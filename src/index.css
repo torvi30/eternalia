@@ -112,3 +112,29 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
 }
+
+/* Custom Leaflet Dark Mode Map Styling */
+.leaflet-container {
+  background-color: #09090b !important;
+  font-family: inherit !important;
+}
+
+.leaflet-bar {
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+.leaflet-bar a {
+  background-color: rgba(13, 13, 18, 0.9) !important;
+  color: #e4e4e7 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.2s ease !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.leaflet-bar a:hover {
+  background-color: #1f1f2e !important;
+  color: #38bdf8 !important;
+}

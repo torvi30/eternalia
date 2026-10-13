@@ -12,6 +12,7 @@
  * - `phone`: Teléfono en formato legible para llamadas.
  * - `category`: 'food' | 'nursery' | 'services' | 'automotive'
  * - `statusType`: 'open' | 'online'
+ * - `lat` / `lng`: Coordenadas geográficas para el mapa interactivo.
  */
 
 export const marinillaBusinesses = [
@@ -30,6 +31,8 @@ export const marinillaBusinesses = [
     address: "Cra 30 #28-15, Sector El Malecón, Marinilla",
     phone: "+57 314 780 9921",
     whatsapp: "573147809921",
+    lat: 6.1722,
+    lng: -75.3341,
     tags: ["Landing Page Activa", "Carta Digital QR", "Cocina de Autor"],
     descriptionEs: "Gastronomía contemporánea con producto local, parrilla gourmet, reservas en línea y catálogo digital interactivo.",
     descriptionEn: "Contemporary gastronomy blending local produce, flame grilling, and seamless online booking.",
@@ -53,6 +56,8 @@ export const marinillaBusinesses = [
     address: "Vereda Cascajo Arriba, km 2.4 Vía Marinilla - El Peñol",
     phone: "+57 320 441 8890",
     whatsapp: "573204418890",
+    lat: 6.1685,
+    lng: -75.3195,
     tags: ["Plantas de Interior", "Orquídeas Nativas", "Abonos Orgánicos"],
     descriptionEs: "Producción y cultivo de orquídeas antioqueñas, plantas ornamentales y asesoría profesional en paisajismo.",
     descriptionEn: "Cultivation of native orchids, ornamental greenery, and personalized landscape consulting.",
@@ -76,6 +81,8 @@ export const marinillaBusinesses = [
     address: "Sector La Inmaculada, Cobertura en todo Marinilla y Rionegro",
     phone: "+57 312 889 0012",
     whatsapp: "573128890012",
+    lat: 6.1748,
+    lng: -75.3362,
     tags: ["Electricista Certificado", "Instalaciones RETIE", "Urgencias 24/7"],
     descriptionEs: "Técnico electricista certificado CONTE con equipos de medición fluke. Diagnósticos, redes de alta tensión y cableados certificados.",
     descriptionEn: "Certified electrical contractor specializing in residential and industrial power installations.",
@@ -99,6 +106,8 @@ export const marinillaBusinesses = [
     address: "Autopista Medellín - Bogotá km 38, Variante Marinilla",
     phone: "+57 318 430 1999",
     whatsapp: "573184301999",
+    lat: 6.1795,
+    lng: -75.3280,
     tags: ["Mantenimiento Diésel", "Scanner Computarizado", "Telemetría"],
     descriptionEs: "Centro de diagnóstico y telemetría satelital para camiones, camionetas y flotas comerciales de carga pesada.",
     descriptionEn: "Advanced diagnostic and telematics hub for commercial trucks and heavy-duty fleets.",
@@ -122,6 +131,8 @@ export const marinillaBusinesses = [
     address: "Sector San José, Calle 27 #32-08, Marinilla",
     phone: "+57 314 901 2345",
     whatsapp: "573149012345",
+    lat: 6.1710,
+    lng: -75.3385,
     tags: ["Landing Page Activa", "Café de Especialidad", "Reservas Online"],
     descriptionEs: "Espacio gastronómico con coctelería de autor, café de origen del Oriente antioqueño y reservas digitales centralizadas.",
     descriptionEn: "Contemporary rooftop lounge with specialty coffee, artisanal drinks, and centralized digital booking.",
@@ -145,6 +156,8 @@ export const marinillaBusinesses = [
     address: "Calle 29 #35-12, Sector Los Rosales, Marinilla",
     phone: "+57 310 500 7711",
     whatsapp: "573105007711",
+    lat: 6.1762,
+    lng: -75.3410,
     tags: ["Suculentas", "Macetas de Barro", "Tierra Abonada"],
     descriptionEs: "Variedad de suculentas, cactus exóticos, árboles frutales para fincas y sustratos especiales.",
     descriptionEn: "Exotic succulents, fruit trees for farms, and rich organic substrates with direct shipping.",
@@ -168,6 +181,8 @@ export const marinillaBusinesses = [
     address: "Vereda Las Mercedes, Marinilla (Servicio a Domicilio)",
     phone: "+57 316 222 9081",
     whatsapp: "573162229081",
+    lat: 6.1640,
+    lng: -75.3450,
     tags: ["Adiestramiento Canino", "Paseos Guiados", "Etología Clínica"],
     descriptionEs: "Entrenamiento canino en positivo, modificación de conducta y recreación guiada en áreas campestres.",
     descriptionEn: "Positive reinforcement canine behavior training, social group walks, and pet boarding.",

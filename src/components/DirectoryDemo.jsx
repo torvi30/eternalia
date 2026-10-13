@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { marinillaBusinesses } from '../data/marinillaBusinesses';
+import DirectoryMap from './DirectoryMap';
 import { 
   Search, 
   MapPin, 
@@ -16,7 +17,9 @@ import {
   Share2,
   Globe,
   ArrowUpRight,
-  PlusCircle
+  PlusCircle,
+  LayoutGrid,
+  Map as MapIcon
 } from 'lucide-react';
 
 export default function DirectoryDemo({ onOpenContact }) {
@@ -24,6 +27,7 @@ export default function DirectoryDemo({ onOpenContact }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [activeModalBusiness, setActiveModalBusiness] = useState(null);
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'map'
 
   const categories = [
     { id: 'all', label: t.directory.categories.all },
@@ -92,26 +96,57 @@ export default function DirectoryDemo({ onOpenContact }) {
         <div className="max-w-4xl mx-auto mb-10">
           <div className="glass-panel rounded-2xl p-3 sm:p-4 border border-white/10 shadow-2xl">
             
-            {/* Live Search Input */}
-            <div className="relative mb-3.5">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-                <Search className="w-5 h-5 text-zinc-400" />
+            {/* Top row: Live Search + View Mode Switcher (Grid / Map) */}
+            <div className="flex flex-col sm:flex-row items-center gap-3 mb-3.5">
+              <div className="relative flex-1 w-full">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                  <Search className="w-5 h-5 text-zinc-400" />
+                </div>
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={t.directory.searchPlaceholder}
+                  className="w-full pl-11 pr-10 py-3 rounded-xl bg-zinc-950/70 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition-all font-medium"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-white"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
               </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t.directory.searchPlaceholder}
-                className="w-full pl-11 pr-10 py-3 rounded-xl bg-zinc-950/70 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition-all font-medium"
-              />
-              {searchQuery && (
+
+              {/* View Switcher Toggle: [ Grid | Map ] */}
+              <div className="flex items-center gap-1 bg-zinc-950/90 p-1 rounded-xl border border-white/10 shrink-0 w-full sm:w-auto justify-center">
                 <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-white"
+                  onClick={() => setViewMode('grid')}
+                  className={`px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    viewMode === 'grid'
+                      ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md font-bold'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                  title={language === 'es' ? 'Ver como tarjetas' : 'View as cards'}
                 >
-                  <X className="w-4 h-4" />
+                  <LayoutGrid className="w-3.5 h-3.5" />
+                  <span>{language === 'es' ? 'Tarjetas' : 'Cards'}</span>
                 </button>
-              )}
+
+                <button
+                  onClick={() => setViewMode('map')}
+                  className={`px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    viewMode === 'map'
+                      ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md font-bold'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                  title={language === 'es' ? 'Ver en mapa interactivo' : 'View on interactive map'}
+                >
+                  <MapIcon className="w-3.5 h-3.5" />
+                  <span>{language === 'es' ? 'Mapa Interactivo' : 'Map View'}</span>
+                </button>
+              </div>
             </div>
 
             {/* Category Filter Pills */}
@@ -142,127 +177,138 @@ export default function DirectoryDemo({ onOpenContact }) {
           </div>
         </div>
 
-        {/* Business Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {filteredBusinesses.map((biz) => {
-            return (
-              <div
-                key={biz.id}
-                className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-              >
-                {/* Glow accent corner */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
+        {/* View Mode Rendering: MAP VIEW or CARDS GRID */}
+        {viewMode === 'map' ? (
+          <div className="mb-8">
+            <DirectoryMap 
+              businesses={filteredBusinesses} 
+              onSelectBusiness={(biz) => setActiveModalBusiness(biz)}
+              language={language}
+            />
+          </div>
+        ) : (
+          /* Business Grid View */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {filteredBusinesses.map((biz) => {
+              return (
+                <div
+                  key={biz.id}
+                  className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                >
+                  {/* Glow accent corner */}
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
 
-                <div>
-                  {/* Top: Logo & Category Bar */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2.5">
-                      {biz.logo ? (
-                        <img 
-                          src={biz.logo} 
-                          alt={biz.name} 
-                          className="w-10 h-10 rounded-xl object-cover border border-white/10 shadow" 
-                        />
-                      ) : (
-                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
-                          <div className="w-full h-full bg-[#0d0d12] rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
-                            {biz.name.charAt(0)}
+                  <div>
+                    {/* Top: Logo & Category Bar */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2.5">
+                        {biz.logo ? (
+                          <img 
+                            src={biz.logo} 
+                            alt={biz.name} 
+                            className="w-10 h-10 rounded-xl object-cover border border-white/10 shadow" 
+                          />
+                        ) : (
+                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
+                            <div className="w-full h-full bg-[#0d0d12] rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
+                              {biz.name.charAt(0)}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                      <div>
-                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
-                          {language === 'es' ? biz.categoryLabelEs : biz.categoryLabelEn}
-                        </span>
+                        <div>
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
+                            {language === 'es' ? biz.categoryLabelEs : biz.categoryLabelEn}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-1 bg-zinc-900/90 px-2 py-0.5 rounded border border-white/5 text-xs font-bold text-amber-400 font-mono">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                        <span>{biz.rating}</span>
+                        <span className="text-zinc-500 text-[10px]">({biz.reviews})</span>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center gap-1 bg-zinc-900/90 px-2 py-0.5 rounded border border-white/5 text-xs font-bold text-amber-400 font-mono">
-                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                      <span>{biz.rating}</span>
-                      <span className="text-zinc-500 text-[10px]">({biz.reviews})</span>
+
+                    {/* Business Name */}
+                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
+                      <span>{biz.name}</span>
+                      {biz.badge && (
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+                          {biz.badge}
+                        </span>
+                      )}
+                    </h3>
+
+                    {/* Address in Marinilla */}
+                    <div className="flex items-start gap-1.5 text-xs text-zinc-400 mb-3">
+                      <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                      <span className="line-clamp-1">{biz.address}</span>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-4 line-clamp-2">
+                      {language === 'es' ? biz.descriptionEs : biz.descriptionEn}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-5">
+                      {biz.tags.map((tag, idx) => (
+                        <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-white/5 text-zinc-400 font-medium">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
 
-                  {/* Business Name */}
-                  <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
-                    <span>{biz.name}</span>
-                    {biz.badge && (
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
-                        {biz.badge}
-                      </span>
-                    )}
-                  </h3>
-
-                  {/* Address in Marinilla */}
-                  <div className="flex items-start gap-1.5 text-xs text-zinc-400 mb-3">
-                    <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                    <span className="line-clamp-1">{biz.address}</span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-4 line-clamp-2">
-                    {language === 'es' ? biz.descriptionEs : biz.descriptionEn}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {biz.tags.map((tag, idx) => (
-                      <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-white/5 text-zinc-400 font-medium">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom Interactive Actions: WhatsApp, Website & Profile */}
-                <div className="pt-3 border-t border-white/10 flex items-center gap-2">
-                  
-                  {/* Primary Direct WhatsApp Action */}
-                  <button
-                    onClick={() => handleWhatsAppClick(biz)}
-                    className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
-                    title={t.directory.buttons.chat}
-                  >
-                    <MessageCircle className="w-4 h-4 fill-emerald-500/30" />
-                    <span>{t.directory.buttons.chat}</span>
-                  </button>
-
-                  {/* Optional Direct Website Link */}
-                  {biz.websiteUrl && (
+                  {/* Bottom Interactive Actions: WhatsApp, Website & Profile */}
+                  <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                    
+                    {/* Primary Direct WhatsApp Action */}
                     <button
-                      onClick={() => handleWebsiteClick(biz.websiteUrl)}
-                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-cyan-400 hover:text-cyan-300 border border-white/10 transition-colors"
-                      title={language === 'es' ? 'Visitar Landing / Web' : 'Visit Website'}
+                      onClick={() => handleWhatsAppClick(biz)}
+                      className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                      title={t.directory.buttons.chat}
                     >
-                      <Globe className="w-4 h-4" />
+                      <MessageCircle className="w-4 h-4 fill-emerald-500/30" />
+                      <span>{t.directory.buttons.chat}</span>
                     </button>
-                  )}
 
-                  {/* Phone Call Action */}
-                  <button
-                    onClick={() => handleCallClick(biz)}
-                    className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
-                    title={t.directory.buttons.call}
-                  >
-                    <Phone className="w-4 h-4" />
-                  </button>
+                    {/* Optional Direct Website Link */}
+                    {biz.websiteUrl && (
+                      <button
+                        onClick={() => handleWebsiteClick(biz.websiteUrl)}
+                        className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-cyan-400 hover:text-cyan-300 border border-white/10 transition-colors"
+                        title={language === 'es' ? 'Visitar Landing / Web' : 'Visit Website'}
+                      >
+                        <Globe className="w-4 h-4" />
+                      </button>
+                    )}
 
-                  {/* Profile detail trigger */}
-                  <button
-                    onClick={() => setActiveModalBusiness(biz)}
-                    className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
-                    title={t.directory.buttons.viewDetails}
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                  </button>
+                    {/* Phone Call Action */}
+                    <button
+                      onClick={() => handleCallClick(biz)}
+                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
+                      title={t.directory.buttons.call}
+                    >
+                      <Phone className="w-4 h-4" />
+                    </button>
+
+                    {/* Profile detail trigger */}
+                    <button
+                      onClick={() => setActiveModalBusiness(biz)}
+                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
+                      title={t.directory.buttons.viewDetails}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+
                 </div>
-
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* Empty state if 0 results */}
         {filteredBusinesses.length === 0 && (

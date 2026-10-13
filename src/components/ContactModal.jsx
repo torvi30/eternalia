@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { X, Send, CheckCircle2, Building, Mail, User, HelpCircle, Loader2 } from 'lucide-react';
+import { saveInquiry } from '../services/inquiryService';
 
 export default function ContactModal({ isOpen, onClose }) {
   const { t, language } = useLanguage();
@@ -14,12 +15,11 @@ export default function ContactModal({ isOpen, onClose }) {
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    setTimeout(() => {
-      setStatus('success');
-    }, 1200);
+    await saveInquiry(formData);
+    setStatus('success');
   };
 
   const handleReset = () => {

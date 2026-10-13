@@ -3,6 +3,7 @@ export const translations = {
     nav: {
       ecosystem: "Ecosistema Tecnológico",
       solutions: "Plataformas SaaS",
+      projects: "Proyectos Activos",
       directory: "Red Comercial Inteligente",
       tech: "Arquitectura & Cloud",
       contact: "Contacto Institucional",
@@ -192,6 +193,7 @@ export const translations = {
     nav: {
       ecosystem: "Tech Ecosystem",
       solutions: "SaaS Platforms",
+      projects: "Live Projects",
       directory: "Smart Commercial Mesh",
       tech: "Architecture & Cloud",
       contact: "Corporate Contact",

@@ -13,10 +13,13 @@ import {
   Sparkles,
   SlidersHorizontal,
   X,
-  Share2
+  Share2,
+  Globe,
+  ArrowUpRight,
+  PlusCircle
 } from 'lucide-react';
 
-export default function DirectoryDemo() {
+export default function DirectoryDemo({ onOpenContact }) {
   const { t, language } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -62,6 +65,11 @@ export default function DirectoryDemo() {
     window.open(`tel:${biz.phone}`);
   };
 
+  const handleWebsiteClick = (url) => {
+    if (!url) return;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section id="directorio" className="relative py-24 sm:py-32 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,7 +77,7 @@ export default function DirectoryDemo() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-3">
-            <Compass className="w-3.5 h-3.5 animate-spin-slow" />
+            <Compass className="w-3.5 h-3.5" />
             <span>{t.directory.badge}</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
@@ -137,10 +145,6 @@ export default function DirectoryDemo() {
         {/* Business Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {filteredBusinesses.map((biz) => {
-            const isFood = biz.category === 'food';
-            const isNursery = biz.category === 'nursery';
-            const isService = biz.category === 'services';
-
             return (
               <div
                 key={biz.id}
@@ -150,11 +154,29 @@ export default function DirectoryDemo() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
 
                 <div>
-                  {/* Category & Rating Bar */}
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
-                      {language === 'es' ? biz.categoryLabelEs : biz.categoryLabelEn}
-                    </span>
+                  {/* Top: Logo & Category Bar */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2.5">
+                      {biz.logo ? (
+                        <img 
+                          src={biz.logo} 
+                          alt={biz.name} 
+                          className="w-10 h-10 rounded-xl object-cover border border-white/10 shadow" 
+                        />
+                      ) : (
+                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
+                          <div className="w-full h-full bg-[#0d0d12] rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
+                            {biz.name.charAt(0)}
+                          </div>
+                        </div>
+                      )}
+
+                      <div>
+                        <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
+                          {language === 'es' ? biz.categoryLabelEs : biz.categoryLabelEn}
+                        </span>
+                      </div>
+                    </div>
                     
                     <div className="flex items-center gap-1 bg-zinc-900/90 px-2 py-0.5 rounded border border-white/5 text-xs font-bold text-amber-400 font-mono">
                       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -166,6 +188,11 @@ export default function DirectoryDemo() {
                   {/* Business Name */}
                   <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
                     <span>{biz.name}</span>
+                    {biz.badge && (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+                        {biz.badge}
+                      </span>
+                    )}
                   </h3>
 
                   {/* Address in Marinilla */}
@@ -189,18 +216,29 @@ export default function DirectoryDemo() {
                   </div>
                 </div>
 
-                {/* Bottom Interactive Actions: WhatsApp & Call */}
+                {/* Bottom Interactive Actions: WhatsApp, Website & Profile */}
                 <div className="pt-3 border-t border-white/10 flex items-center gap-2">
                   
                   {/* Primary Direct WhatsApp Action */}
                   <button
                     onClick={() => handleWhatsAppClick(biz)}
-                    className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                    className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
                     title={t.directory.buttons.chat}
                   >
                     <MessageCircle className="w-4 h-4 fill-emerald-500/30" />
                     <span>{t.directory.buttons.chat}</span>
                   </button>
+
+                  {/* Optional Direct Website Link */}
+                  {biz.websiteUrl && (
+                    <button
+                      onClick={() => handleWebsiteClick(biz.websiteUrl)}
+                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-cyan-400 hover:text-cyan-300 border border-white/10 transition-colors"
+                      title={language === 'es' ? 'Visitar Landing / Web' : 'Visit Website'}
+                    >
+                      <Globe className="w-4 h-4" />
+                    </button>
+                  )}
 
                   {/* Phone Call Action */}
                   <button
@@ -247,6 +285,35 @@ export default function DirectoryDemo() {
           </div>
         )}
 
+        {/* Quick Developer / Merchant CTA Banner */}
+        <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-md max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-zinc-400">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
+              <PlusCircle className="w-4 h-4" />
+            </div>
+            <div>
+              <span className="font-bold text-white block">
+                {language === 'es' ? '¿Quieres sumar tu comercio al Directorio?' : 'Want to list your business on the directory?'}
+              </span>
+              <span>
+                {language === 'es' 
+                  ? 'Configura comercios en ' 
+                  : 'Manage businesses in '}
+                <code className="text-cyan-300 font-mono bg-zinc-900 px-1.5 py-0.5 rounded border border-white/5">
+                  src/data/marinillaBusinesses.js
+                </code>
+              </span>
+            </div>
+          </div>
+
+          <button
+            onClick={onOpenContact}
+            className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-xs whitespace-nowrap shadow-md cursor-pointer"
+          >
+            {language === 'es' ? 'Registrar Mi Comercio' : 'List My Business'}
+          </button>
+        </div>
+
         {/* Business Detailed Quick View Modal */}
         {activeModalBusiness && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
@@ -285,6 +352,20 @@ export default function DirectoryDemo() {
                   <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>{activeModalBusiness.phone}</span>
                 </div>
+                {activeModalBusiness.websiteUrl && (
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
+                    <a 
+                      href={activeModalBusiness.websiteUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-cyan-400 hover:underline flex items-center gap-1"
+                    >
+                      <span>{activeModalBusiness.websiteUrl}</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </div>
+                )}
               </div>
 
               {/* Verified Features */}
@@ -308,14 +389,14 @@ export default function DirectoryDemo() {
                     handleWhatsAppClick(activeModalBusiness);
                     setActiveModalBusiness(null);
                   }}
-                  className="flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg"
+                  className="flex-1 py-3 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer"
                 >
                   <MessageCircle className="w-4 h-4" />
                   <span>{language === 'es' ? 'Escribir por WhatsApp' : 'Chat via WhatsApp'}</span>
                 </button>
                 <button
                   onClick={() => setActiveModalBusiness(null)}
-                  className="px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs"
+                  className="px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs cursor-pointer"
                 >
                   {language === 'es' ? 'Cerrar' : 'Close'}
                 </button>

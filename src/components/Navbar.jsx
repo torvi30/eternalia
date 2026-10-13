@@ -17,7 +17,7 @@ export default function Navbar({ onOpenContact }) {
 
   const navLinks = [
     { name: t.nav.ecosystem, href: "#ecosistema", icon: Layers },
-    { name: t.nav.solutions, href: "#ecosistema", icon: Sparkles },
+    { name: t.nav.projects, href: "#proyectos", icon: Sparkles },
     { name: t.nav.directory, href: "#directorio", icon: Compass },
     { name: t.nav.tech, href: "#tecnologia", icon: Cpu },
   ];

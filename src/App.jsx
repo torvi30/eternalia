@@ -4,6 +4,7 @@ import GlowBackground from './components/GlowBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BentoGrid from './components/BentoGrid';
+import ProjectsShowcase from './components/ProjectsShowcase';
 import DirectoryDemo from './components/DirectoryDemo';
 import TechSpecs from './components/TechSpecs';
 import CallToAction from './components/CallToAction';
@@ -44,7 +45,9 @@ function MainLayout() {
 
         <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
 
-        <DirectoryDemo />
+        <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
+
+        <DirectoryDemo onOpenContact={() => setIsContactOpen(true)} />
 
         <TechSpecs />
 

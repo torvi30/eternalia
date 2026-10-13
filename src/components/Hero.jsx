@@ -125,20 +125,29 @@ export default function Hero({ onOpenContact, onExploreClick, onDemoClick }) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            {/* Secondary CTA: Ver Red Inteligente */}
+            {/* Secondary CTA: Ver Proyectos en Vivo */}
+            <a
+              href="#proyectos"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-zinc-100 bg-zinc-900/90 hover:bg-zinc-800 border border-white/10 hover:border-cyan-500/40 transition-all duration-200 backdrop-blur-md shadow-md"
+            >
+              <Globe2 className="w-4 h-4 text-cyan-400" />
+              <span>{language === 'es' ? 'Ver Proyectos Activos' : 'View Live Projects'}</span>
+            </a>
+
+            {/* Tertiary CTA: Demo Directorio Marinilla */}
             <a
               href="#directorio"
               onClick={onDemoClick}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-medium text-zinc-200 bg-zinc-900/80 hover:bg-zinc-800/90 border border-white/10 hover:border-cyan-500/30 transition-all duration-200 backdrop-blur-md hover:text-white"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-medium text-zinc-300 bg-zinc-900/50 hover:bg-zinc-800/80 border border-white/5 hover:border-white/15 transition-all duration-200 backdrop-blur-md hover:text-white text-xs sm:text-sm"
             >
-              <Compass className="w-4 h-4 text-cyan-400" />
+              <Compass className="w-4 h-4 text-indigo-400" />
               <span>{t.hero.ctaSecondary}</span>
             </a>
 
             {/* Investor CTA */}
             <button
               onClick={onOpenContact}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl text-xs sm:text-sm font-medium text-zinc-400 hover:text-indigo-300 border border-transparent hover:border-indigo-500/20 transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-4 rounded-xl text-xs sm:text-sm font-medium text-zinc-400 hover:text-indigo-300 border border-transparent hover:border-indigo-500/20 transition-all cursor-pointer"
             >
               <span>{t.hero.ctaPartner}</span>
             </button>

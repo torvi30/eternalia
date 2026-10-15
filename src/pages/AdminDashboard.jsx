@@ -12,13 +12,24 @@ import {
   updateBusiness, 
   deleteBusiness 
 } from '../services/businessService';
+import {
+  getProjects,
+  addProject,
+  updateProject,
+  deleteProject
+} from '../services/projectService';
+import {
+  getVideos,
+  addVideo,
+  updateVideo,
+  deleteVideo
+} from '../services/videoService';
 import { isFirebaseConfigured } from '../firebase/config';
 import { 
   LogOut, 
   ExternalLink, 
   Inbox, 
   Compass, 
-  Activity, 
   Search, 
   MessageCircle, 
   DollarSign, 
@@ -31,16 +42,25 @@ import {
   Phone, 
   RefreshCw, 
   Mail, 
-  Server
+  Server,
+  Briefcase,
+  Video,
+  Play,
+  Globe2,
+  Clock
 } from 'lucide-react';
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('leads'); // 'leads' | 'directory' | 'telemetry'
+  const [activeTab, setActiveTab] = useState('leads'); // 'leads' | 'directory' | 'projects' | 'videos' | 'telemetry'
+  
+  // Data States
   const [leads, setLeads] = useState([]);
   const [businesses, setBusinesses] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [videos, setVideos] = useState([]);
   const [loadingLeads, setLoadingLeads] = useState(true);
 
   // Search & Filters for Leads
@@ -51,6 +71,13 @@ export default function AdminDashboard() {
   // Search & Filters for Businesses
   const [bizSearch, setBizSearch] = useState('');
   const [bizCategoryFilter, setBizCategoryFilter] = useState('all');
+
+  // Search & Filters for Projects
+  const [projectSearch, setProjectSearch] = useState('');
+  const [projectCategoryFilter, setProjectCategoryFilter] = useState('all');
+
+  // Search for Videos
+  const [videoSearch, setVideoSearch] = useState('');
 
   // Business Modal (Add / Edit)
   const [isBizModalOpen, setIsBizModalOpen] = useState(false);
@@ -75,6 +102,42 @@ export default function AdminDashboard() {
     features: ['Atención Inmediata', 'Pagos Digitales']
   });
 
+  // Project Modal (Add / Edit)
+  const [isProjModalOpen, setIsProjModalOpen] = useState(false);
+  const [editingProjId, setEditingProjId] = useState(null);
+  const [projForm, setProjForm] = useState({
+    name: '',
+    taglineEs: '',
+    taglineEn: '',
+    category: 'commerce',
+    categoryLabelEs: 'E-Commerce & Frontends',
+    categoryLabelEn: 'Commerce & Frontends',
+    url: '',
+    badge: 'En Producción',
+    status: 'live',
+    metricValue: '',
+    metricLabelEs: '',
+    metricLabelEn: '',
+    descriptionEs: '',
+    descriptionEn: '',
+    techStack: 'React, Tailwind, Firebase',
+    logoColor: 'from-indigo-500 to-cyan-500'
+  });
+
+  // Video Modal (Add / Edit)
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [editingVideoId, setEditingVideoId] = useState(null);
+  const [videoForm, setVideoForm] = useState({
+    title: '',
+    description: '',
+    videoUrl: '',
+    thumbnailUrl: '',
+    category: 'workforce',
+    categoryLabel: 'Workforce OS & Fintech',
+    duration: '2:15 min',
+    badge: 'Demo en Vivo'
+  });
+
   // Load Data
   const loadLeads = async () => {
     setLoadingLeads(true);
@@ -90,9 +153,21 @@ export default function AdminDashboard() {
     setBusinesses(list);
   };
 
+  const loadProjectsData = async () => {
+    const list = await getProjects();
+    setProjects(list);
+  };
+
+  const loadVideosData = async () => {
+    const list = await getVideos();
+    setVideos(list);
+  };
+
   useEffect(() => {
     loadLeads();
     loadBusinessesData();
+    loadProjectsData();
+    loadVideosData();
   }, []);
 
   const handleLogout = async () => {
@@ -116,13 +191,11 @@ export default function AdminDashboard() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // Toggle / Update lead status
   const handleStatusChange = async (lead, newStatus) => {
     await updateLeadStatus(lead.id, newStatus, lead.type);
     setLeads(prev => prev.map(item => item.id === lead.id ? { ...item, status: newStatus } : item));
   };
 
-  // Delete lead
   const handleDeleteLead = async (lead) => {
     if (window.confirm(`¿Estás seguro de archivar este registro de ${lead.clientName}?`)) {
       await deleteLead(lead.id, lead.type);
@@ -130,7 +203,7 @@ export default function AdminDashboard() {
     }
   };
 
-  // Open modal to add business
+  // Business CRUD
   const handleOpenAddBiz = () => {
     setEditingBizId(null);
     setBizForm({
@@ -155,7 +228,6 @@ export default function AdminDashboard() {
     setIsBizModalOpen(true);
   };
 
-  // Open modal to edit business
   const handleOpenEditBiz = (biz) => {
     setEditingBizId(biz.id);
     setBizForm({
@@ -180,7 +252,6 @@ export default function AdminDashboard() {
     setIsBizModalOpen(true);
   };
 
-  // Save business (Add or Edit)
   const handleSaveBiz = async (e) => {
     e.preventDefault();
     if (!bizForm.name.trim()) return;
@@ -195,11 +266,130 @@ export default function AdminDashboard() {
     await loadBusinessesData();
   };
 
-  // Delete business
   const handleDeleteBiz = async (biz) => {
     if (window.confirm(`¿Eliminar ${biz.name} del directorio y mapa de Marinilla?`)) {
       await deleteBusiness(biz.id);
       await loadBusinessesData();
+    }
+  };
+
+  // Projects CRUD
+  const handleOpenAddProj = () => {
+    setEditingProjId(null);
+    setProjForm({
+      name: '',
+      taglineEs: 'Solución tecnológica de alto impacto',
+      taglineEn: 'High-impact enterprise solution',
+      category: 'commerce',
+      categoryLabelEs: 'E-Commerce & POS',
+      categoryLabelEn: 'E-Commerce & POS',
+      url: 'https://',
+      badge: 'En Producción',
+      status: 'live',
+      metricValue: '99.99%',
+      metricLabelEs: 'Uptime SLA',
+      metricLabelEn: 'Uptime SLA',
+      descriptionEs: 'Plataforma cloud desarrollada bajo estándares de ingeniería de alto rendimiento.',
+      descriptionEn: 'High-performance cloud software built for mission-critical scale.',
+      techStack: 'React 18, Tailwind, Firebase, APIs',
+      logoColor: 'from-indigo-500 to-cyan-500'
+    });
+    setIsProjModalOpen(true);
+  };
+
+  const handleOpenEditProj = (proj) => {
+    setEditingProjId(proj.id);
+    setProjForm({
+      name: proj.name || '',
+      taglineEs: proj.taglineEs || '',
+      taglineEn: proj.taglineEn || '',
+      category: proj.category || 'commerce',
+      categoryLabelEs: proj.categoryLabelEs || 'E-Commerce & Frontends',
+      categoryLabelEn: proj.categoryLabelEn || 'Commerce & Frontends',
+      url: proj.url || '',
+      badge: proj.badge || 'En Producción',
+      status: proj.status || 'live',
+      metricValue: proj.metricValue || '',
+      metricLabelEs: proj.metricLabelEs || '',
+      metricLabelEn: proj.metricLabelEn || '',
+      descriptionEs: proj.descriptionEs || '',
+      descriptionEn: proj.descriptionEn || '',
+      techStack: Array.isArray(proj.techStack) ? proj.techStack.join(', ') : (proj.techStack || ''),
+      logoColor: proj.logoColor || 'from-indigo-500 to-cyan-500'
+    });
+    setIsProjModalOpen(true);
+  };
+
+  const handleSaveProj = async (e) => {
+    e.preventDefault();
+    if (!projForm.name.trim()) return;
+
+    if (editingProjId) {
+      await updateProject(editingProjId, projForm);
+    } else {
+      await addProject(projForm);
+    }
+
+    setIsProjModalOpen(false);
+    await loadProjectsData();
+  };
+
+  const handleDeleteProj = async (proj) => {
+    if (window.confirm(`¿Eliminar ${proj.name} del portafolio SaaS del holding?`)) {
+      await deleteProject(proj.id);
+      await loadProjectsData();
+    }
+  };
+
+  // Video CRUD
+  const handleOpenAddVideo = () => {
+    setEditingVideoId(null);
+    setVideoForm({
+      title: '',
+      description: 'Demostración paso a paso de la plataforma y arquitectura.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&auto=format&fit=crop&q=80',
+      category: 'workforce',
+      categoryLabel: 'Workforce OS & Fintech',
+      duration: '2:15 min',
+      badge: 'Demo en Vivo'
+    });
+    setIsVideoModalOpen(true);
+  };
+
+  const handleOpenEditVideo = (v) => {
+    setEditingVideoId(v.id);
+    setVideoForm({
+      title: v.title || '',
+      description: v.description || '',
+      videoUrl: v.videoUrl || '',
+      thumbnailUrl: v.thumbnailUrl || '',
+      category: v.category || 'workforce',
+      categoryLabel: v.categoryLabel || 'Workforce OS & Fintech',
+      duration: v.duration || '2:00 min',
+      badge: v.badge || 'Demo en Vivo'
+    });
+    setIsVideoModalOpen(true);
+  };
+
+  const handleSaveVideo = async (e) => {
+    e.preventDefault();
+    if (!videoForm.title.trim()) return;
+
+    if (editingVideoId) {
+      await updateVideo(editingVideoId, videoForm);
+    } else {
+      await addVideo(videoForm);
+    }
+
+    setIsVideoModalOpen(false);
+    await loadVideosData();
+  };
+
+  const handleDeleteVideo = async (v) => {
+    if (window.confirm(`¿Eliminar la demo "${v.title}" del Video Hub?`)) {
+      await deleteVideo(v.id);
+      await loadVideosData();
     }
   };
 
@@ -239,10 +429,41 @@ export default function AdminDashboard() {
     });
   }, [businesses, bizCategoryFilter, bizSearch]);
 
+  // Filtered Projects Calculation
+  const filteredProjects = useMemo(() => {
+    return projects.filter(p => {
+      const matchCat = projectCategoryFilter === 'all' || p.category === projectCategoryFilter;
+      const query = projectSearch.toLowerCase().trim();
+      if (!query) return matchCat;
+
+      const matchText = 
+        (p.name || '').toLowerCase().includes(query) ||
+        (p.taglineEs || '').toLowerCase().includes(query) ||
+        (p.descriptionEs || '').toLowerCase().includes(query);
+
+      return matchCat && matchText;
+    });
+  }, [projects, projectCategoryFilter, projectSearch]);
+
+  // Filtered Videos Calculation
+  const filteredVideos = useMemo(() => {
+    return videos.filter(v => {
+      const query = videoSearch.toLowerCase().trim();
+      if (!query) return true;
+      return (
+        (v.title || '').toLowerCase().includes(query) ||
+        (v.description || '').toLowerCase().includes(query) ||
+        (v.categoryLabel || '').toLowerCase().includes(query)
+      );
+    });
+  }, [videos, videoSearch]);
+
   // Metrics KPI calculations
   const totalLeadsCount = leads.length;
   const totalVolumeUSD = leads.reduce((acc, l) => acc + (l.estimatedInvestmentUSD || 0), 0);
   const totalBusinessesCount = businesses.length;
+  const totalProjectsCount = projects.length;
+  const totalVideosCount = videos.length;
 
   return (
     <div className="min-h-screen bg-[#07070a] text-zinc-100 flex flex-col font-sans selection:bg-indigo-500/30">
@@ -275,7 +496,6 @@ export default function AdminDashboard() {
 
         {/* Center / Right Quick Actions */}
         <div className="flex items-center gap-3">
-          
           <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-white/5 text-xs font-mono text-zinc-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-zinc-200 truncate max-w-[160px]">{user?.email}</span>
@@ -301,7 +521,6 @@ export default function AdminDashboard() {
             <LogOut className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Cerrar Sesión</span>
           </button>
-
         </div>
       </header>
 
@@ -309,69 +528,81 @@ export default function AdminDashboard() {
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* KPI Summary Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5 mb-8">
           
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
-              <span className="text-xs font-mono font-semibold uppercase">Total Oportunidades</span>
+          <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center justify-between text-zinc-400 mb-1.5">
+              <span className="text-[11px] font-mono font-semibold uppercase">Oportunidades</span>
               <Inbox className="w-4 h-4 text-indigo-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono">
+            <div className="text-2xl font-extrabold text-white font-mono">
               {totalLeadsCount}
             </div>
-            <p className="text-[11px] text-zinc-500 font-mono mt-1">
-              Cotizaciones & Consultas CRM
+            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              CRM Leads & Quotes
             </p>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
-              <span className="text-xs font-mono font-semibold uppercase">Volumen Cotizado</span>
+          <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center justify-between text-zinc-400 mb-1.5">
+              <span className="text-[11px] font-mono font-semibold uppercase">Vol. Cotizado</span>
               <DollarSign className="w-4 h-4 text-emerald-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">
+            <div className="text-2xl font-extrabold text-emerald-400 font-mono">
               ${totalVolumeUSD.toLocaleString()} <span className="text-xs text-zinc-400 font-normal">USD</span>
             </div>
-            <p className="text-[11px] text-zinc-500 font-mono mt-1">
-              Estimaciones instantáneas
+            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              Pipeline estimado
             </p>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
-              <span className="text-xs font-mono font-semibold uppercase">Comercios en Red</span>
+          <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center justify-between text-zinc-400 mb-1.5">
+              <span className="text-[11px] font-mono font-semibold uppercase">Portafolio SaaS</span>
+              <Briefcase className="w-4 h-4 text-amber-400" />
+            </div>
+            <div className="text-2xl font-extrabold text-amber-300 font-mono">
+              {totalProjectsCount}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              Empresas y frontends
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center justify-between text-zinc-400 mb-1.5">
+              <span className="text-[11px] font-mono font-semibold uppercase">Video Hub</span>
+              <Video className="w-4 h-4 text-purple-400" />
+            </div>
+            <div className="text-2xl font-extrabold text-purple-300 font-mono">
+              {totalVideosCount}
+            </div>
+            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              Demos institucionales
+            </p>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl col-span-2 lg:col-span-1">
+            <div className="flex items-center justify-between text-zinc-400 mb-1.5">
+              <span className="text-[11px] font-mono font-semibold uppercase">Red Comercial</span>
               <Compass className="w-4 h-4 text-cyan-400" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-cyan-300 font-mono">
+            <div className="text-2xl font-extrabold text-cyan-300 font-mono">
               {totalBusinessesCount}
             </div>
-            <p className="text-[11px] text-zinc-500 font-mono mt-1">
-              Nodos activos en Marinilla
-            </p>
-          </div>
-
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-xl">
-            <div className="flex items-center justify-between text-zinc-400 mb-2">
-              <span className="text-xs font-mono font-semibold uppercase">SLA de Respuesta</span>
-              <Activity className="w-4 h-4 text-purple-400" />
-            </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white font-mono flex items-center gap-1.5">
-              <span>&lt; 2 hrs</span>
-              <span className="text-xs font-bold text-emerald-400">99.8%</span>
-            </div>
-            <p className="text-[11px] text-zinc-500 font-mono mt-1">
-              Objetivo de conversión ejecutiva
+            <p className="text-[10px] text-zinc-500 font-mono mt-0.5">
+              Nodos en Marinilla
             </p>
           </div>
 
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-2 border-b border-white/10 pb-4 mb-6">
+        <div className="flex items-center gap-2 border-b border-white/10 pb-4 mb-6 overflow-x-auto">
           
           <button
             onClick={() => setActiveTab('leads')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
               activeTab === 'leads'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
@@ -385,15 +616,45 @@ export default function AdminDashboard() {
           </button>
 
           <button
+            onClick={() => setActiveTab('projects')}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+              activeTab === 'projects'
+                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
+                : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
+            }`}
+          >
+            <Briefcase className="w-4 h-4" />
+            <span>Portafolio SaaS</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+              {projects.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('videos')}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+              activeTab === 'videos'
+                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
+                : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
+            }`}
+          >
+            <Video className="w-4 h-4" />
+            <span>Video Demostraciones</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+              {videos.length}
+            </span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('directory')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
               activeTab === 'directory'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
             <Compass className="w-4 h-4" />
-            <span>Directorio Hiperlocal (Marinilla)</span>
+            <span>Directorio Hiperlocal</span>
             <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
               {businesses.length}
             </span>
@@ -401,14 +662,14 @@ export default function AdminDashboard() {
 
           <button
             onClick={() => setActiveTab('telemetry')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
               activeTab === 'telemetry'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
             <Server className="w-4 h-4" />
-            <span>Infraestructura & Clúster</span>
+            <span>Clúster Cloud</span>
           </button>
 
         </div>
@@ -420,7 +681,6 @@ export default function AdminDashboard() {
             {/* Control Bar: Search + Filters */}
             <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
               
-              {/* Search Bar */}
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3" />
                 <input
@@ -432,7 +692,6 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              {/* Type Filter */}
               <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
                 <span className="text-zinc-500 font-mono text-[10px] uppercase font-bold shrink-0">Tipo:</span>
                 <button
@@ -461,7 +720,6 @@ export default function AdminDashboard() {
                 </button>
               </div>
 
-              {/* Status Filter */}
               <div className="flex items-center gap-1.5 overflow-x-auto text-xs">
                 <span className="text-zinc-500 font-mono text-[10px] uppercase font-bold shrink-0">Estado:</span>
                 <select
@@ -476,7 +734,7 @@ export default function AdminDashboard() {
                 </select>
                 <button
                   onClick={loadLeads}
-                  className="p-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/5"
+                  className="p-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-white/5 cursor-pointer"
                   title="Recargar bandeja"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${loadingLeads ? 'animate-spin' : ''}`} />
@@ -505,7 +763,6 @@ export default function AdminDashboard() {
                       key={lead.id}
                       className="p-5 rounded-2xl bg-zinc-950/80 border border-white/10 hover:border-white/20 transition-all flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4"
                     >
-                      {/* Left: Client info and details */}
                       <div className="space-y-1.5 flex-1 min-w-0">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
@@ -556,7 +813,6 @@ export default function AdminDashboard() {
                           )}
                         </div>
 
-                        {/* Notes or Message */}
                         {(lead.clientNotes || lead.message) && (
                           <p className="text-xs text-zinc-300 bg-zinc-900/60 p-2.5 rounded-xl border border-white/5 mt-2 italic">
                             "{lead.clientNotes || lead.message}"
@@ -564,9 +820,7 @@ export default function AdminDashboard() {
                         )}
                       </div>
 
-                      {/* Right: Status selector and actions */}
                       <div className="flex flex-wrap lg:flex-col items-end gap-2 shrink-0 w-full lg:w-auto pt-3 lg:pt-0 border-t lg:border-t-0 border-white/5">
-                        
                         <div className="flex items-center gap-2">
                           <select
                             value={lead.status || 'pending_review'}
@@ -602,7 +856,6 @@ export default function AdminDashboard() {
                             <span>Responder por WhatsApp</span>
                           </button>
                         )}
-
                       </div>
                     </div>
                   );
@@ -613,13 +866,236 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* TAB 2: DIRECTORIO HIPERLOCAL CRUD */}
+        {/* TAB 2: PORTAFOLIO SAAS (CRUD) */}
+        {activeTab === 'projects' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            
+            <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  value={projectSearch}
+                  onChange={(e) => setProjectSearch(e.target.value)}
+                  placeholder="Buscar proyectos por nombre, eslogan o tecnología..."
+                  className="w-full pl-10 pr-4 py-2 rounded-xl bg-zinc-900 border border-white/5 text-white text-xs placeholder-zinc-500 focus:outline-none focus:border-indigo-500 font-mono"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <select
+                  value={projectCategoryFilter}
+                  onChange={(e) => setProjectCategoryFilter(e.target.value)}
+                  className="bg-zinc-900 border border-white/10 rounded-xl px-3 py-2 text-xs text-zinc-300 font-mono focus:outline-none"
+                >
+                  <option value="all">Todas las verticales</option>
+                  <option value="commerce">Commerce Cloud</option>
+                  <option value="services">Workforce OS</option>
+                  <option value="ventures">Industrial Ventures</option>
+                  <option value="directories">Redes Territoriales</option>
+                </select>
+
+                <button
+                  onClick={handleOpenAddProj}
+                  className="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all cursor-pointer shrink-0"
+                >
+                  <Plus className="w-4 h-4" />
+                  <span>+ Registrar Proyecto SaaS</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Projects Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredProjects.map((proj) => (
+                <div 
+                  key={proj.id}
+                  className="p-5 rounded-2xl bg-zinc-950/80 border border-white/10 flex flex-col justify-between hover:border-white/20 transition-all shadow-md"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/25 font-bold uppercase">
+                        {proj.categoryLabelEs || proj.category}
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                        {proj.badge || 'En Vivo'}
+                      </span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-white mb-1">
+                      {proj.name}
+                    </h4>
+
+                    <p className="text-xs text-cyan-300 font-mono mb-2 line-clamp-1">
+                      {proj.taglineEs || proj.taglineEn}
+                    </p>
+
+                    <p className="text-xs text-zinc-400 line-clamp-2 mb-3 leading-relaxed">
+                      {proj.descriptionEs || proj.descriptionEn}
+                    </p>
+
+                    {/* Metric pill */}
+                    {proj.metricValue && (
+                      <div className="p-2 rounded-xl bg-zinc-900/60 border border-white/5 font-mono text-[11px] mb-3 flex items-center justify-between">
+                        <span className="text-zinc-500">{proj.metricLabelEs || 'Métrica'}:</span>
+                        <span className="text-emerald-400 font-bold">{proj.metricValue}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                    <a
+                      href={proj.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-indigo-400 hover:text-cyan-300 flex items-center gap-1 transition-colors truncate max-w-[170px]"
+                    >
+                      <Globe2 className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">{proj.url.replace('https://', '')}</span>
+                    </a>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleOpenEditProj(proj)}
+                        className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/5 transition-colors cursor-pointer"
+                        title="Editar proyecto"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteProj(proj)}
+                        className="p-1.5 rounded-lg bg-zinc-900 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-400 border border-white/5 transition-colors cursor-pointer"
+                        title="Eliminar proyecto"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 3: VIDEO DEMOSTRACIONES (CRUD) */}
+        {activeTab === 'videos' && (
+          <div className="space-y-6 animate-in fade-in duration-200">
+            
+            <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <div className="relative flex-1">
+                <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3" />
+                <input
+                  type="text"
+                  value={videoSearch}
+                  onChange={(e) => setVideoSearch(e.target.value)}
+                  placeholder="Buscar demos por título, descripción o vertical..."
+                  className="w-full pl-10 pr-4 py-2 rounded-xl bg-zinc-900 border border-white/5 text-white text-xs placeholder-zinc-500 focus:outline-none focus:border-indigo-500 font-mono"
+                />
+              </div>
+
+              <button
+                onClick={handleOpenAddVideo}
+                className="py-2 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all cursor-pointer shrink-0"
+              >
+                <Plus className="w-4 h-4" />
+                <span>+ Nuevo Video / Demostración</span>
+              </button>
+            </div>
+
+            {/* Videos Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {filteredVideos.map((v) => (
+                <div 
+                  key={v.id}
+                  className="rounded-2xl bg-zinc-950/80 border border-white/10 overflow-hidden flex flex-col justify-between hover:border-white/20 transition-all shadow-md"
+                >
+                  <div>
+                    {/* Video Thumbnail Preview */}
+                    <div className="relative aspect-video w-full bg-zinc-900 overflow-hidden">
+                      <img 
+                        src={v.thumbnailUrl || "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&auto=format&fit=crop&q=80"} 
+                        alt={v.title}
+                        className="w-full h-full object-cover opacity-80"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
+                      
+                      <div className="absolute top-2 right-2 px-2 py-0.5 rounded bg-black/80 text-[10px] font-mono text-white flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-cyan-400" />
+                        <span>{v.duration}</span>
+                      </div>
+
+                      <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-indigo-500/30 border border-indigo-500/40 text-[10px] font-mono text-indigo-300 font-bold">
+                        {v.badge}
+                      </div>
+
+                      <a 
+                        href={v.videoUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="absolute inset-0 flex items-center justify-center group"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-indigo-600/90 group-hover:bg-cyan-500 text-white flex items-center justify-center shadow-lg transition-transform group-hover:scale-110">
+                          <Play className="w-4 h-4 ml-0.5 fill-current" />
+                        </div>
+                      </a>
+                    </div>
+
+                    <div className="p-4">
+                      <span className="text-[10px] font-mono text-zinc-500 block uppercase font-bold mb-1">
+                        {v.categoryLabel || v.category}
+                      </span>
+                      <h4 className="text-sm font-bold text-white mb-1.5 line-clamp-2">
+                        {v.title}
+                      </h4>
+                      <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
+                        {v.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="p-4 pt-2 border-t border-white/5 flex items-center justify-between">
+                    <a
+                      href={v.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-mono text-cyan-400 hover:underline flex items-center gap-1 truncate max-w-[160px]"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                      <span>Ver Enlace</span>
+                    </a>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleOpenEditVideo(v)}
+                        className="p-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/5 transition-colors cursor-pointer"
+                        title="Editar video"
+                      >
+                        <Edit3 className="w-3.5 h-3.5" />
+                      </button>
+
+                      <button
+                        onClick={() => handleDeleteVideo(v)}
+                        className="p-1.5 rounded-lg bg-zinc-900 hover:bg-rose-500/20 text-zinc-400 hover:text-rose-400 border border-white/5 transition-colors cursor-pointer"
+                        title="Eliminar video"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        )}
+
+        {/* TAB 4: DIRECTORIO HIPERLOCAL CRUD */}
         {activeTab === 'directory' && (
           <div className="space-y-6 animate-in fade-in duration-200">
             
-            {/* Control Bar: Search + Add Button */}
             <div className="p-4 rounded-2xl bg-zinc-950/70 border border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              
               <div className="relative flex-1">
                 <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3" />
                 <input
@@ -652,7 +1128,6 @@ export default function AdminDashboard() {
                   <span>+ Agregar Comercio</span>
                 </button>
               </div>
-
             </div>
 
             {/* Businesses Grid */}
@@ -717,7 +1192,7 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* TAB 3: INFRAESTRUCTURA & CLÚSTER */}
+        {/* TAB 5: INFRAESTRUCTURA & CLÚSTER */}
         {activeTab === 'telemetry' && (
           <div className="space-y-6 animate-in fade-in duration-200">
             <div className="p-6 rounded-3xl bg-zinc-950/70 border border-white/10">
@@ -764,7 +1239,6 @@ export default function AdminDashboard() {
       {isBizModalOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="relative w-full max-w-2xl bg-zinc-950 border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left my-8">
-            
             <button
               onClick={() => setIsBizModalOpen(false)}
               className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white"
@@ -910,9 +1384,288 @@ export default function AdminDashboard() {
                   <span>Guardar en Directorio</span>
                 </button>
               </div>
-
             </form>
+          </div>
+        </div>
+      )}
 
+      {/* Project Modal (Add / Edit) */}
+      {isProjModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative w-full max-w-2xl bg-zinc-950 border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left my-8">
+            <button
+              onClick={() => setIsProjModalOpen(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="mb-6">
+              <span className="text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider block mb-1">
+                {editingProjId ? 'MODIFICAR PROYECTO SAAS' : 'NUEVA PLATAFORMA SAAS'}
+              </span>
+              <h2 className="text-2xl font-extrabold text-white">
+                {editingProjId ? 'Editar Proyecto del Portafolio' : 'Registrar Empresa / Proyecto SaaS'}
+              </h2>
+            </div>
+
+            <form onSubmit={handleSaveProj} className="space-y-4">
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Nombre del Proyecto / Plataforma *</label>
+                <input
+                  type="text"
+                  required
+                  value={projForm.name}
+                  onChange={(e) => setProjForm({ ...projForm, name: e.target.value })}
+                  placeholder="ej. Eternalia Logistics Hub"
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none focus:border-amber-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">Vertical / Categoría</label>
+                  <select
+                    value={projForm.category}
+                    onChange={(e) => {
+                      const cat = e.target.value;
+                      const labels = {
+                        commerce: { es: 'E-Commerce & Frontends', en: 'Commerce & Frontends' },
+                        services: { es: 'Workforce OS & Fintech', en: 'Workforce OS & Fintech' },
+                        ventures: { es: 'Industrial IoT & ERP', en: 'Industrial IoT & ERP' },
+                        directories: { es: 'Redes Territoriales', en: 'Territorial Meshes' }
+                      };
+                      setProjForm({
+                        ...projForm,
+                        category: cat,
+                        categoryLabelEs: labels[cat]?.es || 'Plataforma',
+                        categoryLabelEn: labels[cat]?.en || 'Platform'
+                      });
+                    }}
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none"
+                  >
+                    <option value="commerce">Commerce Cloud (Frontends / POS)</option>
+                    <option value="services">Workforce OS (Servicios / Escrow)</option>
+                    <option value="ventures">Industrial Ventures (IoT / ERP)</option>
+                    <option value="directories">Redes Territoriales (Hiperlocal)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">URL de Producción en Vivo *</label>
+                  <input
+                    type="url"
+                    required
+                    value={projForm.url}
+                    onChange={(e) => setProjForm({ ...projForm, url: e.target.value })}
+                    placeholder="https://plataforma.eternalia.co"
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none font-mono"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">Insignia / Badge</label>
+                  <input
+                    type="text"
+                    value={projForm.badge}
+                    onChange={(e) => setProjForm({ ...projForm, badge: e.target.value })}
+                    placeholder="ej. En Producción, Enterprise, Piloto"
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">Métrica Clave (Impacto)</label>
+                  <input
+                    type="text"
+                    value={projForm.metricValue}
+                    onChange={(e) => setProjForm({ ...projForm, metricValue: e.target.value })}
+                    placeholder="ej. +15k usuarios, <0.3s TTFB, 99.99%"
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Eslogan Corto</label>
+                <input
+                  type="text"
+                  value={projForm.taglineEs}
+                  onChange={(e) => setProjForm({ ...projForm, taglineEs: e.target.value, taglineEn: e.target.value })}
+                  placeholder="ej. Plataforma de telemetría y diagnóstico en ruta"
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Stack Tecnológico (separado por comas)</label>
+                <input
+                  type="text"
+                  value={projForm.techStack}
+                  onChange={(e) => setProjForm({ ...projForm, techStack: e.target.value })}
+                  placeholder="React 18, Vite, Cloud Firestore, MQTT, WebSockets"
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Descripción del Proyecto</label>
+                <textarea
+                  rows={2}
+                  value={projForm.descriptionEs}
+                  onChange={(e) => setProjForm({ ...projForm, descriptionEs: e.target.value, descriptionEn: e.target.value })}
+                  placeholder="Describe la solución y valor de mercado..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none resize-none"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setIsProjModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.4)] cursor-pointer"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Guardar Proyecto</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Video Modal (Add / Edit) */}
+      {isVideoModalOpen && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative w-full max-w-2xl bg-zinc-950 border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left my-8">
+            <button
+              onClick={() => setIsVideoModalOpen(false)}
+              className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="mb-6">
+              <span className="text-[10px] font-mono font-bold text-purple-400 uppercase tracking-wider block mb-1">
+                {editingVideoId ? 'MODIFICAR DEMOSTRACIÓN' : 'NUEVO VIDEO REEL'}
+              </span>
+              <h2 className="text-2xl font-extrabold text-white">
+                {editingVideoId ? 'Editar Video Corporativo' : 'Agregar Demostración / Reel'}
+              </h2>
+            </div>
+
+            <form onSubmit={handleSaveVideo} className="space-y-4">
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Título del Video / Reel *</label>
+                <input
+                  type="text"
+                  required
+                  value={videoForm.title}
+                  onChange={(e) => setVideoForm({ ...videoForm, title: e.target.value })}
+                  placeholder="ej. Workforce OS • Demo de Liquidación Escrow"
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none focus:border-purple-500"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">Vertical / Categoría</label>
+                  <select
+                    value={videoForm.category}
+                    onChange={(e) => {
+                      const cat = e.target.value;
+                      const labels = {
+                        workforce: 'Workforce OS & Fintech',
+                        commerce: 'Commerce Cloud',
+                        ventures: 'Industrial IoT',
+                        directories: 'Red Territorial'
+                      };
+                      setVideoForm({
+                        ...videoForm,
+                        category: cat,
+                        categoryLabel: labels[cat] || 'Plataforma'
+                      });
+                    }}
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none"
+                  >
+                    <option value="workforce">Workforce OS & Fintech</option>
+                    <option value="commerce">Commerce Cloud</option>
+                    <option value="ventures">Industrial IoT</option>
+                    <option value="directories">Red Territorial</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-xs font-mono text-zinc-300 block mb-1">Duración (ej. 2:45 min)</label>
+                  <input
+                    type="text"
+                    value={videoForm.duration}
+                    onChange={(e) => setVideoForm({ ...videoForm, duration: e.target.value })}
+                    placeholder="2:15 min"
+                    className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">URL del Video (YouTube, Loom, o MP4 directo) *</label>
+                <input
+                  type="url"
+                  required
+                  value={videoForm.videoUrl}
+                  onChange={(e) => setVideoForm({ ...videoForm, videoUrl: e.target.value })}
+                  placeholder="https://www.youtube.com/watch?v=... o https://www.loom.com/share/..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">URL de Portada / Miniatura (Thumbnail)</label>
+                <input
+                  type="url"
+                  value={videoForm.thumbnailUrl}
+                  onChange={(e) => setVideoForm({ ...videoForm, thumbnailUrl: e.target.value })}
+                  placeholder="https://images.unsplash.com/photo-..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs font-mono focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-mono text-zinc-300 block mb-1">Descripción de la Demostración</label>
+                <textarea
+                  rows={2}
+                  value={videoForm.description}
+                  onChange={(e) => setVideoForm({ ...videoForm, description: e.target.value })}
+                  placeholder="Describe qué características se exhiben en el video..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none resize-none"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setIsVideoModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 text-xs font-semibold cursor-pointer"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow-[0_0_15px_rgba(168,85,247,0.4)] cursor-pointer"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Guardar Video</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

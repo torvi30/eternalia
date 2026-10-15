@@ -1,30 +1,43 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { projectsConfig } from '../data/projectsConfig';
+import { projectsConfig as initialProjects } from '../data/projectsConfig';
+import { getProjects } from '../services/projectService';
 import { 
   ExternalLink, 
   Sparkles, 
   ArrowUpRight, 
-  Layers, 
-  Globe2, 
-  ShieldCheck, 
-  Cpu, 
-  Activity, 
-  CheckCircle2, 
   Search, 
   X,
   Code2,
-  SlidersHorizontal,
-  Compass,
-  Zap,
-  Truck
+  SlidersHorizontal
 } from 'lucide-react';
 
 export default function ProjectsShowcase({ onOpenContact }) {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
+  const [projects, setProjects] = useState(initialProjects);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalProject, setActiveModalProject] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchProj = async () => {
+      const data = await getProjects();
+      if (isMounted && data) {
+        setProjects(data);
+      }
+    };
+    fetchProj();
+
+    const handleUpdate = () => {
+      fetchProj();
+    };
+    window.addEventListener('eternalia_projects_updated', handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('eternalia_projects_updated', handleUpdate);
+    };
+  }, []);
 
   const categories = [
     { id: 'all', label: language === 'es' ? 'Todos los Proyectos' : 'All Projects' },
@@ -35,22 +48,23 @@ export default function ProjectsShowcase({ onOpenContact }) {
   ];
 
   const filteredProjects = useMemo(() => {
-    return projectsConfig.filter((proj) => {
+    return projects.filter((proj) => {
       const matchesCat = selectedCategory === 'all' || proj.category === selectedCategory;
       const query = searchQuery.toLowerCase().trim();
       if (!query) return matchesCat;
 
-      const tagline = language === 'es' ? proj.taglineEs : proj.taglineEn;
-      const desc = language === 'es' ? proj.descriptionEs : proj.descriptionEn;
+      const tagline = language === 'es' ? (proj.taglineEs || '') : (proj.taglineEn || '');
+      const desc = language === 'es' ? (proj.descriptionEs || '') : (proj.descriptionEn || '');
+      const techList = proj.techStack || [];
       const matchesText = 
-        proj.name.toLowerCase().includes(query) ||
+        (proj.name || '').toLowerCase().includes(query) ||
         tagline.toLowerCase().includes(query) ||
         desc.toLowerCase().includes(query) ||
-        proj.techStack.some((tech) => tech.toLowerCase().includes(query));
+        techList.some((tech) => (tech || '').toLowerCase().includes(query));
 
       return matchesCat && matchesText;
     });
-  }, [selectedCategory, searchQuery, language]);
+  }, [projects, selectedCategory, searchQuery, language]);
 
   const handleLaunchProject = (url) => {
     if (!url || url === '#') {

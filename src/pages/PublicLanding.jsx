@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import BentoGrid from '../components/BentoGrid';
 import ProjectsShowcase from '../components/ProjectsShowcase';
+import VideoHub from '../components/VideoHub';
 import QuoteEngine from '../components/QuoteEngine';
 import DirectoryDemo from '../components/DirectoryDemo';
 import TechSpecs from '../components/TechSpecs';
@@ -52,6 +53,9 @@ export default function PublicLanding() {
         <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
 
         <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
+
+        {/* Video-Demostraciones y Reels Corporativos */}
+        <VideoHub />
 
         {/* 3. Cotizador Interactivo de Soluciones */}
         <QuoteEngine />

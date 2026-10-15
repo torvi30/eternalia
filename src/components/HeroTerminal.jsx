@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   Terminal as TerminalIcon, 
@@ -8,6 +9,7 @@ import {
 
 export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
   const { t, language } = useLanguage();
+  const navigate = useNavigate();
   const [inputVal, setInputVal] = useState('');
   const [isDeploying, setIsDeploying] = useState(false);
   const terminalEndRef = useRef(null);
@@ -38,6 +40,10 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
     let responseEntry = null;
 
     switch (cmd) {
+      case 'admin':
+        navigate('/admin/login');
+        return;
+
       case 'help':
         responseEntry = {
           type: 'output',
@@ -52,6 +58,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
                 <div><span className="text-amber-400 font-bold">deploy</span> — {language === 'es' ? 'Simular despliegue perimetral en <180ms' : 'Simulate edge deployment in <180ms'}</div>
                 <div><span className="text-cyan-400 font-bold">quote</span> — {language === 'es' ? 'Abrir cotizador instantáneo' : 'Open instant quote estimator'}</div>
                 <div><span className="text-pink-400 font-bold">contact</span> — {language === 'es' ? 'Abrir formulario ejecutivo' : 'Open leadership contact modal'}</div>
+                <div><span className="text-purple-400 font-bold">admin</span> — {language === 'es' ? 'Acceder al clúster administrativo (/admin)' : 'Open admin management console'}</div>
                 <div><span className="text-zinc-400 font-bold">clear</span> — {language === 'es' ? 'Limpiar historial de la consola' : 'Clear terminal console history'}</div>
               </div>
             </div>
@@ -245,7 +252,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
         <span className="text-zinc-500 text-[10px] uppercase font-bold tracking-wider shrink-0 mr-1">
           {language === 'es' ? 'RÁPIDO:' : 'QUICK:'}
         </span>
-        {(t.terminal?.pills || ['status', 'ventures', 'deploy', 'quote', 'contact', 'clear']).map((cmd) => (
+        {(t.terminal?.pills || ['status', 'ventures', 'deploy', 'quote', 'contact', 'admin', 'clear']).map((cmd) => (
           <button
             key={cmd}
             type="button"

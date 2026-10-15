@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { marinillaBusinesses } from '../data/marinillaBusinesses';
+import { marinillaBusinesses as initialBusinesses } from '../data/marinillaBusinesses';
+import { getBusinesses } from '../services/businessService';
 import DirectoryMap from './DirectoryMap';
 import { 
   Search, 
@@ -11,23 +12,41 @@ import {
   CheckCircle, 
   Compass, 
   ExternalLink, 
-  Sparkles,
-  SlidersHorizontal,
-  X,
-  Share2,
-  Globe,
-  ArrowUpRight,
-  PlusCircle,
-  LayoutGrid,
-  Map as MapIcon
+  Globe, 
+  ArrowUpRight, 
+  PlusCircle, 
+  LayoutGrid, 
+  Map as MapIcon,
+  X
 } from 'lucide-react';
 
 export default function DirectoryDemo({ onOpenContact }) {
   const { t, language } = useLanguage();
+  const [businesses, setBusinesses] = useState(initialBusinesses);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [activeModalBusiness, setActiveModalBusiness] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'map'
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchBiz = async () => {
+      const data = await getBusinesses();
+      if (isMounted && data) {
+        setBusinesses(data);
+      }
+    };
+    fetchBiz();
+
+    const handleUpdate = () => {
+      fetchBiz();
+    };
+    window.addEventListener('eternalia_businesses_updated', handleUpdate);
+    return () => {
+      isMounted = false;
+      window.removeEventListener('eternalia_businesses_updated', handleUpdate);
+    };
+  }, []);
 
   const categories = [
     { id: 'all', label: t.directory.categories.all },
@@ -39,23 +58,24 @@ export default function DirectoryDemo({ onOpenContact }) {
 
   // Real-time filter logic
   const filteredBusinesses = useMemo(() => {
-    return marinillaBusinesses.filter((item) => {
+    return businesses.filter((item) => {
       const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
       const query = searchQuery.toLowerCase().trim();
       if (!query) return matchesCategory;
 
-      const desc = language === 'es' ? item.descriptionEs : item.descriptionEn;
-      const categoryLabel = language === 'es' ? item.categoryLabelEs : item.categoryLabelEn;
+      const desc = language === 'es' ? (item.descriptionEs || '') : (item.descriptionEn || '');
+      const categoryLabel = language === 'es' ? (item.categoryLabelEs || '') : (item.categoryLabelEn || '');
+      const tagsList = item.tags || [];
       const matchesText = 
-        item.name.toLowerCase().includes(query) ||
+        (item.name || '').toLowerCase().includes(query) ||
         desc.toLowerCase().includes(query) ||
-        item.address.toLowerCase().includes(query) ||
+        (item.address || '').toLowerCase().includes(query) ||
         categoryLabel.toLowerCase().includes(query) ||
-        item.tags.some(t => t.toLowerCase().includes(query));
+        tagsList.some(t => (t || '').toLowerCase().includes(query));
 
       return matchesCategory && matchesText;
     });
-  }, [searchQuery, selectedCategory, language]);
+  }, [businesses, searchQuery, selectedCategory, language]);
 
   const handleWhatsAppClick = (biz) => {
     const textMessage = language === 'es'

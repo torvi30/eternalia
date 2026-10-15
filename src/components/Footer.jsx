@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { Terminal } from 'lucide-react';
 
@@ -125,6 +126,11 @@ export default function Footer({ onOpenContact, onOpenInvestors }) {
               <li className="hover:text-white transition-colors cursor-pointer flex items-center gap-1.5 text-indigo-400">
                 <Terminal className="w-3 h-3" />
                 <span>API Status & Uptime</span>
+              </li>
+              <li>
+                <Link to="/admin/login" className="hover:text-cyan-400 transition-colors flex items-center gap-1 text-[11px] text-zinc-500 hover:underline">
+                  <span>🔒 Panel de Administración (/admin)</span>
+                </Link>
               </li>
             </ul>
           </div>

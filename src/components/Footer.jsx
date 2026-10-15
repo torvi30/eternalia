@@ -1,8 +1,7 @@
-import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Activity, ShieldCheck, Heart, Terminal } from 'lucide-react';
+import { Terminal } from 'lucide-react';
 
-export default function Footer({ onOpenContact }) {
+export default function Footer({ onOpenContact, onOpenInvestors }) {
   const { t } = useLanguage();
 
   return (
@@ -36,10 +35,13 @@ export default function Footer({ onOpenContact }) {
             </p>
 
             {/* System Status Pill */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-emerald-500/30 text-zinc-300 text-xs font-mono">
+            <a 
+              href="#infraestructura"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-emerald-500/30 text-zinc-300 text-xs font-mono transition-colors"
+            >
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span className="text-emerald-400 font-semibold">{t.footer.systemStatus}</span>
-            </div>
+            </a>
           </div>
 
           {/* Quick Links */}
@@ -54,17 +56,27 @@ export default function Footer({ onOpenContact }) {
                 </a>
               </li>
               <li>
+                <a href="#cotizador" className="hover:text-white transition-colors">
+                  {t.nav.quoteBtn || "Cotizador Interactivo"}
+                </a>
+              </li>
+              <li>
                 <a href="#directorio" className="hover:text-white transition-colors">
                   {t.nav.directory}
                 </a>
               </li>
               <li>
-                <a href="#tecnologia" className="hover:text-white transition-colors">
-                  {t.nav.tech}
+                <a href="#infraestructura" className="hover:text-white transition-colors">
+                  {t.nav.statusBtn || "Estado Servidores (SLA)"}
                 </a>
               </li>
               <li>
-                <button onClick={onOpenContact} className="hover:text-white transition-colors text-left">
+                <button onClick={onOpenInvestors} className="hover:text-indigo-400 transition-colors text-left cursor-pointer">
+                  {t.nav.investorsBtn || "Relación Inversionistas"}
+                </button>
+              </li>
+              <li>
+                <button onClick={onOpenContact} className="hover:text-white transition-colors text-left cursor-pointer">
                   {t.nav.contact}
                 </button>
               </li>

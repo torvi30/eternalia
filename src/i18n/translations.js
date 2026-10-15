@@ -8,6 +8,9 @@ export const translations = {
       tech: "Arquitectura & Cloud",
       contact: "Contacto Institucional",
       partnerBtn: "Portal Inversores & Socios",
+      investorsBtn: "Inversionistas",
+      quoteBtn: "Cotizador Interactivo",
+      statusBtn: "Estado Servidores",
     },
     hero: {
       badge: "FASE 1 • HOLDING TECNOLÓGICO MULTI-VERTICAL",
@@ -187,6 +190,124 @@ export const translations = {
       security: "Protocolos de Seguridad & SOC-2",
       systemStatus: "Infraestructura Global 100% Operativa",
       copyright: "© 2026 Eternalia Tech Holding. Todos los derechos reservados. Desarrollado con estándares de ingeniería de software de clase mundial.",
+    },
+    terminal: {
+      title: "ETERNALIA CLOUD CLI • v2.6.4",
+      promptUser: "invitado@eternalia",
+      welcome: "Consola de comando central de Eternalia. Escribe 'help' para ver la lista de comandos disponibles o pulsa los accesos directos.",
+      placeholder: "Escribe un comando corporativo (ej: status, ventures, deploy, quote)...",
+      pills: ["status", "ventures", "deploy", "quote", "contact", "clear"],
+    },
+    infraStatus: {
+      badge: "MONITOR EN VIVO DE INFRAESTRUCTURA",
+      title: "Estado de Servidores & Disponibilidad Global",
+      subtitle: "Auditoría en tiempo real de nodos distribuidos, acuerdos de nivel de servicio (SLA 99.99%) y latencias perimetrales.",
+      allOperational: "Todos los Sistemas Operacionales",
+      uptime90Days: "Disponibilidad últimos 90 días: 99.994%",
+      avgLatency: "Latencia Promedio Global",
+      nodesActive: "Nodos Perimetrales",
+      regionsTitle: "Latencia de Nodos Edge por Región",
+      testPing: "Ejecutar Ping de Red",
+      pingTesting: "Midiendo latencia de clúster...",
+      services: {
+        commerce: {
+          name: "Eternalia Commerce Cloud (Edge Storefronts)",
+          desc: "Frontends ultrarrápidos, microservicios de catálogo y checkout QR",
+          sla: "99.99%",
+        },
+        workforce: {
+          name: "Workforce OS (Escrow & Split Payments)",
+          desc: "Orquestador de liquidaciones, garantías digitales y reputación inmutable",
+          sla: "99.98%",
+        },
+        mesh: {
+          name: "Smart Commercial Mesh Gateway (Marinilla & Oriente)",
+          desc: "Malla de enrutamiento comercial georreferenciado e interconexión WhatsApp",
+          sla: "100.0%",
+        },
+        iot: {
+          name: "Enterprise Ventures IoT Ingestion Engine",
+          desc: "Brokers MQTT de alta densidad para telemetría vehicular y ERPs masivos",
+          sla: "99.99%",
+        },
+        ai: {
+          name: "Autonomous AI Orchestrator & Synthesis",
+          desc: "Modelos de cuantización local y agentes de despacho automatizado",
+          sla: "99.97%",
+        }
+      }
+    },
+    quoteEngine: {
+      badge: "INSTANT QUOTE ENGINE • ESTIMADOR EN VIVO",
+      title: "Cotizador Interactivo de Soluciones",
+      subtitle: "Diseña el alcance técnico de tu proyecto en 3 pasos simples y obtén una estimación de inversión y entrega en tiempo real.",
+      step1Title: "1. Selecciona la Vertical Tecnológica",
+      step2Title: "2. Nivel de Escala & Arquitectura",
+      step3Title: "3. Módulos Adicionales de Alto Impacto",
+      step4Title: "4. Datos de Contacto y Envío al CRM",
+      verticals: {
+        commerce: { title: "Commerce Cloud", desc: "Landing de ultra-conversión, catálogo QR y checkout sin comisiones", basePrice: 450 },
+        workforce: { title: "Workforce OS", desc: "Sistema operativo para redes de servicios, agenda y split payments", basePrice: 850 },
+        mesh: { title: "Hyperlocal Mesh", desc: "Directorio georreferenciado municipal con enlace directo WhatsApp", basePrice: 650 },
+        enterprise: { title: "Enterprise Ventures", desc: "Telemetría satelital IoT vehicular o ERP masivo para eventos", basePrice: 1400 },
+      },
+      tiers: {
+        mvp: { title: "Lanzamiento Ágil (MVP)", desc: "Despliegue rápido en 7-10 días con componentes esenciales", multiplier: 1.0, weeks: "1 - 2 semanas" },
+        growth: { title: "Growth & Multi-Sucursal", desc: "Arquitectura escalable para tráfico medio, integraciones API y analytics", multiplier: 1.5, weeks: "2 - 3 semanas" },
+        enterprise: { title: "Enterprise High-SLA", desc: "Clúster dedicado, SLA 99.99%, seguridad bancaria y soporte prioritario", multiplier: 2.2, weeks: "3 - 5 semanas" },
+      },
+      addons: [
+        { id: "payments", name: "Pasarela Split Payments & Suscripciones", price: 200 },
+        { id: "whatsapp", name: "Integración Automatizada WhatsApp Cloud API", price: 150 },
+        { id: "telemetry", name: "Telemetría IoT en Tiempo Real & Sensores", price: 350 },
+        { id: "map", name: "Mapeo Georreferenciado & Geolocalización en Vivo", price: 180 },
+        { id: "warranties", name: "Garantías Digitales Verificadas & Facturación", price: 220 },
+      ],
+      estimatedTime: "Tiempo Estimado de Entrega",
+      estimatedInvestment: "Inversión Estimada",
+      usdSuffix: "USD aprox.",
+      formName: "Nombre o Razón Social",
+      formEmail: "Correo Corporativo",
+      formPhone: "WhatsApp / Teléfono",
+      formNotes: "Requisitos o Notas Adicionales (opcional)",
+      submitBtn: "Enviar Cotización al CRM de Eternalia",
+      submitting: "Transmitiendo cotización al clúster...",
+      successTitle: "¡Cotización Registrada con Éxito!",
+      successDesc: "Tu estimación fue archivada en el CRM institucional con el ID:",
+      successAction: "Cotizar otra solución",
+    },
+    investorModal: {
+      badge: "EXECUTIVE INVESTOR BRIEFING",
+      title: "Relación con Inversionistas & Partners",
+      subtitle: "Arquitectura de monetización, tesis de inversión y roadmap multianual de Eternalia Tech Holding.",
+      thesisTitle: "Tesis de Inversión y Monetización",
+      thesisText: "Eternalia captura valor a través de un modelo trifásico: 1) Cero comisión inicial en el descubrimiento hiperlocal para capturar masa crítica; 2) Take-rate transaccional y comisiones de pasarela en pagos de servicios; 3) Suscripciones SaaS recurrentes B2B y contratos anuales Enterprise en IoT.",
+      metrics: [
+        { label: "TAM LATAM", value: "$120B+", desc: "Comercio local y fuerza de servicios" },
+        { label: "Take Rate Objetivo", value: "3.5% - 5.0%", desc: "En servicios liquidados por la red" },
+        { label: "Gross Margin", value: "82%", desc: "Estructura cloud serverless de bajo coste" },
+        { label: "Fase Actual", value: "Seed Round", desc: "Abierta para socios estratégicos" }
+      ],
+      roadmapTitle: "Roadmap Estratégico Multianual",
+      roadmap: [
+        { period: "Q1-Q2 2026", title: "Dominio Hiperlocal", desc: "Consolidación de la Red Comercial en Marinilla, Rionegro y el Oriente Antioqueño. Más de 150 comercios digitalizados." },
+        { period: "Q3-Q4 2026", title: "Escalamiento Workforce OS", desc: "Lanzamiento oficial del sistema de formalización laboral y split payments para 10,000 técnicos independientes." },
+        { period: "2027+", title: "Expansión Enterprise IoT", desc: "Internacionalización de soluciones de telemetría pesada en México, Perú y Centroamérica." }
+      ],
+      roundTitle: "Ronda de Inversión & Capital",
+      roundStatus: "Ronda Semilla en Curso • Asignación Prioritaria a Socios con Capacidad de Distribución",
+      downloadDossier: "Descargar Executive Dossier (PDF)",
+      scheduleMeeting: "Agendar Sesión con la Dirección",
+    },
+    mapActivity: {
+      title: "Transacciones en Tiempo Real",
+      events: [
+        { text: "Nuevo pedido online verificado (+4 productos)", biz: "Restaurante El Portal de la Huerta", time: "Hace 10s" },
+        { text: "Consulta por WhatsApp iniciada para catálogo floral", biz: "Vivero El Rosal", time: "Hace 22s" },
+        { text: "Diagnóstico telemático de frenos completado", biz: "Taller Mecánico Marinilla", time: "Hace 38s" },
+        { text: "Liquidación y garantía digital aprobada en escrow", biz: "Barbería & Estilo Elite", time: "Hace 54s" },
+        { text: "Reserva de mesa confirmada con QR dinámico", biz: "Café Colonial Marinilla", time: "Hace 1m" },
+      ]
     }
   },
   en: {
@@ -198,6 +319,9 @@ export const translations = {
       tech: "Architecture & Cloud",
       contact: "Corporate Contact",
       partnerBtn: "Investors & Partners Portal",
+      investorsBtn: "Investor Relations",
+      quoteBtn: "Quote Engine",
+      statusBtn: "System Status",
     },
     hero: {
       badge: "PHASE 1 • MULTI-VERTICAL TECH HOLDING",
@@ -377,6 +501,125 @@ export const translations = {
       security: "Security & SOC-2 Compliance",
       systemStatus: "Global Cloud Mesh 100% Operational",
       copyright: "© 2026 Eternalia Tech Holding. All rights reserved. Built to world-class software engineering standards.",
+    },
+    terminal: {
+      title: "ETERNALIA CLOUD CLI • v2.6.4",
+      promptUser: "guest@eternalia",
+      welcome: "Eternalia command terminal online. Type 'help' to list available commands or click quick actions below.",
+      placeholder: "Type a corporate command (e.g., status, ventures, deploy, quote)...",
+      pills: ["status", "ventures", "deploy", "quote", "contact", "clear"],
+    },
+    infraStatus: {
+      badge: "LIVE CLUSTER TELEMETRY",
+      title: "Real-Time System Health & Global Uptime",
+      subtitle: "Real-time auditing of distributed edge nodes, 99.99% enterprise SLA, and regional response latencies.",
+      allOperational: "All Systems 100% Operational",
+      uptime90Days: "90-Day System Availability: 99.994%",
+      avgLatency: "Global Avg Latency",
+      nodesActive: "Active Edge PoPs",
+      regionsTitle: "Edge Node Response Latency by Region",
+      testPing: "Run Network Ping",
+      pingTesting: "Measuring cluster latency...",
+      services: {
+        commerce: {
+          name: "Eternalia Commerce Cloud (Edge Storefronts)",
+          desc: "Sub-second frontends, QR catalog microservices & zero-commission checkout",
+          sla: "99.99%",
+        },
+        workforce: {
+          name: "Workforce OS (Escrow & Split Payments)",
+          desc: "Automated settlements, immutable verified reputation & digital warranties",
+          sla: "99.98%",
+        },
+        mesh: {
+          name: "Smart Commercial Mesh Gateway (Marinilla & Oriente)",
+          desc: "Georeferenced commercial routing mesh & zero-friction WhatsApp links",
+          sla: "100.0%",
+        },
+        iot: {
+          name: "Enterprise Ventures IoT Ingestion Engine",
+          desc: "High-density MQTT message brokers for fleet telematics & enterprise ERPs",
+          sla: "99.99%",
+        },
+        ai: {
+          name: "Autonomous AI Orchestrator & Synthesis",
+          desc: "Quantized local inference models & automated dispatch agents",
+          sla: "99.97%",
+        }
+      }
+    },
+    quoteEngine: {
+      badge: "INSTANT QUOTE ENGINE • REALTIME ESTIMATOR",
+      title: "Interactive Solution Estimator",
+      subtitle: "Architect your technical scope in 3 simple steps and get an instant real-time investment and delivery estimate.",
+      step1Title: "1. Select Technology Vertical",
+      step2Title: "2. Architecture & Scale Tier",
+      step3Title: "3. High-Impact Add-on Modules",
+      step4Title: "4. Contact Details & CRM Transmission",
+      verticals: {
+        commerce: { title: "Commerce Cloud", desc: "Ultra-conversion landing, QR catalog & zero-cut checkout", basePrice: 450 },
+        workforce: { title: "Workforce OS", desc: "Operating system for service networks, scheduling & split payments", basePrice: 850 },
+        mesh: { title: "Hyperlocal Mesh", desc: "Georeferenced municipal directory with direct WhatsApp routing", basePrice: 650 },
+        enterprise: { title: "Enterprise Ventures", desc: "Satellite IoT fleet telematics or hospitality mega-event ERP", basePrice: 1400 },
+      },
+      tiers: {
+        mvp: { title: "Agile Launch (MVP)", desc: "Rapid rollout in 7-10 days with core essential components", multiplier: 1.0, weeks: "1 - 2 weeks" },
+        growth: { title: "Growth & Multi-Location", desc: "Scalable architecture for medium traffic, API integrations & analytics", multiplier: 1.5, weeks: "2 - 3 weeks" },
+        enterprise: { title: "Enterprise High-SLA", desc: "Dedicated cluster, 99.99% SLA, bank-grade encryption & priority support", multiplier: 2.2, weeks: "3 - 5 weeks" },
+      },
+      addons: [
+        { id: "payments", name: "Split Payments & Recurring Subscriptions", price: 200 },
+        { id: "whatsapp", name: "Automated WhatsApp Cloud API Integration", price: 150 },
+        { id: "telemetry", name: "Real-Time IoT Telemetry & Sensor Streams", price: 350 },
+        { id: "map", name: "Georeferenced Mapping & Live Geolocation", price: 180 },
+        { id: "warranties", name: "Verified Digital Warranties & Invoicing", price: 220 },
+      ],
+      estimatedTime: "Estimated Delivery Timeline",
+      estimatedInvestment: "Estimated Tech Investment",
+      usdSuffix: "USD approx.",
+      formName: "Full Name or Organization",
+      formEmail: "Corporate Email Address",
+      formPhone: "WhatsApp / Phone",
+      formNotes: "Specific Requirements or Notes (optional)",
+      submitBtn: "Submit Quote to Eternalia CRM",
+      submitting: "Broadcasting quotation to cluster...",
+      successTitle: "Quotation Registered Successfully!",
+      successDesc: "Your estimate has been archived in the executive CRM under ID:",
+      successAction: "Quote another solution",
+    },
+    investorModal: {
+      badge: "EXECUTIVE INVESTOR BRIEFING",
+      title: "Investor Relations & Strategic Partners",
+      subtitle: "Capital architecture, monetization mechanics, and multi-year roadmap for Eternalia Tech Holding.",
+      thesisTitle: "Investment Thesis & Monetization",
+      thesisText: "Eternalia captures compounding enterprise value through a 3-layer flywheel: 1) Zero-fee hyperlocal discovery to onboard dominant merchant density; 2) Transactional take-rates and payment gateway fees on workforce services; 3) High-margin B2B recurring SaaS subscriptions and multi-year Enterprise IoT contracts.",
+      metrics: [
+        { label: "LATAM TAM", value: "$120B+", desc: "Local commerce & independent workforce" },
+        { label: "Target Take Rate", value: "3.5% - 5.0%", desc: "On services settled through network" },
+        { label: "Gross Margin", value: "82%", desc: "Lean serverless edge infrastructure" },
+        { label: "Current Phase", value: "Seed Round", desc: "Open to strategic partners" }
+      ],
+      roadmapTitle: "Multi-Year Strategic Roadmap",
+      roadmap: [
+        { period: "Q1-Q2 2026", title: "Hyperlocal Dominance", desc: "Consolidation of Commercial Mesh across Marinilla, Rionegro, and Eastern Antioquia. 150+ digital nodes active." },
+        { period: "Q3-Q4 2026", title: "Workforce OS Scale", desc: "Official rollout of formalization protocol and split payments for 10,000 independent technical professionals." },
+        { period: "2027+", title: "Enterprise IoT Expansion", desc: "Internationalization of mission-critical vehicle telematics into Mexico, Peru, and Central America." }
+      ],
+      roundTitle: "Investment Round & Capital Status",
+      roundStatus: "Active Seed Round • Priority Allocation for Value-Add Partners with Distribution Capabilities",
+      downloadDossier: "Download Executive Dossier (PDF)",
+      scheduleMeeting: "Schedule Corporate Session with Leadership",
+    },
+    mapActivity: {
+      title: "Real-Time Network Activity",
+      events: [
+        { text: "New online order verified (+4 items)", biz: "Restaurante El Portal de la Huerta", time: "10s ago" },
+        { text: "WhatsApp consultation initiated for floral catalog", biz: "Vivero El Rosal", time: "22s ago" },
+        { text: "Brake system IoT telematics diagnosis complete", biz: "Taller Mecánico Marinilla", time: "38s ago" },
+        { text: "Escrow settlement & digital warranty validated", biz: "Barbería & Estilo Elite", time: "54s ago" },
+        { text: "Table reservation confirmed via dynamic QR", biz: "Café Colonial Marinilla", time: "1m ago" },
+      ]
     }
   }
 };
+

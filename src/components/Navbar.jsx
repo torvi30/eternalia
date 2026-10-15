@@ -1,8 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Sparkles, Globe, Menu, X, ArrowUpRight, Layers, Compass, Cpu, MessageSquare } from 'lucide-react';
+import { 
+  Sparkles, 
+  Globe, 
+  Menu, 
+  X, 
+  ArrowUpRight, 
+  Layers, 
+  Compass, 
+  MessageSquare,
+  Calculator,
+  Activity,
+  TrendingUp
+} from 'lucide-react';
 
-export default function Navbar({ onOpenContact }) {
+export default function Navbar({ onOpenContact, onOpenInvestors }) {
   const { language, toggleLanguage, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,8 +30,9 @@ export default function Navbar({ onOpenContact }) {
   const navLinks = [
     { name: t.nav.ecosystem, href: "#ecosistema", icon: Layers },
     { name: t.nav.projects, href: "#proyectos", icon: Sparkles },
+    { name: t.nav.quoteBtn || "Cotizador", href: "#cotizador", icon: Calculator },
     { name: t.nav.directory, href: "#directorio", icon: Compass },
-    { name: t.nav.tech, href: "#tecnologia", icon: Cpu },
+    { name: t.nav.statusBtn || "Servidores", href: "#infraestructura", icon: Activity },
   ];
 
   return (
@@ -97,6 +110,15 @@ export default function Navbar({ onOpenContact }) {
               </div>
             </button>
 
+            {/* Investor Relations Executive Button */}
+            <button
+              onClick={onOpenInvestors}
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-white/10 hover:border-indigo-500/50 hover:bg-zinc-800/80 text-zinc-300 hover:text-white text-xs font-semibold transition-all shadow-sm cursor-pointer"
+            >
+              <TrendingUp className="w-3.5 h-3.5 text-indigo-400" />
+              <span>{t.nav.investorsBtn || "Inversionistas"}</span>
+            </button>
+
             {/* Partner Portal CTA */}
             <button
               onClick={onOpenContact}
@@ -136,6 +158,17 @@ export default function Navbar({ onOpenContact }) {
             })}
 
             <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenInvestors();
+                }}
+                className="w-full py-2.5 rounded-xl bg-zinc-900 border border-white/10 hover:bg-zinc-800 text-white text-sm font-medium flex items-center justify-center gap-2 shadow"
+              >
+                <TrendingUp className="w-4 h-4 text-indigo-400" />
+                <span>{t.nav.investorsBtn || "Relación Inversionistas"}</span>
+              </button>
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);

@@ -34,3 +34,36 @@ export async function saveInquiry(inquiryData) {
     return { success: false, error: error.message };
   }
 }
+
+/**
+ * Guarda una cotización interactiva generada desde el Instant Quote Engine
+ * @param {Object} quoteData
+ * @returns {Promise<{success: boolean, id?: string}>}
+ */
+export async function saveQuoteRequest(quoteData) {
+  try {
+    if (!isFirebaseConfigured) {
+      console.warn(
+        "⚠️ [Eternalia Firebase]: Simulando registro exitoso de cotización:",
+        quoteData
+      );
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      return { success: true, id: `quote-mock-${Date.now()}` };
+    }
+
+    const docRef = await addDoc(collection(db, 'quotes'), {
+      ...quoteData,
+      status: 'pending_review',
+      createdAt: serverTimestamp(),
+      platform: 'eternalia-quote-engine',
+      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown',
+    });
+
+    console.log("✅ [Eternalia Firebase]: Cotización guardada exitosamente en Firestore con ID:", docRef.id);
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error("❌ [Eternalia Firebase] Error al guardar cotización:", error);
+    return { success: false, error: error.message };
+  }
+}
+

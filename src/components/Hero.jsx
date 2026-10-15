@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   ArrowRight, 
@@ -9,16 +9,14 @@ import {
   Zap, 
   Layers, 
   Terminal, 
-  Cpu, 
-  ShieldCheck, 
-  CheckCircle2,
-  TrendingUp,
   Server
 } from 'lucide-react';
+import HeroTerminal from './HeroTerminal';
 
 export default function Hero({ onOpenContact, onExploreClick, onDemoClick }) {
   const { t, language } = useLanguage();
   const [activeSimulationIndex, setActiveSimulationIndex] = useState(0);
+  const [consoleMode, setConsoleMode] = useState('terminal'); // 'terminal' | 'telemetry'
 
   // Rotating live pulse activity showing high-level enterprise operations
   const liveEvents = [
@@ -153,57 +151,94 @@ export default function Hero({ onOpenContact, onExploreClick, onDemoClick }) {
             </button>
           </div>
 
-          {/* Holographic Cloud Telemetry Stream Card */}
+          {/* Interactive Console & Telemetry Switcher */}
           <div className="max-w-3xl mx-auto mb-16">
-            <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden text-left">
-              
-              {/* Top status bar inside console */}
-              <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
-                <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-indigo-400" />
-                  <span className="text-xs font-mono font-bold text-zinc-300 tracking-wider">
-                    ETERNALIA DISTRIBUTED CLOUD STREAM
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-400">
-                  <span className="text-emerald-400 flex items-center gap-1 font-semibold">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                    LIVE TELEMETRY
-                  </span>
-                  <span className="text-zinc-600">|</span>
-                  <span>{activeEvent.throughput}</span>
-                </div>
-              </div>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <button
+                type="button"
+                onClick={() => setConsoleMode('terminal')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer ${
+                  consoleMode === 'terminal'
+                    ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)] border border-indigo-400/40'
+                    : 'bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/5'
+                }`}
+              >
+                <Terminal className="w-3.5 h-3.5 text-cyan-400" />
+                <span>CLI Terminal Simulator</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              </button>
 
-              {/* Event Body */}
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <div className="p-2.5 rounded-xl bg-zinc-900 border border-white/5 flex-shrink-0">
-                    <ActiveIcon className={`w-5 h-5 ${activeEvent.color}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${activeEvent.badgeColor}`}>
-                        {activeEvent.vertical}
-                      </span>
-                      <span className="text-[10px] text-zinc-400 font-mono flex items-center gap-1">
-                        <Activity className="w-3 h-3 text-emerald-400" />
-                        {activeEvent.latency} SLA
-                      </span>
-                    </div>
-                    <p className="text-xs sm:text-sm text-zinc-100 truncate font-medium">
-                      {language === 'es' ? activeEvent.es : activeEvent.en}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="hidden sm:flex flex-col items-end shrink-0 pl-2 text-right">
-                  <span className="text-[10px] text-zinc-500 font-mono">ENCRYPTED CHANNEL</span>
-                  <span className="text-xs font-mono font-bold text-cyan-400">AES-256 GCM</span>
-                </div>
-              </div>
-
+              <button
+                type="button"
+                onClick={() => setConsoleMode('telemetry')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold transition-all cursor-pointer ${
+                  consoleMode === 'telemetry'
+                    ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)] border border-indigo-400/40'
+                    : 'bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/5'
+                }`}
+              >
+                <Activity className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Live Stream Telemetry</span>
+              </button>
             </div>
+
+            {consoleMode === 'terminal' ? (
+              <HeroTerminal 
+                onOpenContact={onOpenContact} 
+                onNavigateSection={(id) => {
+                  const el = document.getElementById(id);
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }} 
+              />
+            ) : (
+              <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/80 border border-white/10 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] relative overflow-hidden text-left">
+                {/* Top status bar inside console */}
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="w-4 h-4 text-indigo-400" />
+                    <span className="text-xs font-mono font-bold text-zinc-300 tracking-wider">
+                      ETERNALIA DISTRIBUTED CLOUD STREAM
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-400">
+                    <span className="text-emerald-400 flex items-center gap-1 font-semibold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                      LIVE TELEMETRY
+                    </span>
+                    <span className="text-zinc-600">|</span>
+                    <span>{activeEvent.throughput}</span>
+                  </div>
+                </div>
+
+                {/* Event Body */}
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 overflow-hidden">
+                    <div className="p-2.5 rounded-xl bg-zinc-900 border border-white/5 flex-shrink-0">
+                      <ActiveIcon className={`w-5 h-5 ${activeEvent.color}`} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${activeEvent.badgeColor}`}>
+                          {activeEvent.vertical}
+                        </span>
+                        <span className="text-[10px] text-zinc-400 font-mono flex items-center gap-1">
+                          <Activity className="w-3 h-3 text-emerald-400" />
+                          {activeEvent.latency} SLA
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-zinc-100 truncate font-medium">
+                        {language === 'es' ? activeEvent.es : activeEvent.en}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="hidden sm:flex flex-col items-end shrink-0 pl-2 text-right">
+                    <span className="text-[10px] text-zinc-500 font-mono">ENCRYPTED CHANNEL</span>
+                    <span className="text-xs font-mono font-bold text-cyan-400">AES-256 GCM</span>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Enterprise Metrics Bar */}

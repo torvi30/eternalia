@@ -11,8 +11,12 @@ import {
   Navigation, 
   Compass, 
   Sparkles,
+  Activity,
   X
 } from 'lucide-react';
+
+// Center of Marinilla, Antioquia
+const MARINILLA_CENTER = [6.1725, -75.3340];
 
 export default function DirectoryMap({ businesses, onSelectBusiness, language }) {
   const mapContainerRef = useRef(null);
@@ -20,8 +24,58 @@ export default function DirectoryMap({ businesses, onSelectBusiness, language })
   const markersRef = useRef([]);
   const [activePinBusiness, setActivePinBusiness] = useState(null);
 
-  // Center of Marinilla, Antioquia
-  const MARINILLA_CENTER = [6.1725, -75.3340];
+  // Live activity simulation
+  const [activeActivityIndex, setActiveActivityIndex] = useState(0);
+
+  const activityEvents = [
+    {
+      biz: "Restaurante El Portal de la Huerta",
+      textEs: "Nuevo pedido online verificado (+4 platos típicos)",
+      textEn: "New online order verified (+4 local dishes)",
+      timeEs: "Hace 8s",
+      timeEn: "8s ago",
+      type: "order"
+    },
+    {
+      biz: "Vivero El Rosal",
+      textEs: "Consulta directa por WhatsApp iniciada para catálogo floral",
+      textEn: "Direct WhatsApp chat initiated for floral catalog",
+      timeEs: "Hace 24s",
+      timeEn: "24s ago",
+      type: "chat"
+    },
+    {
+      biz: "Taller Mecánico Marinilla",
+      textEs: "Diagnóstico telemático de frenos completado y cargado al historial",
+      textEn: "Brake telematics diagnostic completed and logged",
+      timeEs: "Hace 41s",
+      timeEn: "41s ago",
+      type: "iot"
+    },
+    {
+      biz: "Barbería & Estilo Elite",
+      textEs: "Liquidación instantánea en escrow y garantía digital aprobada",
+      textEn: "Instant escrow payout & digital warranty validated",
+      timeEs: "Hace 58s",
+      timeEn: "58s ago",
+      type: "payment"
+    },
+    {
+      biz: "Café Colonial Marinilla",
+      textEs: "Reserva de mesa confirmada con código QR interactivo",
+      textEn: "Table reservation confirmed via dynamic QR code",
+      timeEs: "Hace 1m",
+      timeEn: "1m ago",
+      type: "qr"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveActivityIndex((prev) => (prev + 1) % activityEvents.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [activityEvents.length]);
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -161,6 +215,35 @@ export default function DirectoryMap({ businesses, onSelectBusiness, language })
         >
           <Navigation className="w-4 h-4 text-cyan-400" />
         </button>
+      </div>
+
+      {/* Floating Real-Time Activity Notification Stream */}
+      <div className="absolute top-16 left-4 right-4 sm:left-auto sm:right-14 sm:top-4 z-[1000] pointer-events-auto max-w-sm animate-in fade-in slide-in-from-top-2 duration-300">
+        <div className="p-3 rounded-2xl bg-zinc-950/90 border border-white/15 backdrop-blur-xl shadow-2xl">
+          <div className="flex items-center justify-between gap-2 mb-1.5 pb-1 border-b border-white/5">
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 font-bold uppercase tracking-wider">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span>LIVE MESH ACTIVITY</span>
+            </div>
+            <span className="text-[10px] font-mono text-zinc-500">
+              {language === 'es' ? activityEvents[activeActivityIndex].timeEs : activityEvents[activeActivityIndex].timeEn}
+            </span>
+          </div>
+
+          <div className="flex items-start gap-2.5">
+            <div className="p-1.5 rounded-lg bg-zinc-900 border border-white/5 text-cyan-400 shrink-0 mt-0.5">
+              <Activity className="w-3.5 h-3.5" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-white leading-snug">
+                {language === 'es' ? activityEvents[activeActivityIndex].textEs : activityEvents[activeActivityIndex].textEn}
+              </p>
+              <p className="text-[11px] text-zinc-400 font-mono mt-0.5 truncate">
+                📍 {activityEvents[activeActivityIndex].biz}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Map Canvas Container */}

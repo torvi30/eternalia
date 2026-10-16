@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { 
   signInWithEmailAndPassword, 
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut, 
   onAuthStateChanged 
 } from 'firebase/auth';
@@ -99,6 +101,44 @@ export function AuthProvider({ children }) {
     };
   };
 
+  const loginWithGoogle = async () => {
+    if (!isFirebaseConfigured) {
+      const demoGoogleAdmin = {
+        email: 'ceo@eternalia.io',
+        uid: 'demo-google-user-01',
+        displayName: 'Director Ejecutivo (Google Demo)',
+        role: 'admin',
+      };
+      setUser(demoGoogleAdmin);
+      localStorage.setItem('eternalia_admin_session', JSON.stringify(demoGoogleAdmin));
+      return { success: true, user: demoGoogleAdmin };
+    }
+
+    try {
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const userCredential = await signInWithPopup(auth, provider);
+      const adminUser = {
+        email: userCredential.user.email,
+        uid: userCredential.user.uid,
+        displayName: userCredential.user.displayName || userCredential.user.email,
+        photoURL: userCredential.user.photoURL,
+        role: 'admin',
+      };
+      setUser(adminUser);
+      localStorage.setItem('eternalia_admin_session', JSON.stringify(adminUser));
+      return { success: true, user: adminUser };
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+      return { 
+        success: false, 
+        error: error.code === 'auth/popup-closed-by-user' 
+          ? 'Ventana de inicio cerrada antes de completar el acceso.'
+          : (error.message || 'Error al autenticar con Google.') 
+      };
+    }
+  };
+
   const logout = async () => {
     if (isFirebaseConfigured) {
       try {
@@ -112,7 +152,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   );

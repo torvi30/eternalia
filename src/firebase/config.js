@@ -3,12 +3,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyMockKeyForDevModeEternaliaHolding",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "eternalia-holding.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "eternalia-holding",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "eternalia-holding.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1029384756",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1029384756:web:abcdef123456",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAj1DHqwtpolYxIsynvfkatsbVp7hdkDfM",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "eternalia-511c9.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "eternalia-511c9",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "eternalia-511c9.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "48772909986",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:48772909986:web:d3f73a98622079706dc0fb",
 };
 
 // Check if valid Firebase configuration is provided

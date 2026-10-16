@@ -31,9 +31,13 @@ export default function DirectoryDemo({ onOpenContact }) {
   useEffect(() => {
     let isMounted = true;
     const fetchBiz = async () => {
-      const data = await getBusinesses();
-      if (isMounted && data) {
-        setBusinesses(data);
+      try {
+        const data = await getBusinesses();
+        if (isMounted && data && Array.isArray(data)) {
+          setBusinesses(data);
+        }
+      } catch (err) {
+        console.warn('Error loading businesses:', err);
       }
     };
     fetchBiz();
@@ -231,28 +235,28 @@ export default function DirectoryDemo({ onOpenContact }) {
                         ) : (
                           <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
                             <div className="w-full h-full bg-[#0d0d12] rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
-                              {biz.name.charAt(0)}
+                              {(biz.name || 'E').charAt(0)}
                             </div>
                           </div>
                         )}
 
                         <div>
                           <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
-                            {language === 'es' ? biz.categoryLabelEs : biz.categoryLabelEn}
+                            {language === 'es' ? (biz.categoryLabelEs || biz.category) : (biz.categoryLabelEn || biz.category)}
                           </span>
                         </div>
                       </div>
                       
                       <div className="flex items-center gap-1 bg-zinc-900/90 px-2 py-0.5 rounded border border-white/5 text-xs font-bold text-amber-400 font-mono">
                         <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                        <span>{biz.rating}</span>
-                        <span className="text-zinc-500 text-[10px]">({biz.reviews})</span>
+                        <span>{biz.rating || 5.0}</span>
+                        <span className="text-zinc-500 text-[10px]">({biz.reviews || 0})</span>
                       </div>
                     </div>
 
                     {/* Business Name */}
                     <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
-                      <span>{biz.name}</span>
+                      <span>{biz.name || 'Comercio Local'}</span>
                       {biz.badge && (
                         <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
                           {biz.badge}
@@ -263,17 +267,17 @@ export default function DirectoryDemo({ onOpenContact }) {
                     {/* Address in Marinilla */}
                     <div className="flex items-start gap-1.5 text-xs text-zinc-400 mb-3">
                       <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
-                      <span className="line-clamp-1">{biz.address}</span>
+                      <span className="line-clamp-1">{biz.address || 'Marinilla, Antioquia'}</span>
                     </div>
 
                     {/* Description */}
                     <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-4 line-clamp-2">
-                      {language === 'es' ? biz.descriptionEs : biz.descriptionEn}
+                      {language === 'es' ? (biz.descriptionEs || biz.descriptionEn || '') : (biz.descriptionEn || biz.descriptionEs || '')}
                     </p>
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-5">
-                      {biz.tags.map((tag, idx) => (
+                      {(biz.tags || []).map((tag, idx) => (
                         <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-white/5 text-zinc-400 font-medium">
                           {tag}
                         </span>
@@ -440,7 +444,7 @@ export default function DirectoryDemo({ onOpenContact }) {
                   {language === 'es' ? 'Beneficios & Servicios Activos' : 'Active Verified Services'}
                 </span>
                 <div className="grid grid-cols-2 gap-2">
-                  {activeModalBusiness.features.map((feat, i) => (
+                  {(activeModalBusiness.features || []).map((feat, i) => (
                     <div key={i} className="text-xs text-zinc-300 flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                       <span>{feat}</span>

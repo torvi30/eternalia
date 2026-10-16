@@ -21,11 +21,13 @@ function getCustomLocalBusinesses() {
   }
 }
 
-function saveCustomLocalBusinesses(list) {
+function saveCustomLocalBusinesses(list, emitEvent = true) {
   try {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(list));
-    // Dispatch custom event so the public directory updates in real-time if open in same tab
-    window.dispatchEvent(new Event('eternalia_businesses_updated'));
+    // Dispatch custom event ONLY if emitEvent is true (e.g. on add/edit/delete), preventing infinite loops
+    if (emitEvent && typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('eternalia_businesses_updated'));
+    }
   } catch (err) {
     console.warn('Could not save businesses to local storage:', err);
   }
@@ -41,7 +43,7 @@ export async function getBusinesses() {
   }
 
   if (!isFirebaseConfigured) {
-    saveCustomLocalBusinesses(defaultBusinesses);
+    saveCustomLocalBusinesses(defaultBusinesses, false);
     return defaultBusinesses;
   }
 
@@ -49,16 +51,16 @@ export async function getBusinesses() {
     const snap = await getDocs(collection(db, 'businesses'));
     if (!snap.empty) {
       const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      saveCustomLocalBusinesses(items);
+      saveCustomLocalBusinesses(items, false);
       return items;
     } else {
       // Si la colección de Firestore está vacía, inicializamos con los comercios por defecto
-      saveCustomLocalBusinesses(defaultBusinesses);
+      saveCustomLocalBusinesses(defaultBusinesses, false);
       return defaultBusinesses;
     }
   } catch (err) {
     console.warn("⚠️ [Eternalia Firestore]: Fallback a comercios locales:", err);
-    saveCustomLocalBusinesses(defaultBusinesses);
+    saveCustomLocalBusinesses(defaultBusinesses, false);
     return defaultBusinesses;
   }
 }

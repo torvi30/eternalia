@@ -506,10 +506,11 @@ export default function AdminDashboard() {
           <Link
             to="/"
             target="_blank"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 text-xs font-medium transition-colors"
+            className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 text-xs font-medium transition-colors"
             title="Abrir web pública en pestaña nueva"
           >
-            <span>Ver Portal Público</span>
+            <span className="hidden sm:inline">Ver Portal Público</span>
+            <span className="sm:hidden text-[11px]">Ver Web</span>
             <ExternalLink className="w-3.5 h-3.5" />
           </Link>
 
@@ -597,79 +598,79 @@ export default function AdminDashboard() {
 
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex items-center gap-2 border-b border-white/10 pb-4 mb-6 overflow-x-auto">
+        {/* Tab Switcher Responsive (Sin scroll horizontal) */}
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 border-b border-white/10 pb-4 mb-6">
           
           <button
             onClick={() => setActiveTab('leads')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`col-span-2 sm:col-auto flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'leads'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
-            <Inbox className="w-4 h-4" />
+            <Inbox className="w-4 h-4 shrink-0" />
             <span>Bandeja de Leads & Cotizaciones</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono shrink-0">
               {leads.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('projects')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'projects'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
-            <Briefcase className="w-4 h-4" />
-            <span>Portafolio SaaS</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+            <Briefcase className="w-4 h-4 shrink-0" />
+            <span className="truncate">Portafolio SaaS</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono shrink-0">
               {projects.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('videos')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'videos'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
-            <Video className="w-4 h-4" />
-            <span>Video Demostraciones</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+            <Video className="w-4 h-4 shrink-0" />
+            <span className="truncate">Videos Demo</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono shrink-0">
               {videos.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('directory')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'directory'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
-            <Compass className="w-4 h-4" />
-            <span>Directorio Hiperlocal</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono">
+            <Compass className="w-4 h-4 shrink-0" />
+            <span className="truncate">Directorio</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px] font-mono shrink-0">
               {businesses.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('telemetry')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer shrink-0 ${
+            className={`flex items-center justify-center sm:justify-start gap-2 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
               activeTab === 'telemetry'
                 ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
                 : 'bg-zinc-900/60 text-zinc-400 hover:text-white border border-white/5'
             }`}
           >
-            <Server className="w-4 h-4" />
-            <span>Clúster Cloud</span>
+            <Server className="w-4 h-4 shrink-0" />
+            <span className="truncate">Clúster Cloud</span>
           </button>
 
         </div>

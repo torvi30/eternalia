@@ -20,7 +20,9 @@ import {
   Terminal,
   Activity,
   SlidersHorizontal,
-  ChevronRight
+  ChevronRight,
+  QrCode,
+  ShoppingBag
 } from 'lucide-react';
 
 export default function BentoGrid({ onOpenContact }) {
@@ -34,7 +36,9 @@ export default function BentoGrid({ onOpenContact }) {
   const [activeSession, setActiveSession] = useState('landing-pro');
   const sessionStreams = {
     'landing-pro': {
-      label: language === 'es' ? 'Landing Page de Marca' : 'Brand Landing Page',
+      shortLabel: language === 'es' ? 'Landing' : 'Landing',
+      label: language === 'es' ? 'Landing Page Web' : 'Brand Landing Page',
+      icon: Globe2,
       metric: '0.38s TTFB',
       visitors: '1,420 activos',
       conversion: '8.4%',
@@ -47,7 +51,9 @@ export default function BentoGrid({ onOpenContact }) {
       ]
     },
     'catalogo-qr': {
+      shortLabel: language === 'es' ? 'Menú QR' : 'QR Menu',
       label: language === 'es' ? 'Catálogo & Menú QR' : 'Interactive QR Menu',
+      icon: QrCode,
       metric: '0.12s Sync',
       visitors: '89 mesas activas',
       conversion: '94.2%',
@@ -60,7 +66,9 @@ export default function BentoGrid({ onOpenContact }) {
       ]
     },
     'checkout-funnel': {
+      shortLabel: language === 'es' ? 'Domicilios' : 'Delivery',
       label: language === 'es' ? 'Funnel de Domicilios' : 'Delivery Sales Funnel',
+      icon: ShoppingBag,
       metric: 'Instant Routing',
       visitors: '340 pedidos/h',
       conversion: '12.8%',
@@ -78,29 +86,35 @@ export default function BentoGrid({ onOpenContact }) {
   const [selectedWorkforceIndex, setSelectedWorkforceIndex] = useState(0);
   const workforceProtocols = [
     {
+      shortLabel: language === 'es' ? 'Redes & Energía' : 'Grid & Power',
+      tabLabel: language === 'es' ? 'Técnico & Redes' : 'Technical Grid',
       domainEs: "Instalaciones de Alta Tensión & Redes",
       domainEn: "High-Voltage Power & Industrial Grid",
       badge: "Protocolo Técnico A-1",
       verification: "Certificación CONTE • Póliza Activa",
-      settlementTime: "Liquidación en 5 min",
+      settlementTime: language === 'es' ? "Liquidación en 5 min" : "5 min Settlement",
       rating: "99.4% Eficacia",
       icon: Zap,
     },
     {
+      shortLabel: language === 'es' ? 'Acabados' : 'Finishes',
+      tabLabel: language === 'es' ? 'Obras & Acabados' : 'Finishes & Works',
       domainEs: "Arquitectura Ligera, Drywall & Acabados",
       domainEn: "Fine Architectural Finishes & Drywall",
       badge: "Garantía Digital 90 Días",
       verification: "Identidad Biométrica • Contratos Express",
-      settlementTime: "Pagos por Hito",
+      settlementTime: language === 'es' ? "Pagos por Hito" : "Milestone Escrow",
       rating: "98.8% Eficacia",
       icon: ShieldCheck,
     },
     {
+      shortLabel: language === 'es' ? 'Servicios' : 'Retainers',
+      tabLabel: language === 'es' ? 'Suscripción Recurrente' : 'Recurring Retainers',
       domainEs: "Servicios Especializados & Ciencias Biológicas",
       domainEn: "Specialized Behavioral & Biological Services",
       badge: "Suscripción Recurrente",
       verification: "Historial de Clientes Verificado",
-      settlementTime: "Cobro Automatizado",
+      settlementTime: language === 'es' ? "Cobro Automatizado" : "Auto-Billing",
       rating: "99.8% Eficacia",
       icon: Cpu,
     }
@@ -216,53 +230,69 @@ export default function BentoGrid({ onOpenContact }) {
               </div>
 
               {/* High-Tech Interactive Conversion Terminal */}
-              <div className="rounded-2xl bg-zinc-950/85 border border-white/10 p-4 sm:p-5 backdrop-blur-xl mb-6 shadow-2xl">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-3 mb-3 border-b border-white/10 gap-2">
+              <div className="rounded-2xl bg-zinc-950/90 border border-white/10 p-4 sm:p-5 backdrop-blur-xl mb-6 shadow-2xl">
+                {/* Terminal Header */}
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
                   <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-amber-400" />
-                    <span className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+                    <Terminal className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span className="text-[11px] sm:text-xs font-mono font-bold text-white uppercase tracking-wider">
                       {bento.commerce.simulationTitle}
                     </span>
                   </div>
-                  {/* Session selectors */}
-                  <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-                    {Object.keys(sessionStreams).map((key) => (
-                      <button
-                        key={key}
-                        onClick={() => setActiveSession(key)}
-                        className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold whitespace-nowrap transition-all ${
-                          activeSession === key 
-                            ? 'bg-amber-500 text-zinc-950 shadow-md font-bold' 
-                            : 'bg-zinc-800 text-zinc-400 hover:text-white hover:bg-zinc-700'
-                        }`}
-                      >
-                        {sessionStreams[key].label}
-                      </button>
-                    ))}
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>TELEMETRY LIVE</span>
                   </div>
                 </div>
 
+                {/* Segmented Control Selector: Fits all 3 options without any horizontal scrolling */}
+                <div className="grid grid-cols-3 gap-1 p-1 bg-zinc-900/90 rounded-xl border border-white/10 mb-4">
+                  {Object.keys(sessionStreams).map((key) => {
+                    const stream = sessionStreams[key];
+                    const Icon = stream.icon;
+                    const isActive = activeSession === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => setActiveSession(key)}
+                        className={`flex items-center justify-center gap-1 sm:gap-1.5 py-2 px-1 rounded-lg text-xs font-semibold transition-all ${
+                          isActive 
+                            ? 'bg-amber-500 text-zinc-950 shadow-md font-bold' 
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
+                        }`}
+                      >
+                        <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-zinc-950' : 'text-zinc-400'}`} />
+                        <span className="truncate sm:hidden text-[11px]">{stream.shortLabel}</span>
+                        <span className="hidden sm:inline truncate text-xs">{stream.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
                 {/* Active Session details */}
-                <div className="flex items-center justify-between mb-3 text-xs">
-                  <div className="flex items-center gap-3">
-                    <span className="font-bold text-white text-sm">{sessionStreams[activeSession].label}</span>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 pb-3 border-b border-white/5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-bold text-white text-sm sm:text-base">{sessionStreams[activeSession].label}</span>
                     <span className="text-emerald-400 font-mono text-[11px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">
                       {sessionStreams[activeSession].visitors}
                     </span>
                   </div>
-                  <span className={`px-2 py-0.5 rounded text-[11px] font-semibold border ${sessionStreams[activeSession].statusColor}`}>
+                  <span className={`self-start sm:self-auto px-2 py-0.5 rounded text-[11px] font-semibold border ${sessionStreams[activeSession].statusColor}`}>
                     {sessionStreams[activeSession].status}
                   </span>
                 </div>
 
-                <div className="space-y-1.5 mb-3 bg-zinc-900/60 p-3 rounded-xl border border-white/5">
+                {/* Events stream with responsive vertical stacking on mobile */}
+                <div className="space-y-2 mb-3 bg-zinc-900/60 p-3 sm:p-3.5 rounded-xl border border-white/5">
                   {sessionStreams[activeSession].events.map((ev, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-xs">
+                    <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1 sm:gap-2">
                       <span className="text-zinc-300 flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                        {ev.title}
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                        <span>{ev.title}</span>
                       </span>
-                      <span className="text-zinc-400 font-mono text-[11px] font-semibold">{ev.value}</span>
+                      <span className="text-amber-200/90 font-mono text-[11px] font-semibold pl-3.5 sm:pl-0 sm:text-right shrink-0">
+                        {ev.value}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -273,12 +303,14 @@ export default function BentoGrid({ onOpenContact }) {
                 </div>
               </div>
 
-              {/* Performance Metrics summary */}
-              <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/10 text-center">
+              {/* Performance Metrics summary without clipping */}
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-3 border-t border-white/10 text-center">
                 {bento.commerce.metrics.map((m, i) => (
-                  <div key={i} className="p-2 rounded-xl bg-zinc-900/50 border border-white/5">
+                  <div key={i} className="p-2 sm:p-3 rounded-xl bg-zinc-900/50 border border-white/5 flex flex-col justify-center">
                     <span className="text-base sm:text-lg font-mono font-bold text-white block">{m.value}</span>
-                    <span className="text-[10px] text-zinc-400 block truncate">{m.label}</span>
+                    <span className="text-[10px] sm:text-xs text-zinc-400 block leading-tight font-medium mt-1">
+                      {m.label}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -294,12 +326,12 @@ export default function BentoGrid({ onOpenContact }) {
               <div className="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-emerald-500/40 transition-all duration-300 relative overflow-hidden group">
                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/15 transition-all" />
 
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-semibold">
                     <Zap className="w-3.5 h-3.5" />
                     {bento.workforce.tag}
                   </span>
-                  <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded-full font-mono">
+                  <span className="text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2.5 py-0.5 rounded-full font-mono">
                     Multi-Party Escrow
                   </span>
                 </div>
@@ -316,41 +348,51 @@ export default function BentoGrid({ onOpenContact }) {
                   {bento.workforce.description}
                 </p>
 
-                {/* Workforce protocol tabs */}
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {workforceProtocols.map((p, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedWorkforceIndex(idx)}
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
-                        selectedWorkforceIndex === idx
-                          ? 'bg-emerald-500 text-zinc-950 font-bold shadow-md'
-                          : 'bg-zinc-900/90 text-zinc-300 hover:bg-zinc-800 border border-white/5'
-                      }`}
-                    >
-                      <p.icon className="w-3.5 h-3.5" />
-                      <span>{p.badge}</span>
-                    </button>
-                  ))}
+                {/* Workforce protocol Segmented Control: Fits all 3 options without horizontal scrolling */}
+                <div className="grid grid-cols-3 gap-1 p-1 bg-zinc-900/90 rounded-xl border border-white/10 mb-4">
+                  {workforceProtocols.map((p, idx) => {
+                    const Icon = p.icon;
+                    const isActive = selectedWorkforceIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedWorkforceIndex(idx)}
+                        className={`flex items-center justify-center gap-1 sm:gap-1.5 py-2 px-1 rounded-lg text-xs font-semibold transition-all ${
+                          isActive
+                            ? 'bg-emerald-500 text-zinc-950 font-bold shadow-md'
+                            : 'text-zinc-400 hover:text-white hover:bg-zinc-800/60'
+                        }`}
+                      >
+                        <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-zinc-950' : 'text-zinc-400'}`} />
+                        <span className="truncate sm:hidden text-[11px]">{p.shortLabel}</span>
+                        <span className="hidden sm:inline truncate text-xs">{p.tabLabel}</span>
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Interactive Protocol Card */}
-                <div className="p-3.5 rounded-xl bg-zinc-950/80 border border-white/10 backdrop-blur-md">
-                  <div className="flex items-center justify-between mb-2">
+                <div className="p-4 rounded-xl bg-zinc-950/85 border border-white/10 backdrop-blur-md space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                     <div>
-                      <span className="text-xs font-bold text-white block">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-[10px] sm:text-[11px] font-mono font-bold text-emerald-400 bg-emerald-950/70 border border-emerald-800/50 px-2 py-0.5 rounded">
+                          {workforceProtocols[selectedWorkforceIndex].badge}
+                        </span>
+                      </div>
+                      <span className="text-xs sm:text-sm font-bold text-white block leading-snug">
                         {language === 'es' ? workforceProtocols[selectedWorkforceIndex].domainEs : workforceProtocols[selectedWorkforceIndex].domainEn}
                       </span>
-                      <span className="text-[10px] text-zinc-400 font-mono">
+                      <span className="text-[10px] sm:text-[11px] text-zinc-400 font-mono block mt-1">
                         {workforceProtocols[selectedWorkforceIndex].verification}
                       </span>
                     </div>
-                    <div className="bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-700/40 text-[11px] text-emerald-300 font-mono font-semibold">
+                    <div className="self-start sm:self-auto bg-emerald-950/60 px-2.5 py-1 rounded-lg border border-emerald-700/40 text-[11px] text-emerald-300 font-mono font-semibold shrink-0">
                       {workforceProtocols[selectedWorkforceIndex].rating}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 text-[11px] pt-2 border-t border-white/5 font-mono">
+                  <div className="grid grid-cols-2 gap-2 text-[11px] pt-2.5 border-t border-white/5 font-mono">
                     <div>
                       <span className="text-zinc-500 text-[10px] block">Settlement SLA:</span>
                       <span className="text-zinc-200 font-semibold">{workforceProtocols[selectedWorkforceIndex].settlementTime}</span>
@@ -370,7 +412,7 @@ export default function BentoGrid({ onOpenContact }) {
               <div className="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-cyan-500/40 transition-all duration-300 relative overflow-hidden group">
                 <div className="absolute -top-20 -right-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-cyan-500/15 transition-all" />
 
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-300 text-xs font-semibold">
                     <Truck className="w-3.5 h-3.5" />
                     {bento.industry.tag}

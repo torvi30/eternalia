@@ -9,8 +9,38 @@ import {
   Search, 
   X,
   Code2,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Layers,
+  Cpu,
+  Users,
+  Globe,
+  ShoppingBag,
+  ShieldCheck
 } from 'lucide-react';
+
+const getProjectGlyph = (category) => {
+  switch (category) {
+    case 'commerce':
+      return <ShoppingBag className="w-3.5 h-3.5 text-amber-400" />;
+    case 'services':
+      return <Users className="w-3.5 h-3.5 text-cyan-400" />;
+    case 'ventures':
+      return <Cpu className="w-3.5 h-3.5 text-indigo-400" />;
+    case 'directories':
+      return <Globe className="w-3.5 h-3.5 text-emerald-400" />;
+    default:
+      return <Layers className="w-3.5 h-3.5 text-cyan-400" />;
+  }
+};
+
+const getProjectMonogram = (name) => {
+  if (!name) return 'ET';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
+};
 
 export default function ProjectsShowcase({ onOpenContact }) {
   const { language } = useLanguage();
@@ -40,11 +70,36 @@ export default function ProjectsShowcase({ onOpenContact }) {
   }, []);
 
   const categories = [
-    { id: 'all', label: language === 'es' ? 'Todos los Proyectos' : 'All Projects' },
-    { id: 'directories', label: language === 'es' ? 'Redes Territoriales' : 'Territorial Meshes' },
-    { id: 'commerce', label: language === 'es' ? 'Comercio & Frontends' : 'Commerce & Frontends' },
-    { id: 'services', label: language === 'es' ? 'Workforce OS' : 'Workforce OS' },
-    { id: 'ventures', label: language === 'es' ? 'Soluciones Industriales' : 'Industrial Ventures' },
+    { 
+      id: 'all', 
+      label: language === 'es' ? 'Todas las Soluciones' : 'All Solutions',
+      mobileLabel: language === 'es' ? '✨ Todas las Soluciones que Ofrecemos' : '✨ All Solutions We Offer',
+      icon: Sparkles 
+    },
+    { 
+      id: 'commerce', 
+      label: language === 'es' ? 'Comercio & Frontends' : 'Commerce & Frontends',
+      mobileLabel: language === 'es' ? 'Comercio Digital' : 'Digital Commerce',
+      icon: ShoppingBag 
+    },
+    { 
+      id: 'services', 
+      label: language === 'es' ? 'Workforce OS' : 'Workforce OS',
+      mobileLabel: language === 'es' ? 'Workforce OS' : 'Workforce OS',
+      icon: Users 
+    },
+    { 
+      id: 'directories', 
+      label: language === 'es' ? 'Redes Territoriales' : 'Territorial Meshes',
+      mobileLabel: language === 'es' ? 'Redes & Directorio' : 'Networks & Directory',
+      icon: Globe 
+    },
+    { 
+      id: 'ventures', 
+      label: language === 'es' ? 'Soluciones Industriales' : 'Industrial Ventures',
+      mobileLabel: language === 'es' ? 'Industria & IoT' : 'Industry & IoT',
+      icon: Cpu 
+    },
   ];
 
   const filteredProjects = useMemo(() => {
@@ -104,62 +159,144 @@ export default function ProjectsShowcase({ onOpenContact }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{language === 'es' ? 'PORTAFOLIO & PLATAFORMAS EN VIVO' : 'LIVE VENTURES & PORTFOLIO'}</span>
+            <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
+            <span>{language === 'es' ? 'PORTAFOLIO & SOLUCIONES EN VIVO' : 'LIVE PORTFOLIO & SOLUTIONS'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
-            {language === 'es' ? 'Proyectos Activos del Ecosistema' : 'Active Ecosystem Projects'}
+            {language === 'es' ? 'Proyectos Activos & Soluciones' : 'Active Projects & Solutions'}
           </h2>
 
           <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es' 
-              ? 'Explora las plataformas, frontends y despliegues tecnológicos que operan bajo el holding Eternalia. Cada solución cuenta con su URL en vivo, arquitectura dedicada y métricas de rendimiento.'
-              : 'Explore the live platforms, frontends, and technological deployments running under the Eternalia holding. Each project features dedicated URLs, architecture, and live performance.'}
+              ? 'Conoce todas las soluciones que ofrecemos en el ecosistema Eternalia: plataformas frontends de ultra-alta conversión, infraestructura de Workforce OS, directorios territoriales y telemetría de misión crítica.'
+              : 'Explore all the solutions we offer across the Eternalia ecosystem: high-converting frontends, workforce operating systems, territorial directories, and mission-critical telematics.'}
           </p>
         </div>
 
-        {/* Filter and Search Bar */}
-        <div className="max-w-4xl mx-auto mb-12">
-          <div className="glass-panel rounded-2xl p-3 sm:p-4 border border-white/10 shadow-2xl flex flex-col md:flex-row gap-3 items-center justify-between">
+        {/* Filter and Search Bar Console */}
+        <div className="max-w-5xl mx-auto mb-12">
+          <div className="glass-panel rounded-2xl p-3.5 sm:p-5 border border-white/10 shadow-2xl flex flex-col gap-3.5">
             
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
-              {categories.map((cat) => (
+            {/* Top Row: Categories & Search */}
+            <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+              
+              {/* MOBILE CATEGORY SELECTOR (Zero horizontal scroll! 100% visible) */}
+              <div className="flex md:hidden flex-col gap-1.5 w-full">
+                {/* 1. Primary Full-Width Tab: "✨ Todas las Soluciones que Ofrecemos" */}
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-                    selectedCategory === cat.id
-                      ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]'
-                      : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-white/5'
+                  onClick={() => setSelectedCategory('all')}
+                  className={`w-full py-2.5 px-3.5 rounded-xl text-xs font-bold flex items-center justify-between transition-all cursor-pointer ${
+                    selectedCategory === 'all'
+                      ? 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 text-white shadow-[0_0_20px_rgba(99,102,241,0.45)] border border-cyan-400/40'
+                      : 'bg-zinc-900/90 text-zinc-300 hover:text-white border border-white/5'
                   }`}
                 >
-                  {cat.label}
+                  <span className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-300 shrink-0 animate-pulse" />
+                    <span>{categories[0].mobileLabel}</span>
+                  </span>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-black/40 text-cyan-200 border border-white/10">
+                    {projects.length}
+                  </span>
                 </button>
-              ))}
+
+                {/* 2. 2x2 Grid for specific solution categories (Fits 100% width on phone) */}
+                <div className="grid grid-cols-2 gap-1.5 w-full">
+                  {categories.slice(1).map((cat) => {
+                    const Icon = cat.icon;
+                    const isActive = selectedCategory === cat.id;
+                    const count = projects.filter(p => p.category === cat.id).length;
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedCategory(cat.id)}
+                        className={`flex items-center justify-between py-2 px-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                          isActive
+                            ? 'bg-cyan-500 text-zinc-950 font-bold shadow-md'
+                            : 'bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/5'
+                        }`}
+                      >
+                        <span className="flex items-center gap-1.5 truncate">
+                          <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-zinc-950' : 'text-zinc-400'}`} />
+                          <span className="truncate text-[11px]">{cat.mobileLabel}</span>
+                        </span>
+                        <span className={`text-[10px] font-mono ml-1 ${isActive ? 'text-zinc-950 font-bold' : 'text-zinc-500'}`}>
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* DESKTOP CATEGORY SELECTOR (Horizontal inline segmented group) */}
+              <div className="hidden md:flex items-center gap-1.5 flex-wrap">
+                {categories.map((cat) => {
+                  const Icon = cat.icon;
+                  const isActive = selectedCategory === cat.id;
+                  const count = cat.id === 'all' 
+                    ? projects.length 
+                    : projects.filter(p => p.category === cat.id).length;
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isActive
+                          ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)] border border-cyan-400/30'
+                          : 'bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 border border-white/5'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5 shrink-0" />
+                      <span>{cat.id === 'all' ? (language === 'es' ? '✨ Todas las Soluciones' : '✨ All Solutions') : cat.label}</span>
+                      <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
+                        isActive ? 'bg-black/30 text-white' : 'bg-zinc-800 text-zinc-500'
+                      }`}>
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Quick Search Input */}
+              <div className="relative w-full lg:w-64 shrink-0">
+                <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={language === 'es' ? 'Buscar solución o tech...' : 'Search solution or tech...'}
+                  className="w-full pl-9 pr-8 py-2 rounded-xl bg-zinc-950/80 border border-white/10 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-cyan-500/60 transition-all font-medium"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+
             </div>
 
-            {/* Quick Search Input */}
-            <div className="relative w-full md:w-64">
-              <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={language === 'es' ? 'Buscar proyecto o tech...' : 'Search project or tech...'}
-                className="w-full pl-9 pr-8 py-2 rounded-xl bg-zinc-950/80 border border-white/10 text-white placeholder-zinc-500 text-xs focus:outline-none focus:border-cyan-500/60 transition-all"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
+            {/* Live Filter Indicator Bar */}
+            <div className="flex items-center justify-between pt-2.5 border-t border-white/5 text-[11px] font-mono text-zinc-400">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                <span className="text-zinc-200 font-semibold">
+                  {selectedCategory === 'all'
+                    ? (language === 'es' ? 'Todas las Soluciones que Ofrecemos' : 'All Solutions We Offer')
+                    : categories.find(c => c.id === selectedCategory)?.label}
+                </span>
+              </div>
+              <span className="text-zinc-500">
+                {filteredProjects.length} {language === 'es' ? 'soluciones activas' : 'active solutions'}
+              </span>
             </div>
 
           </div>
@@ -183,24 +320,26 @@ export default function ProjectsShowcase({ onOpenContact }) {
                 <div>
                   {/* Top Bar: Logo & Status Badge */}
                   <div className="flex items-center justify-between mb-5">
-                    {/* Project Logo: custom image OR styled monogram */}
+                    {/* Project Logo: styled monogram with glow & glyph */}
                     <div className="flex items-center gap-3">
-                      {project.logo ? (
-                        <img 
-                          src={project.logo} 
-                          alt={project.name} 
-                          className="w-11 h-11 rounded-2xl object-cover border border-white/10 shadow-md"
-                        />
-                      ) : (
-                        <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-[0_0_15px_rgba(99,102,241,0.3)]`}>
-                          <div className="w-full h-full bg-[#0d0d12] rounded-[14px] flex items-center justify-center font-extrabold text-white text-base">
-                            {project.name.charAt(0)}
+                      <div className="relative group/monogram shrink-0">
+                        <div className={`absolute -inset-1 bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} rounded-2xl blur-[6px] opacity-35 group-hover/monogram:opacity-70 transition-opacity duration-300`} />
+                        <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-lg`}>
+                          <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center relative overflow-hidden">
+                            <span className="font-mono font-black text-white text-sm tracking-wider">
+                              {getProjectMonogram(project.name)}
+                            </span>
+                            <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
                           </div>
                         </div>
-                      )}
+                        {/* Category glyph chip */}
+                        <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                          {getProjectGlyph(project.category)}
+                        </div>
+                      </div>
 
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 block mb-0.5">
                           {language === 'es' ? project.categoryLabelEs : project.categoryLabelEn}
                         </span>
                         <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors">
@@ -326,18 +465,36 @@ export default function ProjectsShowcase({ onOpenContact }) {
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`w-12 h-12 rounded-2xl bg-gradient-to-tr ${activeModalProject.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px]`}>
-                  <div className="w-full h-full bg-[#0d0d12] rounded-[14px] flex items-center justify-center font-extrabold text-white text-lg">
-                    {activeModalProject.name.charAt(0)}
+              <div className="flex items-center gap-4 mb-4">
+                <div className="relative shrink-0">
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${activeModalProject.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-xl`}>
+                    <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex items-center justify-center">
+                      <span className="font-mono font-black text-white text-lg tracking-wider">
+                        {getProjectMonogram(activeModalProject.name)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                    {getProjectGlyph(activeModalProject.category)}
                   </div>
                 </div>
+
                 <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/25">
+                      {language === 'es' ? activeModalProject.categoryLabelEs : activeModalProject.categoryLabelEn}
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      {activeModalProject.badge || 'Enterprise'}
+                    </span>
+                  </div>
                   <h3 className="text-xl font-bold text-white">
                     {activeModalProject.name}
                   </h3>
-                  <span className="text-xs text-cyan-400 font-mono">
-                    {activeModalProject.url}
+                  <span className="text-xs text-cyan-400 font-mono flex items-center gap-1 mt-0.5">
+                    <Globe className="w-3 h-3" />
+                    <span>{activeModalProject.url}</span>
                   </span>
                 </div>
               </div>

@@ -17,8 +17,39 @@ import {
   PlusCircle, 
   LayoutGrid, 
   Map as MapIcon,
-  X
+  X,
+  Utensils,
+  Sprout,
+  ShieldCheck,
+  Car,
+  Sparkles,
+  Zap,
+  CheckCircle2
 } from 'lucide-react';
+
+const getCategoryGlyph = (category) => {
+  switch (category) {
+    case 'food':
+      return <Utensils className="w-3.5 h-3.5 text-amber-400" />;
+    case 'nursery':
+      return <Sprout className="w-3.5 h-3.5 text-emerald-400" />;
+    case 'services':
+      return <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />;
+    case 'automotive':
+      return <Car className="w-3.5 h-3.5 text-indigo-400" />;
+    default:
+      return <Sparkles className="w-3.5 h-3.5 text-cyan-400" />;
+  }
+};
+
+const getMonogram = (name) => {
+  if (!name) return 'ET';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return name.substring(0, 2).toUpperCase();
+};
 
 export default function DirectoryDemo({ onOpenContact }) {
   const { t, language } = useLanguage();
@@ -173,14 +204,14 @@ export default function DirectoryDemo({ onOpenContact }) {
               </div>
             </div>
 
-            {/* Category Filter Pills */}
-            <div className="flex items-center justify-between gap-2 overflow-x-auto pb-1 pt-1 scrollbar-none">
-              <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Category Filter Pills (Zero horizontal scrolling) */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/5">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {categories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+                    className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                       selectedCategory === cat.id
                         ? 'bg-cyan-500 text-zinc-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.35)]'
                         : 'bg-zinc-900/90 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/5'
@@ -192,7 +223,7 @@ export default function DirectoryDemo({ onOpenContact }) {
               </div>
 
               {/* Status indicator */}
-              <div className="hidden sm:flex items-center gap-1.5 text-xs text-zinc-400 font-mono pl-3 shrink-0 border-l border-white/10">
+              <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono py-1">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span>{filteredBusinesses.length} {t.directory.totalResults}</span>
               </div>
@@ -225,25 +256,34 @@ export default function DirectoryDemo({ onOpenContact }) {
                   <div>
                     {/* Top: Logo & Category Bar */}
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center gap-2.5">
-                        {biz.logo ? (
-                          <img 
-                            src={biz.logo} 
-                            alt={biz.name} 
-                            className="w-10 h-10 rounded-xl object-cover border border-white/10 shadow" 
-                          />
-                        ) : (
-                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
-                            <div className="w-full h-full bg-[#0d0d12] rounded-[10px] flex items-center justify-center font-bold text-white text-sm">
-                              {(biz.name || 'E').charAt(0)}
+                      <div className="flex items-center gap-3">
+                        {/* Luxury Isotype Monogram */}
+                        <div className="relative group/monogram shrink-0">
+                          <div className={`absolute -inset-1 bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} rounded-2xl blur-[6px] opacity-30 group-hover/monogram:opacity-60 transition-opacity duration-300`} />
+                          <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-lg`}>
+                            <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center relative overflow-hidden">
+                              <span className="font-mono font-black text-white text-sm tracking-wider">
+                                {getMonogram(biz.name)}
+                              </span>
+                              <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
                             </div>
                           </div>
-                        )}
+                          {/* Category mini glyph */}
+                          <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                            {getCategoryGlyph(biz.category)}
+                          </div>
+                        </div>
 
                         <div>
-                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/80 border border-white/10 text-cyan-300">
-                            {language === 'es' ? (biz.categoryLabelEs || biz.category) : (biz.categoryLabelEn || biz.category)}
-                          </span>
+                          <div className="flex items-center gap-1.5 mb-1">
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/90 border border-white/10 text-cyan-300">
+                              {language === 'es' ? (biz.categoryLabelEs || biz.category) : (biz.categoryLabelEn || biz.category)}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-mono">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            <span>{language === 'es' ? 'Nodo Verificado' : 'Verified Node'}</span>
+                          </div>
                         </div>
                       </div>
                       
@@ -283,6 +323,32 @@ export default function DirectoryDemo({ onOpenContact }) {
                         </span>
                       ))}
                     </div>
+
+                    {/* Prominent Landing Page Bar */}
+                    {biz.websiteUrl ? (
+                      <div className="mb-4">
+                        <button
+                          onClick={() => handleWebsiteClick(biz.websiteUrl)}
+                          className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-cyan-500/10 hover:from-cyan-500/20 hover:to-indigo-500/20 text-cyan-300 border border-cyan-500/25 hover:border-cyan-400 text-xs font-semibold flex items-center justify-between transition-all group/landing cursor-pointer shadow-sm"
+                        >
+                          <div className="flex items-center gap-2 truncate">
+                            <Globe className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                            <span className="truncate font-mono text-[11px]">{biz.websiteUrl.replace(/^https?:\/\//, '')}</span>
+                          </div>
+                          <span className="flex items-center gap-1 text-[11px] font-bold text-cyan-300 group-hover/landing:translate-x-0.5 transition-transform shrink-0">
+                            <span>{language === 'es' ? 'Ver Landing' : 'View Landing'}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </span>
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="mb-4">
+                        <div className="w-full py-1.5 px-3 rounded-xl bg-zinc-900/60 border border-white/5 text-zinc-500 text-[11px] flex items-center justify-between font-mono">
+                          <span>{language === 'es' ? 'Landing: En Desarrollo' : 'Landing: In Progress'}</span>
+                          <span className="text-[10px] text-zinc-600 font-sans">Canal WhatsApp Activo</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Bottom Interactive Actions: WhatsApp, Website & Profile */}
@@ -297,17 +363,6 @@ export default function DirectoryDemo({ onOpenContact }) {
                       <MessageCircle className="w-4 h-4 fill-emerald-500/30" />
                       <span>{t.directory.buttons.chat}</span>
                     </button>
-
-                    {/* Optional Direct Website Link */}
-                    {biz.websiteUrl && (
-                      <button
-                        onClick={() => handleWebsiteClick(biz.websiteUrl)}
-                        className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-cyan-400 hover:text-cyan-300 border border-white/10 transition-colors"
-                        title={language === 'es' ? 'Visitar Landing / Web' : 'Visit Website'}
-                      >
-                        <Globe className="w-4 h-4" />
-                      </button>
-                    )}
 
                     {/* Phone Call Action */}
                     <button
@@ -387,29 +442,48 @@ export default function DirectoryDemo({ onOpenContact }) {
         {/* Business Detailed Quick View Modal */}
         {activeModalBusiness && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-lg rounded-2xl bg-[#121217] border border-white/15 p-6 shadow-2xl">
+            <div className="relative w-full max-w-lg rounded-3xl bg-[#121217] border border-white/15 p-6 sm:p-7 shadow-2xl overflow-hidden">
+              <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
               <button
                 onClick={() => setActiveModalBusiness(null)}
-                className="absolute top-4 right-4 p-1.5 rounded-lg bg-zinc-800 text-zinc-400 hover:text-white"
+                className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer z-10"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
 
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  {language === 'es' ? activeModalBusiness.categoryLabelEs : activeModalBusiness.categoryLabelEn}
-                </span>
-                <span className="text-xs font-medium text-emerald-400 flex items-center gap-1">
-                  <CheckCircle className="w-3.5 h-3.5" />
-                  {t.directory.status.verified}
-                </span>
+              {/* Modal Brand Header */}
+              <div className="flex items-center gap-4 mb-4">
+                <div className="relative shrink-0">
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${activeModalBusiness.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-xl`}>
+                    <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center">
+                      <span className="font-mono font-black text-white text-lg tracking-wider">
+                        {getMonogram(activeModalBusiness.name)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                    {getCategoryGlyph(activeModalBusiness.category)}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/25">
+                      {language === 'es' ? activeModalBusiness.categoryLabelEs : activeModalBusiness.categoryLabelEn}
+                    </span>
+                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      {t.directory.status.verified}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white">
+                    {activeModalBusiness.name}
+                  </h3>
+                </div>
               </div>
 
-              <h3 className="text-2xl font-bold text-white mb-2">
-                {activeModalBusiness.name}
-              </h3>
-
-              <p className="text-sm text-zinc-300 mb-4 leading-relaxed">
+              <p className="text-xs sm:text-sm text-zinc-300 mb-4 leading-relaxed">
                 {language === 'es' ? activeModalBusiness.descriptionEs : activeModalBusiness.descriptionEn}
               </p>
 
@@ -453,7 +527,20 @@ export default function DirectoryDemo({ onOpenContact }) {
                 </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex flex-col sm:flex-row gap-2.5">
+                {activeModalBusiness.websiteUrl && (
+                  <button
+                    onClick={() => {
+                      handleWebsiteClick(activeModalBusiness.websiteUrl);
+                    }}
+                    className="py-3 px-4 rounded-xl bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                  >
+                    <Globe className="w-4 h-4" />
+                    <span>{language === 'es' ? 'Abrir Landing Page' : 'Launch Landing Page'}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+
                 <button
                   onClick={() => {
                     handleWhatsAppClick(activeModalBusiness);

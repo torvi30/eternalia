@@ -21,7 +21,8 @@ import {
   LogIn,
   Lock,
   Sun,
-  Moon
+  Moon,
+  UtensilsCrossed
 } from 'lucide-react';
 
 export default function Navbar({ onOpenContact, onOpenInvestors }) {
@@ -161,6 +162,14 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
               >
                 {language === 'es' ? 'Soluciones' : 'Solutions'}
               </button>
+
+              <Link
+                to="/restaurantes"
+                className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/25 rounded-full transition-all"
+              >
+                <UtensilsCrossed className="w-3 h-3" />
+                <span>{language === 'es' ? 'Restaurantes' : 'Restaurants'}</span>
+              </Link>
 
               <button
                 onClick={() => scrollTo('directorio')}
@@ -334,6 +343,28 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-bold block mb-3">
                   {language === 'es' ? 'Navegación & Ecosistema' : 'Navigation & Ecosystem'}
                 </span>
+
+                {/* Botón Destacado: Software para Restaurantes */}
+                <Link
+                  to="/restaurantes"
+                  onClick={() => setDrawerOpen(false)}
+                  className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-950/50 dark:to-amber-950/50 border border-orange-500/30 hover:border-orange-500 text-left transition-all mb-2.5 flex items-center justify-between cursor-pointer group shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-orange-500/15 text-orange-600 dark:text-orange-400">
+                      <UtensilsCrossed className="w-4 h-4 text-orange-500" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-zinc-900 dark:text-white block group-hover:text-orange-600 dark:group-hover:text-orange-300 transition-colors">
+                        {language === 'es' ? '🍽️ Software para Restaurantes' : '🍽️ Restaurant Software'}
+                      </span>
+                      <span className="text-[10px] text-zinc-600 dark:text-zinc-400">
+                        {language === 'es' ? 'Menú QR, pedidos WhatsApp, comandas e inventario' : 'QR menu, WhatsApp orders, kitchen tickets'}
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all" />
+                </Link>
 
                 {/* Botón Principal: Todas las Soluciones */}
                 <button

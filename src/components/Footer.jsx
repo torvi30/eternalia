@@ -90,8 +90,10 @@ export default function Footer({ onOpenContact, onOpenInvestors }) {
               {t.footer.verticalsTitle}
             </h4>
             <ul className="space-y-2.5 text-xs text-zinc-600 dark:text-zinc-400">
-              <li className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer">
-                Eternalia Food & POS
+              <li>
+                <Link to="/restaurantes" className="hover:text-orange-600 dark:hover:text-orange-400 transition-colors cursor-pointer flex items-center gap-1.5 font-semibold text-orange-600 dark:text-orange-400">
+                  <span>🍽️ Eternalia Food OS (Restaurantes)</span>
+                </Link>
               </li>
               <li className="hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer">
                 Eternalia Services

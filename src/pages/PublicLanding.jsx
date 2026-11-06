@@ -3,6 +3,7 @@ import GlowBackground from '../components/GlowBackground';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import BentoGrid from '../components/BentoGrid';
+import FeaturedProducts from '../components/FeaturedProducts';
 import ProjectsShowcase from '../components/ProjectsShowcase';
 import QuoteEngine from '../components/QuoteEngine';
 import DirectoryDemo from '../components/DirectoryDemo';
@@ -50,6 +51,9 @@ export default function PublicLanding() {
         />
 
         <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
+
+        {/* Productos SaaS Disponibles con Simulador Responsive */}
+        <FeaturedProducts onOpenContact={() => setIsContactOpen(true)} />
 
         <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
 

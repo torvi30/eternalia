@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -20,7 +20,10 @@ import {
   DollarSign,
   Sun,
   Moon,
-  Maximize2
+  Maximize2,
+  ChevronLeft,
+  ChevronRight,
+  X
 } from 'lucide-react';
 
 export default function RestaurantLanding() {
@@ -28,7 +31,9 @@ export default function RestaurantLanding() {
   const { isDark, toggleTheme } = useTheme();
   const [activeModule, setActiveModule] = useState(0);
   const [isContactOpen, setIsContactOpen] = useState(false);
-  const [activeZoomImg, setActiveZoomImg] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   // ROI Calculator State
   const [monthlySales, setMonthlySales] = useState(15000000); // 15 millones COP por defecto
@@ -249,6 +254,59 @@ export default function RestaurantLanding() {
   const yearlyCommissionLoss = monthlyCommissionLoss * 12;
 
   const currentModule = modules[activeModule];
+
+  const handlePrevModule = () => {
+    setActiveModule((prev) => (prev === 0 ? modules.length - 1 : prev - 1));
+  };
+
+  const handleNextModule = () => {
+    setActiveModule((prev) => (prev === modules.length - 1 ? 0 : prev + 1));
+  };
+
+  // Keyboard navigation when fullscreen lightbox is open
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleNextModule();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        handlePrevModule();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsLightboxOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen]);
+
+  // Touch swipe handlers for mobile devices
+  const minSwipeDistance = 45;
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > minSwipeDistance) {
+      // Swiped left -> Next
+      handleNextModule();
+    } else if (distance < -minSwipeDistance) {
+      // Swiped right -> Previous
+      handlePrevModule();
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#07080c] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-orange-500 selection:text-white">
@@ -496,7 +554,7 @@ export default function RestaurantLanding() {
                   {language === 'es' ? 'Cotizar Este Módulo' : 'Quote This Module'}
                 </button>
                 <button
-                  onClick={() => setActiveZoomImg(currentModule.img)}
+                  onClick={() => setIsLightboxOpen(true)}
                   className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <Maximize2 className="w-3.5 h-3.5" />
@@ -508,7 +566,7 @@ export default function RestaurantLanding() {
             {/* Right: Screenshot Viewer Frame */}
             <div className="lg:col-span-7">
               <div
-                onClick={() => setActiveZoomImg(currentModule.img)}
+                onClick={() => setIsLightboxOpen(true)}
                 className="relative rounded-2xl overflow-hidden border border-black/15 dark:border-white/20 shadow-2xl bg-zinc-950 group cursor-pointer"
               >
                 <div className="h-7 bg-zinc-800 px-3 flex items-center justify-between border-b border-white/10">
@@ -654,29 +712,115 @@ export default function RestaurantLanding() {
         </div>
       </section>
 
-      {/* 7. LIGHTBOX ZOOM MODAL */}
-      {activeZoomImg && (
+      {/* 7. FULLSCREEN LIGHTBOX MODAL (Keyboard & Touch-Swipe Optimized) */}
+      {isLightboxOpen && (
         <div
-          onClick={() => setActiveZoomImg(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none"
         >
-          <div className="relative max-w-6xl w-full max-h-[95vh] rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950">
-            <div className="h-8 bg-zinc-900 px-4 flex items-center justify-between border-b border-white/10">
-              <span className="text-xs font-mono text-zinc-300 font-bold">Captura en Alta Definición • Software Real</span>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="relative max-w-6xl w-full max-h-[96vh] flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950"
+          >
+            {/* Modal Header */}
+            <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
+                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                  {activeModule + 1} / {modules.length}
+                </span>
+                <span className="text-xs sm:text-sm font-semibold text-white truncate">
+                  {language === 'es' ? currentModule.nameEs : currentModule.nameEn}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="hidden md:inline-block text-[11px] text-zinc-400 font-mono">
+                  {language === 'es' ? '← / → Teclas para cambiar' : '← / → Keys to navigate'}
+                </span>
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="flex items-center gap-1.5 text-zinc-300 hover:text-white text-xs font-bold px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors cursor-pointer"
+                  aria-label="Cerrar modal"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="hidden sm:inline">Cerrar (ESC)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Image Area with Floating Side Navigation Arrows */}
+            <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-hidden min-h-[300px]">
+              <img
+                key={currentModule.id}
+                src={currentModule.img}
+                alt={currentModule.nameEs}
+                className="max-h-[64vh] sm:max-h-[70vh] w-auto max-w-full object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+              />
+
+              {/* Floating Prev Button */}
               <button
-                onClick={() => setActiveZoomImg(null)}
-                className="text-zinc-400 hover:text-white text-xs font-bold px-2 py-0.5 rounded bg-zinc-800"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevModule();
+                }}
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
+                aria-label="Anterior"
               >
-                Cerrar (ESC)
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              {/* Floating Next Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextModule();
+                }}
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-2 bg-black flex items-center justify-center">
-              <img
-                src={activeZoomImg}
-                alt="Captura ampliada"
-                className="max-h-[85vh] w-auto object-contain rounded-lg"
-              />
+
+            {/* Modal Footer with Mobile Swipe Hint and Mini Thumbnails */}
+            <div className="bg-zinc-900/90 px-3 sm:px-4 py-2 border-t border-white/10 shrink-0">
+              <div className="flex items-center justify-between gap-2 mb-1.5 text-[11px] text-zinc-400">
+                <span className="truncate">
+                  {language === 'es' ? currentModule.taglineEs : currentModule.taglineEn}
+                </span>
+                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                  {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
+                </span>
+              </div>
+
+              {/* Thumbnail Strip inside Modal */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                {modules.map((mod, idx) => (
+                  <button
+                    key={mod.id}
+                    onClick={() => setActiveModule(idx)}
+                    title={language === 'es' ? mod.nameEs : mod.nameEn}
+                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
+                      activeModule === idx
+                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
+                        : 'border-white/10 opacity-50 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={mod.img}
+                      alt={mod.nameEs}
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { 
@@ -24,7 +24,9 @@ import {
 export default function FeaturedProducts({ onOpenContact }) {
   const { language } = useLanguage();
   const [activeScreenIndex, setActiveScreenIndex] = useState(0);
-  const [zoomModalImg, setZoomModalImg] = useState(null);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
   const desktopScreens = [
     {
@@ -145,6 +147,51 @@ export default function FeaturedProducts({ onOpenContact }) {
 
   const handleNext = () => {
     setActiveScreenIndex((prev) => (prev === desktopScreens.length - 1 ? 0 : prev + 1));
+  };
+
+  // Keyboard navigation when fullscreen lightbox is open
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsLightboxOpen(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen]);
+
+  // Touch swipe handlers for mobile devices
+  const minSwipeDistance = 45;
+
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > minSwipeDistance) {
+      // Swiped left -> Next
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      // Swiped right -> Previous
+      handlePrev();
+    }
   };
 
   return (
@@ -296,9 +343,9 @@ export default function FeaturedProducts({ onOpenContact }) {
                   <div className="flex items-center gap-2">
                     <span className="text-[9px] font-mono text-emerald-500 font-bold hidden sm:inline">1920x1080 Full HD</span>
                     <button
-                      onClick={() => setZoomModalImg(currentScreen.img)}
+                      onClick={() => setIsLightboxOpen(true)}
                       className="p-1 text-zinc-400 hover:text-white cursor-pointer"
-                      title={language === 'es' ? 'Ampliar pantalla' : 'Zoom screen'}
+                      title={language === 'es' ? 'Ampliar pantalla completa' : 'Full screen view'}
                     >
                       <Maximize2 className="w-3 h-3" />
                     </button>
@@ -307,7 +354,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
                 {/* Screenshot Frame with Navigation Controls */}
                 <div 
-                  onClick={() => setZoomModalImg(currentScreen.img)}
+                  onClick={() => setIsLightboxOpen(true)}
                   className="relative aspect-[16/9] bg-zinc-950 overflow-hidden cursor-pointer"
                 >
                   <img
@@ -391,29 +438,115 @@ export default function FeaturedProducts({ onOpenContact }) {
 
       </div>
 
-      {/* Lightbox Zoom Modal */}
-      {zoomModalImg && (
+      {/* Fullscreen Lightbox Modal (Keyboard & Touch-Swipe Optimized) */}
+      {isLightboxOpen && (
         <div 
-          onClick={() => setZoomModalImg(null)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
+          onClick={() => setIsLightboxOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none"
         >
-          <div className="relative max-w-6xl w-full max-h-[95vh] rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950">
-            <div className="h-8 bg-zinc-900 px-4 flex items-center justify-between border-b border-white/10">
-              <span className="text-xs font-mono text-zinc-300 font-bold">Captura en Alta Definición • Vista de Escritorio</span>
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="relative max-w-6xl w-full max-h-[96vh] flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950"
+          >
+            {/* Modal Header */}
+            <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
+                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                  {activeScreenIndex + 1} / {desktopScreens.length}
+                </span>
+                <span className="text-xs sm:text-sm font-semibold text-white truncate">
+                  {language === 'es' ? currentScreen.labelEs : currentScreen.labelEn}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="hidden md:inline-block text-[11px] text-zinc-400 font-mono">
+                  {language === 'es' ? '← / → Teclas para cambiar' : '← / → Keys to navigate'}
+                </span>
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="flex items-center gap-1.5 text-zinc-300 hover:text-white text-xs font-bold px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors cursor-pointer"
+                  aria-label="Cerrar modal"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="hidden sm:inline">Cerrar (ESC)</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Modal Image Area with Floating Side Navigation Arrows */}
+            <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-hidden min-h-[300px]">
+              <img 
+                key={currentScreen.id}
+                src={currentScreen.img} 
+                alt={currentScreen.labelEs} 
+                className="max-h-[64vh] sm:max-h-[70vh] w-auto max-w-full object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200"
+              />
+
+              {/* Floating Prev Button */}
               <button
-                onClick={() => setZoomModalImg(null)}
-                className="text-zinc-400 hover:text-white text-xs font-bold px-2 py-0.5 rounded bg-zinc-800 cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
+                aria-label="Anterior"
               >
-                Cerrar (ESC)
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+
+              {/* Floating Next Button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
+                aria-label="Siguiente"
+              >
+                <ChevronRight className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-2 bg-black flex items-center justify-center">
-              <img 
-                src={zoomModalImg} 
-                alt="Captura ampliada" 
-                className="max-h-[85vh] w-auto object-contain rounded-lg"
-              />
+
+            {/* Modal Footer with Mobile Swipe Hint and Mini Thumbnails */}
+            <div className="bg-zinc-900/90 px-3 sm:px-4 py-2 border-t border-white/10 shrink-0">
+              <div className="flex items-center justify-between gap-2 mb-1.5 text-[11px] text-zinc-400">
+                <span className="truncate">
+                  {language === 'es' ? currentScreen.captionEs : currentScreen.captionEn}
+                </span>
+                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                  {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
+                </span>
+              </div>
+
+              {/* Thumbnail Strip inside Modal */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                {desktopScreens.map((screen, idx) => (
+                  <button
+                    key={screen.id}
+                    onClick={() => setActiveScreenIndex(idx)}
+                    title={language === 'es' ? screen.labelEs : screen.labelEn}
+                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
+                      activeScreenIndex === idx 
+                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100' 
+                        : 'border-white/10 opacity-50 hover:opacity-100'
+                    }`}
+                  >
+                    <img 
+                      src={screen.img} 
+                      alt={screen.labelEs} 
+                      className="w-full h-full object-cover rounded" 
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
       )}

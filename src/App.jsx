@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider } from './context/AuthContext';
 import PublicLanding from './pages/PublicLanding';
 import AdminLogin from './pages/AdminLogin';
@@ -9,30 +10,32 @@ import ProtectedRoute from './components/ProtectedRoute';
 export default function App() {
   return (
     <BrowserRouter>
-      <LanguageProvider>
-        <AuthProvider>
-          <Routes>
-            {/* Public Corporate Portal */}
-            <Route path="/" element={<PublicLanding />} />
+      <ThemeProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <Routes>
+              {/* Public Corporate Portal */}
+              <Route path="/" element={<PublicLanding />} />
 
-            {/* Admin Authentication */}
-            <Route path="/admin/login" element={<AdminLogin />} />
+              {/* Admin Authentication */}
+              <Route path="/admin/login" element={<AdminLogin />} />
 
-            {/* Protected Management Clúster */}
-            <Route 
-              path="/admin" 
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard />
-                </ProtectedRoute>
-              } 
-            />
+              {/* Protected Management Clúster */}
+              <Route 
+                path="/admin" 
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
 
-            {/* Catch-all redirect */}
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </AuthProvider>
-      </LanguageProvider>
+              {/* Catch-all redirect */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </AuthProvider>
+        </LanguageProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

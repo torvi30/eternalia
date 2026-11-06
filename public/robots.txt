@@ -1,0 +1,7 @@
+# Robots.txt for Eternalia
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/login
+
+Sitemap: https://eternalia.io/sitemap.xml

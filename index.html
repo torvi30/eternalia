@@ -4,16 +4,70 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eternalia | Holding Tecnológico & Ecosistema SaaS</title>
-    <meta name="description" content="Eternalia unifica soluciones SaaS avanzadas, directorios comerciales inteligentes y gestión de servicios profesionales para impulsar el comercio del mañana." />
+    
+    <!-- Primary SEO Meta Tags -->
+    <title>Eternalia | Holding Tecnológico & Ecosistema SaaS de Vanguardia</title>
+    <meta name="title" content="Eternalia | Holding Tecnológico & Ecosistema SaaS de Vanguardia" />
+    <meta name="description" content="Eternalia es un holding tecnológico que integra soluciones SaaS avanzadas, directorios comerciales inteligentes y preservación digital para transformar el comercio y la memoria." />
+    <meta name="keywords" content="Eternalia, SaaS, Holding Tecnológico, Directorio Inteligente, Transformación Digital, IA, Cloud Computing, Marinilla, Colombia" />
+    <meta name="author" content="Eternalia Tech" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://eternalia.io/" />
     <meta name="theme-color" content="#09090b" />
     
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://eternalia.io/" />
+    <meta property="og:title" content="Eternalia | Holding Tecnológico & Ecosistema SaaS" />
+    <meta property="og:description" content="Ecosistema de soluciones SaaS escalables, directorios hiperlocales y tecnología empresarial de próxima generación." />
+    <meta property="og:image" content="https://eternalia.io/og-image.jpg" />
+    <meta property="og:site_name" content="Eternalia" />
+    <meta property="og:locale" content="es_CO" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://eternalia.io/" />
+    <meta name="twitter:title" content="Eternalia | Holding Tecnológico & Ecosistema SaaS" />
+    <meta name="twitter:description" content="Ecosistema de soluciones SaaS escalables, directorios hiperlocales y tecnología empresarial de próxima generación." />
+    <meta name="twitter:image" content="https://eternalia.io/og-image.jpg" />
+
     <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Structured Data (JSON-LD) for Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://eternalia.io/#organization",
+          "name": "Eternalia",
+          "url": "https://eternalia.io/",
+          "logo": "https://eternalia.io/favicon.svg",
+          "description": "Holding tecnológico que unifica soluciones SaaS, directorios inteligentes y plataformas de preservación digital.",
+          "sameAs": [
+            "https://twitter.com/eternalia_io",
+            "https://github.com/torvi30/eternalia"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://eternalia.io/#website",
+          "url": "https://eternalia.io/",
+          "name": "Eternalia",
+          "publisher": {
+            "@id": "https://eternalia.io/#organization"
+          },
+          "inLanguage": ["es-CO", "en-US"]
+        }
+      ]
+    }
+    </script>
   </head>
-  <body class="bg-[#09090b] text-zinc-100 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 antialiased overflow-x-hidden min-h-screen">
+  <body class="bg-[#09090b] dark:bg-[#09090b] light:bg-[#f8fafc] text-zinc-100 dark:text-zinc-100 light:text-zinc-900 font-sans selection:bg-indigo-500/30 selection:text-indigo-200 antialiased overflow-x-hidden min-h-screen">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

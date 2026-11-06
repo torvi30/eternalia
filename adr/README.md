@@ -28,4 +28,5 @@ Cada ADR sigue un formato estándar:
 | Número | Título | Estado | Fecha |
 |---|---|---|---|
 | [ADR-0001](0001-coautor-jsdnlb-en-commits.md) | Coautor obligatorio `jsdnlb` en todos los commits | **Aceptado** | 2026-11-06 |
+| [ADR-0002](0002-sistema-diseno-light-mode-estrategia-seo-agente-experto.md) | Sistema de Diseño Dual (Dark/Light Mode), SEO y Agente Experto | **Aceptado** | 2026-11-06 |
 

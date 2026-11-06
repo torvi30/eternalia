@@ -30,15 +30,15 @@ import {
 const getCategoryGlyph = (category) => {
   switch (category) {
     case 'food':
-      return <Utensils className="w-3.5 h-3.5 text-amber-400" />;
+      return <Utensils className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />;
     case 'nursery':
-      return <Sprout className="w-3.5 h-3.5 text-emerald-400" />;
+      return <Sprout className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />;
     case 'services':
-      return <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />;
+      return <ShieldCheck className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />;
     case 'automotive':
-      return <Car className="w-3.5 h-3.5 text-indigo-400" />;
+      return <Car className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />;
     default:
-      return <Sparkles className="w-3.5 h-3.5 text-cyan-400" />;
+      return <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />;
   }
 };
 
@@ -98,58 +98,67 @@ export default function DirectoryDemo({ onOpenContact }) {
       const query = searchQuery.toLowerCase().trim();
       if (!query) return matchesCategory;
 
-      const desc = language === 'es' ? (item.descriptionEs || '') : (item.descriptionEn || '');
-      const categoryLabel = language === 'es' ? (item.categoryLabelEs || '') : (item.categoryLabelEn || '');
-      const tagsList = item.tags || [];
-      const matchesText = 
-        (item.name || '').toLowerCase().includes(query) ||
-        desc.toLowerCase().includes(query) ||
-        (item.address || '').toLowerCase().includes(query) ||
-        categoryLabel.toLowerCase().includes(query) ||
-        tagsList.some(t => (t || '').toLowerCase().includes(query));
+      const matchesSearch = 
+        (item.name && item.name.toLowerCase().includes(query)) ||
+        (item.address && item.address.toLowerCase().includes(query)) ||
+        (item.tags && item.tags.some(tag => tag.toLowerCase().includes(query))) ||
+        (item.descriptionEs && item.descriptionEs.toLowerCase().includes(query)) ||
+        (item.descriptionEn && item.descriptionEn.toLowerCase().includes(query));
 
-      return matchesCategory && matchesText;
+      return matchesCategory && matchesSearch;
     });
-  }, [businesses, searchQuery, selectedCategory, language]);
+  }, [businesses, selectedCategory, searchQuery]);
 
   const handleWhatsAppClick = (biz) => {
-    const textMessage = language === 'es'
-      ? `¡Hola! Conecté con ${biz.name} a través de la Red Comercial Inteligente de Eternalia y deseo solicitar información institucional y catálogo de servicios.`
-      : `Hello! I connected with ${biz.name} through the Eternalia Smart Commercial Mesh and would like to request institutional info and services catalog.`;
-    const url = `https://wa.me/${biz.whatsapp}?text=${encodeURIComponent(textMessage)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    const phone = biz.whatsapp || biz.phone || '573000000000';
+    const cleanPhone = phone.replace(/\D/g, '');
+    const message = encodeURIComponent(
+      language === 'es'
+        ? `Hola ${biz.name}, los encontré en el Directorio Digital de Marinilla de Eternalia. Quisiera más información sobre sus productos/servicios.`
+        : `Hello ${biz.name}, I found your business on the Marinilla Digital Directory by Eternalia. I would like more information.`
+    );
+    window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
   };
 
   const handleCallClick = (biz) => {
-    window.open(`tel:${biz.phone}`);
+    const phone = biz.phone || biz.whatsapp || '';
+    if (phone) {
+      window.location.href = `tel:${phone.replace(/\s+/g, '')}`;
+    }
   };
 
   const handleWebsiteClick = (url) => {
     if (!url) return;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    if (url.startsWith('/')) {
+      window.location.href = url;
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
   };
 
   return (
     <section id="directorio" className="relative py-24 sm:py-32 scroll-mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-3">
-            <Compass className="w-3.5 h-3.5" />
+        {/* Section Title */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-700 dark:text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-3">
+            <Compass className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
             <span>{t.directory.badge}</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-4">
+          
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-4">
             {t.directory.title}
           </h2>
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed">
+          
+          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {t.directory.subtitle}
           </p>
         </div>
 
         {/* Directory Search & Filter Bar Console */}
         <div className="max-w-4xl mx-auto mb-10">
-          <div className="glass-panel rounded-2xl p-3 sm:p-4 border border-white/10 shadow-2xl">
+          <div className="glass-panel rounded-2xl p-3 sm:p-4 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-2xl">
             
             {/* Top row: Live Search + View Mode Switcher (Grid / Map) */}
             <div className="flex flex-col sm:flex-row items-center gap-3 mb-3.5">
@@ -162,12 +171,12 @@ export default function DirectoryDemo({ onOpenContact }) {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={t.directory.searchPlaceholder}
-                  className="w-full pl-11 pr-10 py-3 rounded-xl bg-zinc-950/70 border border-white/10 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/40 transition-all font-medium"
+                  className="w-full pl-11 pr-10 py-3 rounded-xl bg-slate-50 dark:bg-zinc-950/70 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white placeholder-zinc-400 text-sm focus:outline-none focus:border-cyan-500 transition-all font-medium"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-white"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-700 dark:hover:text-white"
                   >
                     <X className="w-4 h-4" />
                   </button>
@@ -175,13 +184,13 @@ export default function DirectoryDemo({ onOpenContact }) {
               </div>
 
               {/* View Switcher Toggle: [ Grid | Map ] */}
-              <div className="flex items-center gap-1 bg-zinc-950/90 p-1 rounded-xl border border-white/10 shrink-0 w-full sm:w-auto justify-center">
+              <div className="flex items-center gap-1 bg-slate-100 dark:bg-zinc-950/90 p-1 rounded-xl border border-black/10 dark:border-white/10 shrink-0 w-full sm:w-auto justify-center">
                 <button
                   onClick={() => setViewMode('grid')}
                   className={`px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                     viewMode === 'grid'
                       ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md font-bold'
-                      : 'text-zinc-400 hover:text-white'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                   }`}
                   title={language === 'es' ? 'Ver como tarjetas' : 'View as cards'}
                 >
@@ -194,7 +203,7 @@ export default function DirectoryDemo({ onOpenContact }) {
                   className={`px-3.5 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                     viewMode === 'map'
                       ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-md font-bold'
-                      : 'text-zinc-400 hover:text-white'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                   }`}
                   title={language === 'es' ? 'Ver en mapa interactivo' : 'View on interactive map'}
                 >
@@ -204,8 +213,8 @@ export default function DirectoryDemo({ onOpenContact }) {
               </div>
             </div>
 
-            {/* Category Filter Pills (Zero horizontal scrolling) */}
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/5">
+            {/* Category Filter Pills */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-black/5 dark:border-white/5">
               <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                 {categories.map((cat) => (
                   <button
@@ -213,8 +222,8 @@ export default function DirectoryDemo({ onOpenContact }) {
                     onClick={() => setSelectedCategory(cat.id)}
                     className={`px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                       selectedCategory === cat.id
-                        ? 'bg-cyan-500 text-zinc-950 font-bold shadow-[0_0_15px_rgba(6,182,212,0.35)]'
-                        : 'bg-zinc-900/90 text-zinc-300 hover:bg-zinc-800 hover:text-white border border-white/5'
+                        ? 'bg-cyan-500 text-zinc-950 font-bold shadow-md'
+                        : 'bg-slate-100 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/5'
                     }`}
                   >
                     {cat.label}
@@ -223,8 +232,8 @@ export default function DirectoryDemo({ onOpenContact }) {
               </div>
 
               {/* Status indicator */}
-              <div className="flex items-center gap-1.5 text-xs text-zinc-400 font-mono py-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 font-mono py-1">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{filteredBusinesses.length} {t.directory.totalResults}</span>
               </div>
             </div>
@@ -248,7 +257,7 @@ export default function DirectoryDemo({ onOpenContact }) {
               return (
                 <div
                   key={biz.id}
-                  className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                  className="glass-card rounded-2xl p-5 sm:p-6 border border-black/10 dark:border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden shadow-lg"
                 >
                   {/* Glow accent corner */}
                   <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-bl-full pointer-events-none group-hover:bg-cyan-500/10 transition-colors" />
@@ -261,64 +270,64 @@ export default function DirectoryDemo({ onOpenContact }) {
                         <div className="relative group/monogram shrink-0">
                           <div className={`absolute -inset-1 bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} rounded-2xl blur-[6px] opacity-30 group-hover/monogram:opacity-60 transition-opacity duration-300`} />
                           <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-tr ${biz.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-lg`}>
-                            <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center relative overflow-hidden">
-                              <span className="font-mono font-black text-white text-sm tracking-wider">
+                            <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center relative overflow-hidden">
+                              <span className="font-mono font-black text-zinc-900 dark:text-white text-sm tracking-wider">
                                 {getMonogram(biz.name)}
                               </span>
-                              <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+                              <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
                             </div>
                           </div>
                           {/* Category mini glyph */}
-                          <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                          <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-slate-100 dark:bg-[#09090b] border border-black/10 dark:border-white/20 shadow-md">
                             {getCategoryGlyph(biz.category)}
                           </div>
                         </div>
 
                         <div>
                           <div className="flex items-center gap-1.5 mb-1">
-                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-zinc-800/90 border border-white/10 text-cyan-300">
+                            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 dark:bg-zinc-800/90 border border-black/10 dark:border-white/10 text-cyan-700 dark:text-cyan-300">
                               {language === 'es' ? (biz.categoryLabelEs || biz.category) : (biz.categoryLabelEn || biz.category)}
                             </span>
                           </div>
-                          <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-mono">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <div className="flex items-center gap-1.5 text-[10px] text-emerald-600 dark:text-emerald-400 font-mono font-medium">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             <span>{language === 'es' ? 'Nodo Verificado' : 'Verified Node'}</span>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-1 bg-zinc-900/90 px-2 py-0.5 rounded border border-white/5 text-xs font-bold text-amber-400 font-mono">
-                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <div className="flex items-center gap-1 bg-slate-100 dark:bg-zinc-900/90 px-2 py-0.5 rounded border border-black/5 dark:border-white/5 text-xs font-bold text-amber-500 dark:text-amber-400 font-mono">
+                        <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-500 dark:text-amber-400" />
                         <span>{biz.rating || 5.0}</span>
                         <span className="text-zinc-500 text-[10px]">({biz.reviews || 0})</span>
                       </div>
                     </div>
 
                     {/* Business Name */}
-                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
+                    <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-200 transition-colors mb-1.5 flex items-center justify-between">
                       <span>{biz.name || 'Comercio Local'}</span>
                       {biz.badge && (
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-300">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-700 dark:text-cyan-300">
                           {biz.badge}
                         </span>
                       )}
                     </h3>
 
                     {/* Address in Marinilla */}
-                    <div className="flex items-start gap-1.5 text-xs text-zinc-400 mb-3">
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400 shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-3">
+                      <MapPin className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
                       <span className="line-clamp-1">{biz.address || 'Marinilla, Antioquia'}</span>
                     </div>
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-4 line-clamp-2">
+                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed mb-4 line-clamp-2">
                       {language === 'es' ? (biz.descriptionEs || biz.descriptionEn || '') : (biz.descriptionEn || biz.descriptionEs || '')}
                     </p>
 
                     {/* Tags */}
                     <div className="flex flex-wrap gap-1.5 mb-5">
                       {(biz.tags || []).map((tag, idx) => (
-                        <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-zinc-900 border border-white/5 text-zinc-400 font-medium">
+                        <span key={idx} className="text-[10px] px-2 py-0.5 rounded bg-slate-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 text-zinc-600 dark:text-zinc-400 font-medium">
                           {tag}
                         </span>
                       ))}
@@ -329,13 +338,13 @@ export default function DirectoryDemo({ onOpenContact }) {
                       <div className="mb-4">
                         <button
                           onClick={() => handleWebsiteClick(biz.websiteUrl)}
-                          className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-cyan-500/10 hover:from-cyan-500/20 hover:to-indigo-500/20 text-cyan-300 border border-cyan-500/25 hover:border-cyan-400 text-xs font-semibold flex items-center justify-between transition-all group/landing cursor-pointer shadow-sm"
+                          className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-cyan-500/10 hover:from-cyan-500/20 hover:to-indigo-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25 hover:border-cyan-400 text-xs font-semibold flex items-center justify-between transition-all group/landing cursor-pointer shadow-sm"
                         >
                           <div className="flex items-center gap-2 truncate">
-                            <Globe className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                            <Globe className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
                             <span className="truncate font-mono text-[11px]">{biz.websiteUrl.replace(/^https?:\/\//, '')}</span>
                           </div>
-                          <span className="flex items-center gap-1 text-[11px] font-bold text-cyan-300 group-hover/landing:translate-x-0.5 transition-transform shrink-0">
+                          <span className="flex items-center gap-1 text-[11px] font-bold text-cyan-700 dark:text-cyan-300 group-hover/landing:translate-x-0.5 transition-transform shrink-0">
                             <span>{language === 'es' ? 'Ver Landing' : 'View Landing'}</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
                           </span>
@@ -343,21 +352,21 @@ export default function DirectoryDemo({ onOpenContact }) {
                       </div>
                     ) : (
                       <div className="mb-4">
-                        <div className="w-full py-1.5 px-3 rounded-xl bg-zinc-900/60 border border-white/5 text-zinc-500 text-[11px] flex items-center justify-between font-mono">
+                        <div className="w-full py-1.5 px-3 rounded-xl bg-slate-100 dark:bg-zinc-900/60 border border-black/5 dark:border-white/5 text-zinc-500 text-[11px] flex items-center justify-between font-mono">
                           <span>{language === 'es' ? 'Landing: En Desarrollo' : 'Landing: In Progress'}</span>
-                          <span className="text-[10px] text-zinc-600 font-sans">Canal WhatsApp Activo</span>
+                          <span className="text-[10px] text-zinc-500 font-sans">Canal WhatsApp Activo</span>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  {/* Bottom Interactive Actions: WhatsApp, Website & Profile */}
-                  <div className="pt-3 border-t border-white/10 flex items-center gap-2">
+                  {/* Bottom Interactive Actions */}
+                  <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
                     
                     {/* Primary Direct WhatsApp Action */}
                     <button
                       onClick={() => handleWhatsAppClick(biz)}
-                      className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
+                      className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-500/15 hover:bg-emerald-500 text-emerald-700 dark:text-emerald-300 hover:text-zinc-950 border border-emerald-500/30 hover:border-emerald-400 text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1.5 shadow-sm active:scale-95 cursor-pointer"
                       title={t.directory.buttons.chat}
                     >
                       <MessageCircle className="w-4 h-4 fill-emerald-500/30" />
@@ -367,7 +376,7 @@ export default function DirectoryDemo({ onOpenContact }) {
                     {/* Phone Call Action */}
                     <button
                       onClick={() => handleCallClick(biz)}
-                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
+                      className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 transition-colors cursor-pointer shadow-sm"
                       title={t.directory.buttons.call}
                     >
                       <Phone className="w-4 h-4" />
@@ -376,7 +385,7 @@ export default function DirectoryDemo({ onOpenContact }) {
                     {/* Profile detail trigger */}
                     <button
                       onClick={() => setActiveModalBusiness(biz)}
-                      className="p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 transition-colors"
+                      className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 transition-colors cursor-pointer shadow-sm"
                       title={t.directory.buttons.viewDetails}
                     >
                       <ExternalLink className="w-4 h-4" />
@@ -389,21 +398,21 @@ export default function DirectoryDemo({ onOpenContact }) {
           </div>
         )}
 
-        {/* Empty state if 0 results */}
+        {/* Empty state */}
         {filteredBusinesses.length === 0 && (
-          <div className="text-center py-16 px-4 glass-card rounded-2xl max-w-lg mx-auto border border-white/10">
-            <Search className="w-10 h-10 text-zinc-600 mx-auto mb-3" />
-            <h4 className="text-base font-bold text-white mb-1">
+          <div className="text-center py-16 px-4 glass-card rounded-2xl max-w-lg mx-auto border border-black/10 dark:border-white/10 shadow-lg">
+            <Search className="w-10 h-10 text-zinc-400 dark:text-zinc-600 mx-auto mb-3" />
+            <h4 className="text-base font-bold text-zinc-900 dark:text-white mb-1">
               {language === 'es' ? 'No se encontraron comercios' : 'No businesses found'}
             </h4>
-            <p className="text-xs text-zinc-400 mb-4">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-4">
               {language === 'es' 
                 ? 'Intenta con otro término de búsqueda o selecciona la categoría "Todos".' 
                 : 'Try another search term or switch back to the "All" category filter.'}
             </p>
             <button
               onClick={() => { setSearchQuery(''); setSelectedCategory('all'); }}
-              className="px-4 py-2 rounded-lg bg-zinc-800 text-xs font-semibold text-white hover:bg-zinc-700 transition-colors"
+              className="px-4 py-2 rounded-lg bg-zinc-800 text-xs font-semibold text-white hover:bg-zinc-700 transition-colors cursor-pointer"
             >
               {language === 'es' ? 'Restablecer Búsqueda' : 'Reset Search'}
             </button>
@@ -411,20 +420,20 @@ export default function DirectoryDemo({ onOpenContact }) {
         )}
 
         {/* Quick Developer / Merchant CTA Banner */}
-        <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-zinc-950/70 border border-white/10 backdrop-blur-md max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-zinc-400">
+        <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-zinc-950/70 border border-black/10 dark:border-white/10 backdrop-blur-md max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-zinc-600 dark:text-zinc-400 shadow-sm">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shrink-0">
+            <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 shrink-0">
               <PlusCircle className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold text-white block">
+              <span className="font-bold text-zinc-900 dark:text-white block">
                 {language === 'es' ? '¿Quieres sumar tu comercio al Directorio?' : 'Want to list your business on the directory?'}
               </span>
               <span>
                 {language === 'es' 
                   ? 'Configura comercios en ' 
                   : 'Manage businesses in '}
-                <code className="text-cyan-300 font-mono bg-zinc-900 px-1.5 py-0.5 rounded border border-white/5">
+                <code className="text-cyan-700 dark:text-cyan-300 font-mono bg-slate-100 dark:bg-zinc-900 px-1.5 py-0.5 rounded border border-black/5 dark:border-white/5">
                   src/data/marinillaBusinesses.js
                 </code>
               </span>
@@ -441,13 +450,13 @@ export default function DirectoryDemo({ onOpenContact }) {
 
         {/* Business Detailed Quick View Modal */}
         {activeModalBusiness && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-lg rounded-3xl bg-[#121217] border border-white/15 p-6 sm:p-7 shadow-2xl overflow-hidden">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-7 shadow-2xl overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
 
               <button
                 onClick={() => setActiveModalBusiness(null)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 border border-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer z-10"
+                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 dark:bg-zinc-900 border border-black/10 dark:border-white/10 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer z-10"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -456,54 +465,54 @@ export default function DirectoryDemo({ onOpenContact }) {
               <div className="flex items-center gap-4 mb-4">
                 <div className="relative shrink-0">
                   <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${activeModalBusiness.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-xl`}>
-                    <div className="w-full h-full bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center">
-                      <span className="font-mono font-black text-white text-lg tracking-wider">
+                    <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center">
+                      <span className="font-mono font-black text-zinc-900 dark:text-white text-lg tracking-wider">
                         {getMonogram(activeModalBusiness.name)}
                       </span>
                     </div>
                   </div>
-                  <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-[#09090b] border border-white/20 shadow-md">
+                  <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-slate-100 dark:bg-[#09090b] border border-black/10 dark:border-white/20 shadow-md">
                     {getCategoryGlyph(activeModalBusiness.category)}
                   </div>
                 </div>
 
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-300 border border-cyan-500/25">
+                    <span className="text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25">
                       {language === 'es' ? activeModalBusiness.categoryLabelEs : activeModalBusiness.categoryLabelEn}
                     </span>
-                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                       {t.directory.status.verified}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-white">
+                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
                     {activeModalBusiness.name}
                   </h3>
                 </div>
               </div>
 
-              <p className="text-xs sm:text-sm text-zinc-300 mb-4 leading-relaxed">
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 mb-4 leading-relaxed">
                 {language === 'es' ? activeModalBusiness.descriptionEs : activeModalBusiness.descriptionEn}
               </p>
 
-              <div className="p-3.5 rounded-xl bg-zinc-900/80 border border-white/5 space-y-2 mb-5 text-xs text-zinc-300">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-black/5 dark:border-white/5 space-y-2 mb-5 text-xs text-zinc-700 dark:text-zinc-300">
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <MapPin className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
                   <span>{activeModalBusiness.address}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <Phone className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
                   <span>{activeModalBusiness.phone}</span>
                 </div>
                 {activeModalBusiness.websiteUrl && (
                   <div className="flex items-center gap-2">
-                    <Globe className="w-4 h-4 text-indigo-400 shrink-0" />
+                    <Globe className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
                     <a 
                       href={activeModalBusiness.websiteUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-cyan-400 hover:underline flex items-center gap-1"
+                      className="text-cyan-700 dark:text-cyan-400 hover:underline flex items-center gap-1 font-medium"
                     >
                       <span>{activeModalBusiness.websiteUrl}</span>
                       <ArrowUpRight className="w-3 h-3" />
@@ -514,13 +523,13 @@ export default function DirectoryDemo({ onOpenContact }) {
 
               {/* Verified Features */}
               <div className="mb-6">
-                <span className="text-xs font-bold text-zinc-400 block mb-2 uppercase tracking-wider">
+                <span className="text-xs font-bold text-zinc-600 dark:text-zinc-400 block mb-2 uppercase tracking-wider">
                   {language === 'es' ? 'Beneficios & Servicios Activos' : 'Active Verified Services'}
                 </span>
                 <div className="grid grid-cols-2 gap-2">
                   {(activeModalBusiness.features || []).map((feat, i) => (
-                    <div key={i} className="text-xs text-zinc-300 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    <div key={i} className="text-xs text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
                       <span>{feat}</span>
                     </div>
                   ))}
@@ -553,7 +562,7 @@ export default function DirectoryDemo({ onOpenContact }) {
                 </button>
                 <button
                   onClick={() => setActiveModalBusiness(null)}
-                  className="px-5 py-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-medium text-xs cursor-pointer"
+                  className="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white font-medium text-xs cursor-pointer"
                 >
                   {language === 'es' ? 'Cerrar' : 'Close'}
                 </button>

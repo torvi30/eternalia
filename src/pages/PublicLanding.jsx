@@ -25,7 +25,7 @@ export default function PublicLanding() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#09090b] text-zinc-100 flex flex-col selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="relative min-h-screen bg-slate-50 dark:bg-[#09090b] text-zinc-800 dark:text-zinc-100 flex flex-col selection:bg-indigo-500/30 selection:text-indigo-900 dark:selection:text-indigo-200 transition-colors duration-300">
       {/* Dynamic Background Atmosphere */}
       <GlowBackground />
 

@@ -182,7 +182,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
   };
 
   return (
-    <div className="w-full rounded-2xl bg-zinc-950/90 border border-white/10 backdrop-blur-2xl shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden text-left font-mono">
+    <div className="w-full rounded-2xl bg-zinc-950/95 border border-black/15 dark:border-white/10 backdrop-blur-2xl shadow-2xl dark:shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden text-left font-mono">
       
       {/* Terminal Title Bar with macOS dots */}
       <div className="flex items-center justify-between px-4 py-2.5 bg-zinc-900/80 border-b border-white/5">

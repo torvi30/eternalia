@@ -34,9 +34,9 @@ export default function ContactModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-lg rounded-3xl bg-[#121217] border border-white/15 p-6 sm:p-8 shadow-[0_20px_70px_rgba(0,0,0,0.8)] overflow-hidden"
+        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow ambient inside dialog */}
@@ -45,25 +45,25 @@ export default function ContactModal({ isOpen, onClose }) {
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-xl bg-zinc-900 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors cursor-pointer"
+          className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />
         </button>
 
         {status === 'success' ? (
           <div className="text-center py-10">
-            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center mx-auto mb-4 text-emerald-400">
+            <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center mx-auto mb-4 text-emerald-600 dark:text-emerald-400">
               <CheckCircle2 className="w-8 h-8" />
             </div>
-            <h3 className="text-2xl font-bold text-white mb-2">
+            <h3 className="text-2xl font-bold text-zinc-900 dark:text-white mb-2">
               {language === 'es' ? '¡Solicitud Recibida!' : 'Application Received!'}
             </h3>
-            <p className="text-zinc-300 text-sm max-w-sm mx-auto mb-8 leading-relaxed">
+            <p className="text-zinc-600 dark:text-zinc-300 text-sm max-w-sm mx-auto mb-8 leading-relaxed">
               {t.contactModal.form.success}
             </p>
             <button
               onClick={handleReset}
-              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs tracking-wide uppercase transition-colors"
+              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs tracking-wide uppercase transition-colors cursor-pointer"
             >
               {t.contactModal.form.close}
             </button>
@@ -71,21 +71,21 @@ export default function ContactModal({ isOpen, onClose }) {
         ) : (
           <div>
             <div className="mb-6">
-              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30">
                 Eternalia Executive Desk
               </span>
-              <h3 className="text-2xl font-extrabold text-white mt-2 mb-1">
+              <h3 className="text-2xl font-extrabold text-zinc-900 dark:text-white mt-2 mb-1">
                 {t.contactModal.title}
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 {t.contactModal.subtitle}
               </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-                  <User className="w-3.5 h-3.5 text-zinc-400" />
+                <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
+                  <User className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>{t.contactModal.form.name}</span>
                 </label>
                 <input
@@ -94,13 +94,13 @@ export default function ContactModal({ isOpen, onClose }) {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder={t.contactModal.form.namePlaceholder}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950/80 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-zinc-400" />
+                <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>{t.contactModal.form.email}</span>
                 </label>
                 <input
@@ -109,22 +109,22 @@ export default function ContactModal({ isOpen, onClose }) {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder={t.contactModal.form.emailPlaceholder}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950/80 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-                  <Building className="w-3.5 h-3.5 text-zinc-400" />
+                <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
+                  <Building className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>{t.contactModal.form.role}</span>
                 </label>
                 <select
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950 border border-white/10 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
                 >
                   {t.contactModal.form.roles.map((role, idx) => (
-                    <option key={idx} value={role} className="bg-zinc-950 text-white">
+                    <option key={idx} value={role} className="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white">
                       {role}
                     </option>
                   ))}
@@ -132,8 +132,8 @@ export default function ContactModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5 flex items-center gap-1.5">
-                  <HelpCircle className="w-3.5 h-3.5 text-zinc-400" />
+                <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
+                  <HelpCircle className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>{t.contactModal.form.message}</span>
                 </label>
                 <textarea
@@ -142,7 +142,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder={t.contactModal.form.messagePlaceholder}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-zinc-950/80 border border-white/10 text-white placeholder-zinc-500 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs sm:text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 resize-none"
                 />
               </div>
 

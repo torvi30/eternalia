@@ -15,3 +15,7 @@
   git commit -m "tipo(alcance): descripcion breve" -m "Co-authored-by: jsdnlb <jsdnlb@users.noreply.github.com>"
   ```
 
+## Regla de Diseño y SEO (ADR-0002)
+- **Soporte Completo Dark / Light Mode**: Todo componente creado o modificado en la landing page debe soportar ambos modos mediante clases `dark:` y variables adaptativas con contraste WCAG 2.1 AA.
+- **Auditoría de SEO**: Mantener metadatos, datos estructurados Schema.org, semántica HTML y velocidad de carga en los más altos estándares bajo el rol de `design-seo-specialist`.
+

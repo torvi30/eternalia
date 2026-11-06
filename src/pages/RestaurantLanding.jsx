@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import ContactModal from '../components/ContactModal';
-import { 
+import {
   UtensilsCrossed,
   Monitor,
   Tablet,
@@ -167,15 +167,15 @@ export default function RestaurantLanding() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-[#07080c] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-orange-500 selection:text-white">
-      
+
       {/* 1. TOP ANNOUNCEMENT & DEDICATED HEADER */}
       <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#090a10]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          
+
           {/* Logo & Back Link */}
           <div className="flex items-center gap-4">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors group"
             >
               <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
@@ -239,7 +239,7 @@ export default function RestaurantLanding() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-orange-500/15 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
+
           <div className="text-center max-w-4xl mx-auto mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-4">
               <UtensilsCrossed className="w-3.5 h-3.5" />
@@ -247,8 +247,8 @@ export default function RestaurantLanding() {
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-zinc-900 dark:text-white tracking-tight leading-tight mb-5">
-              {language === 'es' 
-                ? 'El Sistema Operativo Definitivo para tu Restaurante: Cero Comisiones, Comandas y Menú QR' 
+              {language === 'es'
+                ? 'El Sistema Operativo Definitivo para tu Restaurante: Cero Comisiones, Comandas y Menú QR'
                 : 'The Ultimate Restaurant OS: Zero Commission Cuts, Kitchen Tickets & QR Menus'}
             </h1>
 
@@ -301,7 +301,7 @@ export default function RestaurantLanding() {
           {/* 3. MULTI-DEVICE SIMULATOR (ESCRITORIO / TABLET / MÓVIL) */}
           <div className="max-w-5xl mx-auto mt-8">
             <div className="bg-white/90 dark:bg-[#0d0e14]/90 rounded-3xl p-4 sm:p-7 border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl">
-              
+
               {/* Device Selector Header */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-5 border-b border-black/10 dark:border-white/10">
                 <div>
@@ -317,11 +317,10 @@ export default function RestaurantLanding() {
                 <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-zinc-900 border border-black/5 dark:border-white/10">
                   <button
                     onClick={() => setActiveDevice('desktop')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      activeDevice === 'desktop'
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'desktop'
                         ? 'bg-orange-500 text-white shadow-md'
                         : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
+                      }`}
                   >
                     <Monitor className="w-3.5 h-3.5" />
                     <span>{language === 'es' ? 'Escritorio (Caja/Admin)' : 'Desktop'}</span>
@@ -329,11 +328,10 @@ export default function RestaurantLanding() {
 
                   <button
                     onClick={() => setActiveDevice('tablet')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      activeDevice === 'tablet'
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'tablet'
                         ? 'bg-orange-500 text-white shadow-md'
                         : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
+                      }`}
                   >
                     <Tablet className="w-3.5 h-3.5" />
                     <span>{language === 'es' ? 'Tablet (Comandero Cocina)' : 'Tablet'}</span>
@@ -341,11 +339,10 @@ export default function RestaurantLanding() {
 
                   <button
                     onClick={() => setActiveDevice('mobile')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                      activeDevice === 'mobile'
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'mobile'
                         ? 'bg-orange-500 text-white shadow-md'
                         : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
+                      }`}
                   >
                     <Smartphone className="w-3.5 h-3.5" />
                     <span>{language === 'es' ? 'Móvil (Mesero/Cliente)' : 'Mobile'}</span>
@@ -355,7 +352,7 @@ export default function RestaurantLanding() {
 
               {/* Dynamic Frame Display */}
               <div className="py-6 flex justify-center items-center overflow-hidden transition-all duration-300">
-                
+
                 {/* Desktop Frame */}
                 {activeDevice === 'desktop' && (
                   <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-900 animate-in fade-in duration-300">
@@ -371,8 +368,8 @@ export default function RestaurantLanding() {
                       <span className="text-[10px] text-emerald-500 font-mono font-bold">1920 x 1080 Full HD</span>
                     </div>
                     <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
-                      <img 
-                        src="/products/restaurants/pedidos.jpg" 
+                      <img
+                        src="/products/restaurants/pedidos.jpg"
                         alt="Vista de Pedidos en Escritorio"
                         className="w-full h-full object-contain"
                       />
@@ -389,8 +386,8 @@ export default function RestaurantLanding() {
                         <span className="text-[9px] text-orange-400 font-mono">Modo Tablet</span>
                       </div>
                       <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden">
-                        <img 
-                          src="/products/restaurants/productos.jpg" 
+                        <img
+                          src="/products/restaurants/productos.jpg"
                           alt="Vista de Menú en Tablet"
                           className="w-full h-full object-contain"
                         />
@@ -409,8 +406,8 @@ export default function RestaurantLanding() {
                         <span className="text-[9px] text-emerald-400 font-mono">5G Live</span>
                       </div>
                       <div className="relative aspect-[9/16] bg-zinc-950 overflow-hidden">
-                        <img 
-                          src="/products/restaurants/pedidos.jpg" 
+                        <img
+                          src="/products/restaurants/pedidos.jpg"
                           alt="Vista Móvil de Pedidos"
                           className="w-full h-full object-cover object-top"
                         />
@@ -437,7 +434,7 @@ export default function RestaurantLanding() {
       {/* 4. MÓDULOS REALES (PANTALLAZOS OFICIALES) */}
       <section id="modulos" className="py-20 bg-slate-100/70 dark:bg-[#0c0d13]/70 border-y border-black/10 dark:border-white/10 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
               <Sparkles className="w-3.5 h-3.5" />
@@ -462,11 +459,10 @@ export default function RestaurantLanding() {
                 <button
                   key={mod.id}
                   onClick={() => setActiveModule(index)}
-                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                    isActive
+                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${isActive
                       ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/25 border border-orange-400/40'
                       : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />
                   <span>{language === 'es' ? mod.nameEs : mod.nameEn}</span>
@@ -477,7 +473,7 @@ export default function RestaurantLanding() {
 
           {/* Active Module Showcase Card */}
           <div className="bg-white dark:bg-[#11121a] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* Left: Module Details & Features */}
             <div className="lg:col-span-5 space-y-6">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/30">
@@ -522,7 +518,7 @@ export default function RestaurantLanding() {
 
             {/* Right: Screenshot Viewer Frame */}
             <div className="lg:col-span-7">
-              <div 
+              <div
                 onClick={() => setActiveZoomImg(currentModule.img)}
                 className="relative rounded-2xl overflow-hidden border border-black/15 dark:border-white/20 shadow-2xl bg-zinc-950 group cursor-pointer"
               >
@@ -539,8 +535,8 @@ export default function RestaurantLanding() {
                 </div>
 
                 <div className="relative aspect-[16/10] bg-zinc-950">
-                  <img 
-                    src={currentModule.img} 
+                  <img
+                    src={currentModule.img}
                     alt={currentModule.nameEs}
                     className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                   />
@@ -562,9 +558,9 @@ export default function RestaurantLanding() {
       {/* 5. CALCULADORA DE RETORNO DE INVERSIÓN (AHORRO EN COMISIONES) */}
       <section className="py-20 relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          
+
           <div className="bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent rounded-3xl p-6 sm:p-10 border border-orange-500/30 shadow-2xl backdrop-blur-xl">
-            
+
             <div className="text-center max-w-2xl mx-auto mb-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
                 <DollarSign className="w-3.5 h-3.5" />
@@ -586,7 +582,7 @@ export default function RestaurantLanding() {
                 <label htmlFor="monthly-sales-slider" className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
                   {language === 'es' ? 'Ventas Mensuales en Domicilios / Pedidos:' : 'Monthly Delivery / Order Volume:'}
                 </label>
-                
+
                 <div className="text-3xl font-black text-orange-600 dark:text-orange-400 font-mono">
                   ${monthlySales.toLocaleString('es-CO')} <span className="text-xs font-sans text-zinc-500 font-normal">COP / mes</span>
                 </div>
@@ -671,7 +667,7 @@ export default function RestaurantLanding() {
 
       {/* 7. LIGHTBOX ZOOM MODAL */}
       {activeZoomImg && (
-        <div 
+        <div
           onClick={() => setActiveZoomImg(null)}
           className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-200"
         >
@@ -686,9 +682,9 @@ export default function RestaurantLanding() {
               </button>
             </div>
             <div className="p-2 bg-black flex items-center justify-center">
-              <img 
-                src={activeZoomImg} 
-                alt="Captura ampliada" 
+              <img
+                src={activeZoomImg}
+                alt="Captura ampliada"
                 className="max-h-[85vh] w-auto object-contain rounded-lg"
               />
             </div>
@@ -698,12 +694,13 @@ export default function RestaurantLanding() {
 
       {/* Contact Modal */}
       {isContactOpen && (
-        <ContactModal 
-          isOpen={isContactOpen} 
-          onClose={() => setIsContactOpen(false)} 
+        <ContactModal
+          isOpen={isContactOpen}
+          onClose={() => setIsContactOpen(false)}
         />
       )}
 
     </div>
   );
 }
+

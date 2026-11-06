@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { 
-  UtensilsCrossed, 
-  Monitor, 
-  Tablet, 
-  Smartphone, 
-  ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
-  TrendingUp, 
-  ShieldCheck, 
+import {
+  UtensilsCrossed,
+  Monitor,
+  Tablet,
+  Smartphone,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
+  TrendingUp,
+  ShieldCheck,
   Zap,
   Layers,
   ChevronRight
@@ -26,7 +26,7 @@ export default function FeaturedProducts({ onOpenContact }) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-orange-500/10 via-amber-500/5 to-cyan-500/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
@@ -39,7 +39,7 @@ export default function FeaturedProducts({ onOpenContact }) {
           </h2>
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
-            {language === 'es' 
+            {language === 'es'
               ? 'Plataformas SaaS de alto rendimiento, 100% responsivas para tabletas de cocina, monitores de caja y teléfonos móviles de clientes. Conoce nuestro producto insignia para el sector gastronómico.'
               : 'High-performance SaaS platforms, 100% responsive for kitchen tablets, cashier monitors, and customer mobile phones. Explore our flagship gastronomy software.'}
           </p>
@@ -47,12 +47,12 @@ export default function FeaturedProducts({ onOpenContact }) {
 
         {/* Featured Product Banner Card */}
         <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl overflow-hidden relative">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* Left Column: Product Information & Value Proposition */}
             <div className="lg:col-span-5 space-y-6">
-              
+
               <div className="flex items-center gap-2.5">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -73,8 +73,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                   </h3>
                 </div>
                 <p className="text-sm font-semibold text-orange-600 dark:text-orange-400">
-                  {language === 'es' 
-                    ? 'Sistema Operativo para Restaurantes, Comidas Rápidas & Cafeterías' 
+                  {language === 'es'
+                    ? 'Sistema Operativo para Restaurantes, Comidas Rápidas & Cafeterías'
                     : 'Operating System for Restaurants, Fast-Food Chains & Cafes'}
                 </p>
               </div>
@@ -127,16 +127,15 @@ export default function FeaturedProducts({ onOpenContact }) {
 
             {/* Right Column: Multi-Device Responsive Simulator */}
             <div className="lg:col-span-7 flex flex-col items-center">
-              
+
               {/* Responsive Device Switcher Tabs */}
               <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200 dark:bg-zinc-900 border border-black/5 dark:border-white/10 mb-5">
                 <button
                   onClick={() => setActiveDevice('desktop')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeDevice === 'desktop'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'desktop'
                       ? 'bg-orange-500 text-white shadow-md'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Monitor className="w-3.5 h-3.5" />
                   <span>{language === 'es' ? 'Escritorio' : 'Desktop'}</span>
@@ -144,11 +143,10 @@ export default function FeaturedProducts({ onOpenContact }) {
 
                 <button
                   onClick={() => setActiveDevice('tablet')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeDevice === 'tablet'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'tablet'
                       ? 'bg-orange-500 text-white shadow-md'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Tablet className="w-3.5 h-3.5" />
                   <span>{language === 'es' ? 'Tablet (Cocina)' : 'Tablet'}</span>
@@ -156,11 +154,10 @@ export default function FeaturedProducts({ onOpenContact }) {
 
                 <button
                   onClick={() => setActiveDevice('mobile')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeDevice === 'mobile'
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'mobile'
                       ? 'bg-orange-500 text-white shadow-md'
                       : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                  }`}
+                    }`}
                 >
                   <Smartphone className="w-3.5 h-3.5" />
                   <span>{language === 'es' ? 'Móvil (Mesero/QR)' : 'Mobile'}</span>
@@ -169,7 +166,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
               {/* Dynamic Frame Display */}
               <div className="w-full flex items-center justify-center min-h-[300px]">
-                
+
                 {/* Desktop View */}
                 {activeDevice === 'desktop' && (
                   <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-950 animate-in fade-in duration-300">
@@ -185,8 +182,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                       <span className="text-[9px] font-mono text-emerald-500 font-bold">1920x1080</span>
                     </div>
                     <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
-                      <img 
-                        src="/products/restaurants/pedidos.jpg" 
+                      <img
+                        src="/products/restaurants/pedidos.jpg"
                         alt="Pantalla de Pedidos en Escritorio"
                         className="w-full h-full object-contain"
                       />
@@ -203,8 +200,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                         <span className="text-orange-400 font-bold">Tablet POS</span>
                       </div>
                       <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden">
-                        <img 
-                          src="/products/restaurants/productos.jpg" 
+                        <img
+                          src="/products/restaurants/productos.jpg"
                           alt="Pantalla de Menú en Tablet"
                           className="w-full h-full object-contain"
                         />
@@ -223,8 +220,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                         <span className="text-emerald-400 font-bold">5G</span>
                       </div>
                       <div className="relative aspect-[9/16] bg-zinc-950 overflow-hidden">
-                        <img 
-                          src="/products/restaurants/pedidos.jpg" 
+                        <img
+                          src="/products/restaurants/pedidos.jpg"
                           alt="Pantalla Móvil"
                           className="w-full h-full object-cover object-top"
                         />
@@ -252,3 +249,4 @@ export default function FeaturedProducts({ onOpenContact }) {
     </section>
   );
 }
+

@@ -1,0 +1,18 @@
+#!/bin/sh
+# Hook de Git para dar cumplimiento a ADR-0001:
+# Añade a jsdnlb como coautor en todos los commits si no está presente ya.
+
+COMMIT_MSG_FILE=$1
+COMMIT_SOURCE=$2
+
+COAUTHOR="Co-authored-by: jsdnlb <jsdnlb@users.noreply.github.com>"
+
+# Verificar si el archivo de mensaje existe
+if [ -f "$COMMIT_MSG_FILE" ]; then
+    # Si no contiene ya la coautoría
+    if ! grep -q "Co-authored-by: jsdnlb" "$COMMIT_MSG_FILE"; then
+        # Añadir una línea en blanco y el coautor al final
+        printf "\n\n%s\n" "$COAUTHOR" >> "$COMMIT_MSG_FILE"
+    fi
+fi
+

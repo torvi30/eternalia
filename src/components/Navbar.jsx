@@ -8,8 +8,6 @@ import {
   Menu, 
   X, 
   ArrowUpRight, 
-  Compass, 
-  Calculator, 
   Activity, 
   TrendingUp,
   ShieldCheck,
@@ -22,7 +20,8 @@ import {
   Lock,
   Sun,
   Moon,
-  UtensilsCrossed
+  UtensilsCrossed,
+  Building2
 } from 'lucide-react';
 
 export default function Navbar({ onOpenContact, onOpenInvestors }) {
@@ -80,7 +79,7 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
       subtitle: language === 'es' ? 'Conecta el mundo físico con tus memorias' : 'Bridge physical tokens with your words',
       icon: QrCode,
       accent: 'from-emerald-500 to-teal-500',
-      action: () => scrollTo('directorio'),
+      action: () => scrollTo('empresas'),
     },
     {
       title: language === 'es' ? 'Contactos de Confianza' : 'Trusted Custodians',
@@ -179,17 +178,10 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
               </Link>
 
               <button
-                onClick={() => scrollTo('directorio')}
+                onClick={() => scrollTo('empresas')}
                 className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
               >
-                {language === 'es' ? 'Red & Placas' : 'Mesh & Directory'}
-              </button>
-
-              <button
-                onClick={() => scrollTo('cotizador')}
-                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
-              >
-                {language === 'es' ? 'Cotizador' : 'Custom Quote'}
+                {language === 'es' ? 'Empresas & Clientes' : 'Client Network'}
               </button>
 
               <button
@@ -396,28 +388,15 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
 
                 <div className="grid grid-cols-2 gap-2">
                   <button
-                    onClick={() => scrollTo('directorio')}
+                    onClick={() => scrollTo('empresas')}
                     className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 text-left transition-all cursor-pointer shadow-sm"
                   >
-                    <Compass className="w-4 h-4 text-cyan-600 dark:text-cyan-400 mb-1.5" />
+                    <Building2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 mb-1.5" />
                     <span className="text-xs font-bold text-zinc-900 dark:text-white block">
-                      {language === 'es' ? 'Directorio' : 'Directory'}
+                      {language === 'es' ? 'Empresas' : 'Businesses'}
                     </span>
                     <span className="text-[10px] text-zinc-500">
-                      {language === 'es' ? 'Red Comercial' : 'Local Mesh'}
-                    </span>
-                  </button>
-
-                  <button
-                    onClick={() => scrollTo('cotizador')}
-                    className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 text-left transition-all cursor-pointer shadow-sm"
-                  >
-                    <Calculator className="w-4 h-4 text-amber-500 dark:text-amber-400 mb-1.5" />
-                    <span className="text-xs font-bold text-zinc-900 dark:text-white block">
-                      {language === 'es' ? 'Cotizador' : 'Solutions'}
-                    </span>
-                    <span className="text-[10px] text-zinc-500">
-                      {language === 'es' ? 'Simulador' : 'Interactive'}
+                      {language === 'es' ? 'Red de Clientes' : 'Client Network'}
                     </span>
                   </button>
 

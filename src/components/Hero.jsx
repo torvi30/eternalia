@@ -132,9 +132,9 @@ export default function Hero({ onOpenContact, onExploreClick, onDemoClick }) {
               <span>{language === 'es' ? 'Ver Proyectos Activos' : 'View Live Projects'}</span>
             </a>
 
-            {/* Tertiary CTA: Demo Directorio Marinilla */}
+            {/* Tertiary CTA: Red de Empresas & Clientes */}
             <a
-              href="#directorio"
+              href="#empresas"
               onClick={onDemoClick}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-medium text-zinc-700 dark:text-zinc-300 bg-slate-100/80 dark:bg-zinc-900/50 hover:bg-slate-200 dark:hover:bg-zinc-800/80 border border-black/5 dark:border-white/5 hover:border-black/15 dark:hover:border-white/15 transition-all duration-200 backdrop-blur-md hover:text-zinc-900 dark:hover:text-white text-xs sm:text-sm"
             >

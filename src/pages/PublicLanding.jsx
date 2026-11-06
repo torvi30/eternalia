@@ -4,9 +4,8 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import BentoGrid from '../components/BentoGrid';
 import FeaturedProducts from '../components/FeaturedProducts';
+import CompanyMarquee from '../components/CompanyMarquee';
 import ProjectsShowcase from '../components/ProjectsShowcase';
-import QuoteEngine from '../components/QuoteEngine';
-import DirectoryDemo from '../components/DirectoryDemo';
 import TechSpecs from '../components/TechSpecs';
 import InfrastructureStatus from '../components/InfrastructureStatus';
 import CallToAction from '../components/CallToAction';
@@ -46,22 +45,19 @@ export default function PublicLanding() {
           }}
           onDemoClick={(e) => {
             e.preventDefault();
-            scrollToSection('directorio');
+            scrollToSection('empresas');
           }}
         />
 
         {/* Productos SaaS Disponibles - Posición Prioritaria Destacada */}
         <FeaturedProducts onOpenContact={() => setIsContactOpen(true)} />
 
+        {/* Red de Empresas & Clientes - Marquee Infinito de Logos */}
+        <CompanyMarquee />
+
         <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
 
         <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
-
-        {/* 3. Cotizador Interactivo de Soluciones */}
-        <QuoteEngine />
-
-        {/* 5. Directorio Hiperlocal con Transacciones en Vivo */}
-        <DirectoryDemo onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Especificaciones Corporativas */}
         <TechSpecs />

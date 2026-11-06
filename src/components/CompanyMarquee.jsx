@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { marinillaBusinesses as defaultBusinesses } from '../data/marinillaBusinesses';
-import { getBusinesses } from '../services/businessService';
+import { directoryCompanies as defaultCompanies } from '../data/companiesData';
+import { fetchDirectoryCompaniesFromEndpoint } from '../services/businessService';
 import { 
   Building2, 
   ArrowUpRight, 
@@ -10,28 +10,16 @@ import {
 
 export default function CompanyMarquee() {
   const { language } = useLanguage();
-  const [businesses, setBusinesses] = useState(defaultBusinesses);
+  const [businesses, setBusinesses] = useState(defaultCompanies);
   const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
-    // Load businesses from directory service (supports Firestore or local storage)
-    getBusinesses().then((data) => {
-      if (data && data.length > 0) {
-        setBusinesses(data);
+    // Consulta en vivo el endpoint de auth-foundattion para sincronizar logos y nombres
+    fetchDirectoryCompaniesFromEndpoint().then((liveData) => {
+      if (liveData && liveData.length > 0) {
+        setBusinesses(liveData);
       }
     });
-
-    // Listen for live updates
-    const handleUpdate = () => {
-      getBusinesses().then((data) => {
-        if (data && data.length > 0) {
-          setBusinesses(data);
-        }
-      });
-    };
-
-    window.addEventListener('eternalia_businesses_updated', handleUpdate);
-    return () => window.removeEventListener('eternalia_businesses_updated', handleUpdate);
   }, []);
 
   const handleImageError = (id) => {
@@ -45,15 +33,20 @@ export default function CompanyMarquee() {
     return (clean[0][0] + clean[1][0]).toUpperCase();
   };
 
-  // Build duplicated arrays for continuous infinite marquee looping
-  const row1Items = [...businesses, ...businesses, ...businesses];
-  const row2Items = [...businesses.slice().reverse(), ...businesses.slice().reverse(), ...businesses.slice().reverse()];
+  // Dividir equitativamente en 2 filas continuas
+  const half = Math.ceil(businesses.length / 2);
+  const firstRow = businesses.slice(0, half);
+  const secondRow = businesses.slice(half);
+
+  // Duplicar para animación infinita sin saltos
+  const row1Items = [...firstRow, ...firstRow, ...firstRow];
+  const row2Items = [...secondRow, ...secondRow, ...secondRow];
 
   const renderCard = (biz, uniqueKey) => {
     const hasValidLogo = biz.logo && !imageErrors[biz.id];
-    const targetUrl = biz.websiteUrl || (biz.whatsapp ? `https://wa.me/${biz.whatsapp}` : '#');
-    const category = language === 'es' ? (biz.categoryLabelEs || biz.category) : (biz.categoryLabelEn || biz.category);
-    const subtitle = language === 'es' ? (biz.tags?.[0] || biz.descriptionEs) : (biz.tags?.[0] || biz.descriptionEn);
+    const targetUrl = biz.url || (biz.companyTag ? `https://auth-foundattion.web.app/${biz.companyTag}/landing` : 'https://auth-foundattion.web.app/directorio');
+    const category = language === 'es' ? (biz.categoryEs || biz.industry || 'Comercio') : (biz.categoryEn || 'Merchant');
+    const location = biz.municipality ? `${biz.municipality}, ${biz.department || 'Antioquia'}` : 'Comercio Activo';
 
     return (
       <a
@@ -63,13 +56,14 @@ export default function CompanyMarquee() {
         rel="noopener noreferrer"
         className="group relative flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-zinc-900/85 hover:bg-white dark:hover:bg-zinc-800/95 border border-black/[0.08] dark:border-white/[0.08] hover:border-cyan-500/40 dark:hover:border-cyan-500/40 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 w-[290px] sm:w-[330px] shrink-0 mx-2 select-none transform hover:-translate-y-1"
       >
-        {/* Logo Container (Image URL or Monogram) */}
+        {/* Logo Container (Cloudinary Image URL or Gradient Monogram) */}
         <div className="relative w-12 h-12 rounded-xl shrink-0 p-[1.5px] bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-white/10 dark:to-white/5 group-hover:from-cyan-500 group-hover:to-indigo-500 transition-colors shadow-inner">
-          <div className="w-full h-full rounded-[10px] bg-slate-50 dark:bg-zinc-950 flex items-center justify-center overflow-hidden">
+          <div className="w-full h-full rounded-[10px] bg-white dark:bg-zinc-950 flex items-center justify-center overflow-hidden">
             {hasValidLogo ? (
               <img
                 src={biz.logo}
                 alt={biz.name}
+                loading="lazy"
                 onError={() => handleImageError(biz.id)}
                 className="w-full h-full object-contain p-1 rounded-lg"
               />
@@ -95,7 +89,7 @@ export default function CompanyMarquee() {
           </span>
 
           <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
-            {subtitle}
+            📍 {location}
           </p>
         </div>
       </a>

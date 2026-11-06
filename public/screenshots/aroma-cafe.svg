@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCafe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#171310"/>
+      <stop offset="100%" stop-color="#0e0a08"/>
+    </linearGradient>
+    <linearGradient id="cafeAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgCafe)"/>
+
+  <!-- Browser Bar -->
+  <rect width="1200" height="48" fill="#221b16"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#100c09"/>
+  <text x="440" y="28" fill="#fde68a" font-family="system-ui, sans-serif" font-size="12">
+    ☕ https://aromacafe.ordenes.eternalia.co/pick-and-go
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#1a1410" stroke="#362920" stroke-width="1"/>
+  <text x="60" y="90" fill="#ffffff" font-family="Georgia, serif" font-size="24" font-weight="bold">AROMA CAFÉ DE ORIGEN</text>
+  <text x="370" y="85" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">MICRO-LOTES • TOSTIÓN SEMANAL</text>
+
+  <rect x="940" y="65" width="200" height="36" rx="18" fill="url(#cafeAccent)"/>
+  <text x="965" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">⚡ Pedido Anticipado (Pick&amp;Go)</text>
+
+  <!-- Banner -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="#241b15" stroke="#3d2c20" stroke-width="1"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="28" font-weight="bold">Cafés Especiales de Fincas Colombianas</text>
+  <text x="100" y="225" fill="#fde68a" font-family="system-ui, sans-serif" font-size="14">Geisha, Borbón Rosado y Castillo con procesos Honey y Natural. Pasa y recoge sin filas.</text>
+  <rect x="100" y="245" width="170" height="32" rx="16" fill="#92400e"/>
+  <text x="120" y="266" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">☕ Ver Métodos de Filtrado</text>
+
+  <!-- Cards -->
+  <rect x="60" y="340" width="340" height="350" rx="16" fill="#1b1410" stroke="#362920" stroke-width="1"/>
+  <rect x="60" y="340" width="340" height="170" rx="16" fill="#291e17"/>
+  <text x="175" y="435" font-size="50" text-anchor="middle">☕</text>
+  <text x="80" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Borbón Rosado (Filtrado V60)</text>
+  <text x="80" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Notas a jazmín, durazno y miel de abejas</text>
+  <text x="80" y="630" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 14.500</text>
+  <rect x="250" y="610" width="130" height="36" rx="10" fill="url(#cafeAccent)"/>
+  <text x="270" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pick&amp;Go</text>
+
+  <rect x="430" y="340" width="340" height="350" rx="16" fill="#1b1410" stroke="#362920" stroke-width="1"/>
+  <rect x="430" y="340" width="340" height="170" rx="16" fill="#291e17"/>
+  <text x="545" y="435" font-size="50" text-anchor="middle">🥐</text>
+  <text x="450" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Croissant Francés de Almendras</text>
+  <text x="450" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Hojaldre 100% mantequilla con crema frangipane</text>
+  <text x="450" y="630" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 12.000</text>
+  <rect x="620" y="610" width="130" height="36" rx="10" fill="url(#cafeAccent)"/>
+  <text x="640" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pick&amp;Go</text>
+
+  <rect x="800" y="340" width="340" height="350" rx="16" fill="#1b1410" stroke="#362920" stroke-width="1"/>
+  <rect x="800" y="340" width="340" height="170" rx="16" fill="#291e17"/>
+  <text x="915" y="435" font-size="50" text-anchor="middle">📦</text>
+  <text x="820" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Bolsa Café Geisha en Grano 340g</text>
+  <text x="820" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Origen Huila • Altitud 1.850 msnm • Tostión media</text>
+  <text x="820" y="630" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 48.000</text>
+  <rect x="990" y="610" width="130" height="36" rx="10" fill="url(#cafeAccent)"/>
+  <text x="1010" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pick&amp;Go</text>
+</svg>
+

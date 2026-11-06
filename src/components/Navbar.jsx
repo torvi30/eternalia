@@ -110,15 +110,12 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
 
           <div className="hidden sm:flex items-center gap-3">
             <span className="text-[10px] text-zinc-500">
-              {language === 'es' ? 'Protocolo AES-256' : 'AES-256 Protocol'}
+              {language === 'es' ? 'Infraestructura Cloud 24/7' : '24/7 Cloud Infrastructure'}
             </span>
-            <Link 
-              to="/admin/login" 
-              className="text-[11px] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-1 hover:underline"
-            >
-              <Lock className="w-3 h-3 text-indigo-500 dark:text-indigo-400" />
-              <span>{language === 'es' ? 'Portal de Acceso' : 'Portal Access'}</span>
-            </Link>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{language === 'es' ? 'Sistemas Operativos 99.9%' : 'Systems Operational 99.9%'}</span>
+            </span>
           </div>
         </div>
       </div>
@@ -220,21 +217,12 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 <span className={language === 'en' ? 'text-zinc-900 dark:text-white font-bold' : 'text-zinc-500'}>EN</span>
               </button>
 
-              {/* Botón Iniciar Sesión / Portal (Desktop) */}
-              <Link
-                to="/admin/login"
-                className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/80 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white text-xs font-medium transition-all cursor-pointer shadow-sm"
-              >
-                <LogIn className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
-                <span>{language === 'es' ? 'Iniciar Sesión' : 'Sign In'}</span>
-              </Link>
-
               {/* Botón Principal de Contacto / Comenzar */}
               <button
                 onClick={onOpenContact}
                 className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white text-xs font-bold shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_22px_rgba(6,182,212,0.4)] transition-all cursor-pointer active:scale-95"
               >
-                <span>{language === 'es' ? 'Comenzar Legado' : 'Start Legacy'}</span>
+                <span>{language === 'es' ? 'Comenzar Proyecto' : 'Start Project'}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </button>
 
@@ -427,20 +415,9 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
               </div>
             </div>
 
-            {/* Pie del Drawer: Iniciar Sesión / Portal + Comenzar Legado */}
+            {/* Pie del Drawer: Comenzar Legado / Contacto */}
             <div className="pt-5 border-t border-black/10 dark:border-white/10 space-y-2.5">
-              
-              {/* Acceso Portal Admin / Iniciar Sesión */}
-              <Link
-                to="/admin/login"
-                onClick={() => setDrawerOpen(false)}
-                className="w-full py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-sm"
-              >
-                <LogIn className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                <span>{language === 'es' ? 'Iniciar Sesión / Portal Admin' : 'Sign In / Admin Portal'}</span>
-              </Link>
-
-              {/* Botón Principal Iniciar Legado */}
+              {/* Botón Principal Iniciar Proyecto */}
               <button
                 onClick={() => {
                   setDrawerOpen(false);
@@ -448,7 +425,7 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 }}
                 className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer active:scale-95"
               >
-                <span>{language === 'es' ? 'Comenzar Mi Legado' : 'Start My Legacy'}</span>
+                <span>{language === 'es' ? 'Comenzar Proyecto / Contactar' : 'Start Project / Contact Us'}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
 

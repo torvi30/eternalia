@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141419"/>
+      <stop offset="100%" stop-color="#0a0a0d"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22232e"/>
+      <stop offset="100%" stop-color="#181822"/>
+    </linearGradient>
+    <linearGradient id="amberAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="goldText" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="750" fill="url(#bgGrad)"/>
+
+  <!-- Browser Top Bar -->
+  <rect width="1200" height="48" fill="#1c1d25"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  
+  <!-- URL Address Bar -->
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#0e0f14"/>
+  <text x="440" y="28" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500">
+    🔒 https://donrafael.menu.eternalia.co/mesa/14
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#14151c" stroke="#2d2f3d" stroke-width="1"/>
+  <text x="60" y="90" fill="#ffffff" font-family="Georgia, serif" font-size="24" font-weight="bold">DON RAFAEL</text>
+  <text x="210" y="84" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" letter-spacing="2">STEAKHOUSE &amp; VINO</text>
+  
+  <!-- Table Badge -->
+  <rect x="940" y="65" width="200" height="36" rx="18" fill="#232430" stroke="#f59e0b" stroke-width="1"/>
+  <circle cx="965" cy="83" r="5" fill="#10b981"/>
+  <text x="980" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">MESA 14 • SALÓN VIP</text>
+
+  <!-- Hero Banner inside app -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="url(#cardGrad)" stroke="#2d2f3d" stroke-width="1"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="28" font-weight="800">Cortes Madurados a la Parrilla</text>
+  <text x="100" y="225" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="14">Ordena desde tu mesa • Tiempo estimado de cocina: 18 - 25 min</text>
+  
+  <rect x="100" y="245" width="160" height="32" rx="16" fill="url(#amberAccent)"/>
+  <text x="125" y="266" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🔥 Menú Especial del Día</text>
+
+  <!-- Section Title -->
+  <text x="60" y="335" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Cortes Selectos (Angus Certificado)</text>
+  <text x="1040" y="335" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">Filtrar por término →</text>
+
+  <!-- Dish Card 1 -->
+  <rect x="60" y="360" width="340" height="340" rx="16" fill="#1b1c26" stroke="#2d2f3d" stroke-width="1"/>
+  <rect x="60" y="360" width="340" height="170" rx="16" fill="#2a1f1d"/>
+  <text x="175" y="450" fill="#f59e0b" font-size="44" text-anchor="middle">🥩</text>
+  <rect x="75" y="375" width="80" height="24" rx="12" fill="#ef4444"/>
+  <text x="88" y="391" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="bold">RECOMENDADO</text>
+  <text x="80" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="bold">Bife de Chorizo 400g</text>
+  <text x="80" y="585" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Corte jugoso a la brasa con mantequilla trufada</text>
+  <text x="80" y="625" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 78.900</text>
+  <rect x="250" y="605" width="130" height="36" rx="10" fill="url(#amberAccent)"/>
+  <text x="275" y="628" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir a Mesa</text>
+
+  <!-- Dish Card 2 -->
+  <rect x="430" y="360" width="340" height="340" rx="16" fill="#1b1c26" stroke="#2d2f3d" stroke-width="1"/>
+  <rect x="430" y="360" width="340" height="170" rx="16" fill="#24211d"/>
+  <text x="545" y="450" fill="#f59e0b" font-size="44" text-anchor="middle">🍖</text>
+  <rect x="445" y="375" width="85" height="24" rx="12" fill="#3b82f6"/>
+  <text x="458" y="391" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="bold">35 DÍAS DRY-AGED</text>
+  <text x="450" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="bold">Tomahawk Steak 900g</text>
+  <text x="450" y="585" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Para compartir • Servido con papas criollas al romero</text>
+  <text x="450" y="625" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 154.000</text>
+  <rect x="620" y="605" width="130" height="36" rx="10" fill="url(#amberAccent)"/>
+  <text x="645" y="628" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir a Mesa</text>
+
+  <!-- Dish Card 3 -->
+  <rect x="800" y="360" width="340" height="340" rx="16" fill="#1b1c26" stroke="#2d2f3d" stroke-width="1"/>
+  <rect x="800" y="360" width="340" height="170" rx="16" fill="#1c2420"/>
+  <text x="915" y="450" fill="#10b981" font-size="44" text-anchor="middle">🍷</text>
+  <rect x="815" y="375" width="80" height="24" rx="12" fill="#10b981"/>
+  <text x="828" y="391" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="bold">MARIDAJE</text>
+  <text x="820" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="bold">Malbec Gran Reserva 2021</text>
+  <text x="820" y="585" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Valle de Uco • Copa o Botella completa</text>
+  <text x="820" y="625" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 120.000</text>
+  <rect x="990" y="605" width="130" height="36" rx="10" fill="url(#amberAccent)"/>
+  <text x="1015" y="628" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir a Mesa</text>
+
+</svg>
+

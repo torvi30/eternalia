@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgTrattoria" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121814"/>
+      <stop offset="100%" stop-color="#0b0e0c"/>
+    </linearGradient>
+    <linearGradient id="oliveAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgTrattoria)"/>
+
+  <!-- Browser Top Bar -->
+  <rect width="1200" height="48" fill="#18221c"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#0c120e"/>
+  <text x="440" y="28" fill="#86efac" font-family="system-ui, sans-serif" font-size="12">
+    🌿 https://trattorianonna.reservas.eternalia.co
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#141c17" stroke="#23352a" stroke-width="1"/>
+  <text x="60" y="90" fill="#ffffff" font-family="Georgia, serif" font-size="24" font-weight="bold">LA NONNA TRATTORIA</text>
+  <text x="350" y="85" fill="#34d399" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">PASTA FATTA A MANO • DESDE 1988</text>
+
+  <rect x="950" y="65" width="190" height="36" rx="18" fill="url(#oliveAccent)"/>
+  <text x="980" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">📅 Reservar Mesa Online</text>
+
+  <!-- Banner -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="#192720" stroke="#23382c" stroke-width="1"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="28" font-weight="bold">Pastas Frescas Rellenas &amp; Salsas Clásicas</text>
+  <text x="100" y="225" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="14">Elaboradas cada mañana con harina de sémola italiana y huevos de campo</text>
+  <rect x="100" y="245" width="180" height="32" rx="16" fill="#047857"/>
+  <text x="120" y="266" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🍝 Ver Menú Degustación</text>
+
+  <!-- Dish Cards -->
+  <rect x="60" y="340" width="340" height="350" rx="16" fill="#16221b" stroke="#23382c" stroke-width="1"/>
+  <rect x="60" y="340" width="340" height="170" rx="16" fill="#203328"/>
+  <text x="175" y="435" font-size="50" text-anchor="middle">🍝</text>
+  <text x="80" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Ravioli di Ricotta e Tartufo</text>
+  <text x="80" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Pasta rellena de ricota y crema de trufa negra</text>
+  <text x="80" y="630" fill="#34d399" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 54.000</text>
+  <rect x="250" y="610" width="130" height="36" rx="10" fill="url(#oliveAccent)"/>
+  <text x="280" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir QR</text>
+
+  <rect x="430" y="340" width="340" height="350" rx="16" fill="#16221b" stroke="#23382c" stroke-width="1"/>
+  <rect x="430" y="340" width="340" height="170" rx="16" fill="#203328"/>
+  <text x="545" y="435" font-size="50" text-anchor="middle">🥘</text>
+  <text x="450" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Lasagna Tradizionale Emiliana</text>
+  <text x="450" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Capas de ragú boloñés con cocción lenta de 6h</text>
+  <text x="450" y="630" fill="#34d399" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 46.500</text>
+  <rect x="620" y="610" width="130" height="36" rx="10" fill="url(#oliveAccent)"/>
+  <text x="650" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir QR</text>
+
+  <rect x="800" y="340" width="340" height="350" rx="16" fill="#16221b" stroke="#23382c" stroke-width="1"/>
+  <rect x="800" y="340" width="340" height="170" rx="16" fill="#203328"/>
+  <text x="915" y="435" font-size="50" text-anchor="middle">🍰</text>
+  <text x="820" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Tiramisú al Mascarpone</text>
+  <text x="820" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Bizcochos savoiardi bañados en espresso y licor</text>
+  <text x="820" y="630" fill="#34d399" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 22.000</text>
+  <rect x="990" y="610" width="130" height="36" rx="10" fill="url(#oliveAccent)"/>
+  <text x="1020" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Pedir QR</text>
+</svg>
+

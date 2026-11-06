@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgFastGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f0c0c"/>
+      <stop offset="100%" stop-color="#170c0c"/>
+    </linearGradient>
+    <linearGradient id="burgerAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#16a34a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="750" fill="url(#bgFastGrad)"/>
+
+  <!-- Browser Top Bar -->
+  <rect width="1200" height="48" fill="#1e1313"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  
+  <!-- URL Address Bar -->
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#0d0808"/>
+  <text x="430" y="28" fill="#cbd5e1" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500">
+    ⚡ https://smashburger.pedidos.eternalia.co/express
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#170e0e" stroke="#381a1a" stroke-width="1"/>
+  <text x="60" y="92" fill="#ffffff" font-family="Impact, sans-serif" font-size="28" letter-spacing="1">SMASH BURGER LAB</text>
+  <rect x="330" y="70" width="90" height="26" rx="6" fill="#ef4444"/>
+  <text x="340" y="87" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="900">DELIVERY 25m</text>
+  
+  <!-- WhatsApp Direct Order Button -->
+  <rect x="910" y="62" width="230" height="42" rx="21" fill="url(#badgeGrad)"/>
+  <text x="945" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">💬 Pedir por WhatsApp (3)</text>
+
+  <!-- Flash Promo Banner -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="#241111" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="30" font-weight="900">DOBLE SMASH + PAPAS RÚSTICAS</text>
+  <text x="100" y="225" fill="#fca5a5" font-family="system-ui, sans-serif" font-size="14">Pan brioche artesanal tostado con mantequilla, queso cheddar fundido y salsa secreta</text>
+  
+  <rect x="100" y="245" width="200" height="34" rx="17" fill="url(#burgerAccent)"/>
+  <text x="120" y="267" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🍔 $ 29.900 (Combo 2x1)</text>
+
+  <!-- Category Chips inside App -->
+  <rect x="60" y="315" width="130" height="34" rx="17" fill="#ef4444"/>
+  <text x="85" y="337" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🍔 Smash Burgers</text>
+
+  <rect x="205" y="315" width="100" height="34" rx="17" fill="#241414" stroke="#451a1a"/>
+  <text x="225" y="337" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">🍗 Alitas</text>
+
+  <rect x="320" y="315" width="100" height="34" rx="17" fill="#241414" stroke="#451a1a"/>
+  <text x="340" y="337" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">🍟 Papas</text>
+
+  <rect x="435" y="315" width="110" height="34" rx="17" fill="#241414" stroke="#451a1a"/>
+  <text x="455" y="337" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">🥤 Bebidas</text>
+
+  <!-- Product Card 1 -->
+  <rect x="60" y="370" width="340" height="330" rx="16" fill="#1f1111" stroke="#3b1b1b" stroke-width="1"/>
+  <rect x="60" y="370" width="340" height="160" rx="16" fill="#361717"/>
+  <text x="175" y="460" fill="#f97316" font-size="50" text-anchor="middle">🍔</text>
+  <text x="80" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Monster Bacon Smash</text>
+  <text x="80" y="585" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">Doble carne 120g, triple tocineta crocante y BBQ ahumada</text>
+  <text x="80" y="625" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="900">$ 32.500</text>
+  <rect x="250" y="605" width="130" height="36" rx="10" fill="url(#burgerAccent)"/>
+  <text x="270" y="628" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Agregar</text>
+
+  <!-- Product Card 2 -->
+  <rect x="430" y="370" width="340" height="330" rx="16" fill="#1f1111" stroke="#3b1b1b" stroke-width="1"/>
+  <rect x="430" y="370" width="340" height="160" rx="16" fill="#331919"/>
+  <text x="545" y="460" fill="#f97316" font-size="50" text-anchor="middle">🧀</text>
+  <text x="450" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Triple Cheese Volcano</text>
+  <text x="450" y="585" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">Cheddar fundido inyectado, cebolla caramelizada</text>
+  <text x="450" y="625" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="900">$ 34.000</text>
+  <rect x="620" y="605" width="130" height="36" rx="10" fill="url(#burgerAccent)"/>
+  <text x="640" y="628" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Agregar</text>
+
+  <!-- Product Card 3 -->
+  <rect x="800" y="370" width="340" height="330" rx="16" fill="#1f1111" stroke="#3b1b1b" stroke-width="1"/>
+  <rect x="800" y="370" width="340" height="160" rx="16" fill="#2d1717"/>
+  <text x="915" y="460" fill="#f97316" font-size="50" text-anchor="middle">🍗</text>
+  <text x="820" y="560" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Wings Buffalo x12</text>
+  <text x="820" y="585" fill="#cbd5e1" font-family="system-ui, sans-serif" font-size="12">Alitas bañadas en salsa picante suave con dip ranch</text>
+  <text x="820" y="625" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="900">$ 28.000</text>
+  <rect x="990" y="605" width="130" height="36" rx="10" fill="url(#burgerAccent)"/>
+  <text x="1010" y="628" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Agregar</text>
+
+</svg>
+

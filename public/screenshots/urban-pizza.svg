@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgPizza" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#191512"/>
+      <stop offset="100%" stop-color="#0f0c0a"/>
+    </linearGradient>
+    <linearGradient id="pizzaAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f97316"/>
+      <stop offset="100%" stop-color="#eab308"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgPizza)"/>
+
+  <!-- Browser Bar -->
+  <rect width="1200" height="48" fill="#241e1a"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#110d0b"/>
+  <text x="440" y="28" fill="#fdba74" font-family="system-ui, sans-serif" font-size="12">
+    🍕 https://urbanpizza.pedidos.eternalia.co/builder
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#1c1613" stroke="#3b2b23" stroke-width="1"/>
+  <text x="60" y="92" fill="#ffffff" font-family="Impact, sans-serif" font-size="28">URBAN CRUST PIZZA</text>
+  <text x="330" y="86" fill="#f97316" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">MASA MADRE 48H • HORNO DE LEÑA</text>
+
+  <rect x="920" y="62" width="220" height="42" rx="21" fill="url(#pizzaAccent)"/>
+  <text x="950" y="88" fill="#000000" font-family="system-ui, sans-serif" font-size="13" font-weight="bold">🛒 Ver Mi Carrito (2)</text>
+
+  <!-- Pizza Builder Interactive Widget -->
+  <rect x="60" y="140" width="1080" height="170" rx="20" fill="#241a15" stroke="#f97316" stroke-width="1.5"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="26" font-weight="900">DISEÑA TU PIZZA MITAD Y MITAD</text>
+  <text x="100" y="225" fill="#fed7aa" font-family="system-ui, sans-serif" font-size="14">Masa fermentada lentamente en frío, salsa de tomate San Marzano y mozzarella fior di latte</text>
+  
+  <rect x="100" y="250" width="170" height="34" rx="17" fill="#f97316"/>
+  <text x="125" y="272" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🍕 Iniciar Diseñador</text>
+
+  <rect x="290" y="250" width="170" height="34" rx="17" fill="#36221a" stroke="#68341e"/>
+  <text x="315" y="272" fill="#fdba74" font-family="system-ui, sans-serif" font-size="12">⏱️ Horno en Vivo (12m)</text>
+
+  <!-- Cards -->
+  <rect x="60" y="340" width="340" height="350" rx="16" fill="#1e1612" stroke="#3b2b23" stroke-width="1"/>
+  <rect x="60" y="340" width="340" height="170" rx="16" fill="#362017"/>
+  <text x="175" y="435" font-size="50" text-anchor="middle">🍕</text>
+  <text x="80" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Pepperoni Hot Honey</text>
+  <text x="80" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Doble pepperoni curado, miel picante con habanero</text>
+  <text x="80" y="630" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 42.000</text>
+  <rect x="250" y="610" width="130" height="36" rx="10" fill="url(#pizzaAccent)"/>
+  <text x="275" y="633" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Ordenar</text>
+
+  <rect x="430" y="340" width="340" height="350" rx="16" fill="#1e1612" stroke="#3b2b23" stroke-width="1"/>
+  <rect x="430" y="340" width="340" height="170" rx="16" fill="#301f16"/>
+  <text x="545" y="435" font-size="50" text-anchor="middle">🧀</text>
+  <text x="450" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Quattro Formaggi Bianca</text>
+  <text x="450" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Gorgonzola, parmesano reggiano, provolone ahumado</text>
+  <text x="450" y="630" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 44.500</text>
+  <rect x="620" y="610" width="130" height="36" rx="10" fill="url(#pizzaAccent)"/>
+  <text x="645" y="633" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Ordenar</text>
+
+  <rect x="800" y="340" width="340" height="350" rx="16" fill="#1e1612" stroke="#3b2b23" stroke-width="1"/>
+  <rect x="800" y="340" width="340" height="170" rx="16" fill="#2d1c15"/>
+  <text x="915" y="435" font-size="50" text-anchor="middle">🥖</text>
+  <text x="820" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="900">Garlic Knots Rellenos</text>
+  <text x="820" y="570" fill="#a8a29e" font-family="system-ui, sans-serif" font-size="12">Nudos de ajo rellenos de queso con dip pomodoro</text>
+  <text x="820" y="630" fill="#f97316" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">$ 18.000</text>
+  <rect x="990" y="610" width="130" height="36" rx="10" fill="url(#pizzaAccent)"/>
+  <text x="1015" y="633" fill="#000000" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">+ Ordenar</text>
+</svg>
+

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgCommerce" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14111c"/>
+      <stop offset="100%" stop-color="#09080e"/>
+    </linearGradient>
+    <linearGradient id="purpleAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgCommerce)"/>
+
+  <!-- Browser Bar -->
+  <rect width="1200" height="48" fill="#1e1a2b"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#0d0b13"/>
+  <text x="430" y="28" fill="#c4b5fd" font-family="system-ui, sans-serif" font-size="12">
+    ⚡ https://commerce.cloud.eternalia.co/telemetry
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#171424" stroke="#2c2642" stroke-width="1"/>
+  <text x="60" y="90" fill="#ffffff" font-family="system-ui, sans-serif" font-size="24" font-weight="900">ETERNALIA COMMERCE CLOUD</text>
+  <text x="440" y="85" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">HIGH-CONVERSION ARCHITECTURE • TTFB &lt; 0.35s</text>
+
+  <rect x="940" y="65" width="200" height="36" rx="18" fill="url(#purpleAccent)"/>
+  <text x="975" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🚀 Deploy Multi-Sucursal</text>
+
+  <!-- Dashboard Overview -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="#201b33" stroke="#372c57" stroke-width="1"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="28" font-weight="bold">Centro de Control de Comandas y Rendimiento</text>
+  <text x="100" y="225" fill="#ddd6fe" font-family="system-ui, sans-serif" font-size="14">Sincronización en milisegundos con comanderos de cocina, pasarelas de pago y despacho automatizado.</text>
+  
+  <rect x="100" y="245" width="170" height="32" rx="16" fill="#6d28d9"/>
+  <text x="120" y="266" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">📊 Ver Métricas en Vivo</text>
+
+  <!-- Metric Widget Cards -->
+  <rect x="60" y="320" width="340" height="180" rx="16" fill="#1b172a" stroke="#2e2747" stroke-width="1"/>
+  <text x="90" y="360" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">VELOCIDAD DE CARGA PERIMETRAL</text>
+  <text x="90" y="420" fill="#22c55e" font-family="system-ui, sans-serif" font-size="44" font-weight="900">0.28s</text>
+  <text x="90" y="460" fill="#86efac" font-family="system-ui, sans-serif" font-size="12">99.98% Core Web Vitals Pass</text>
+
+  <rect x="430" y="320" width="340" height="180" rx="16" fill="#1b172a" stroke="#2e2747" stroke-width="1"/>
+  <text x="460" y="360" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">PEDIDOS PROCESADOS HOY</text>
+  <text x="460" y="420" fill="#a78bfa" font-family="system-ui, sans-serif" font-size="44" font-weight="900">+4,820</text>
+  <text x="460" y="460" fill="#c4b5fd" font-family="system-ui, sans-serif" font-size="12">0% Caídas • Conexión WebSockets Activa</text>
+
+  <rect x="800" y="320" width="340" height="180" rx="16" fill="#1b172a" stroke="#2e2747" stroke-width="1"/>
+  <text x="830" y="360" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="13">COMISIONES POR INTERMEDIARIOS</text>
+  <text x="830" y="420" fill="#f59e0b" font-family="system-ui, sans-serif" font-size="44" font-weight="900">0%</text>
+  <text x="830" y="460" fill="#fde68a" font-family="system-ui, sans-serif" font-size="12">Ahorro promedio de $12M/mes por restaurante</text>
+
+  <!-- Live Terminal Log -->
+  <rect x="60" y="525" width="1080" height="175" rx="16" fill="#110e1a" stroke="#231d36" stroke-width="1"/>
+  <text x="90" y="560" fill="#a78bfa" font-family="monospace" font-size="13" font-weight="bold">[SYSTEM KERNEL] • WebSockets connected to 14 kitchen screens</text>
+  <text x="90" y="590" fill="#38bdf8" font-family="monospace" font-size="12">2026-11-06 15:30:11 UTC [ORDER #8841] Mesa 6 -&gt; Comanda enviada a Cocina (12ms)</text>
+  <text x="90" y="615" fill="#22c55e" font-family="monospace" font-size="12">2026-11-06 15:30:14 UTC [PAYMENT] Transacción aprobada sin cobro de comisión agregada</text>
+  <text x="90" y="640" fill="#94a3b8" font-family="monospace" font-size="12">2026-11-06 15:30:20 UTC [SYNC] Menú digital sincronizado en tiempo real (0 productos agotados)</text>
+</svg>
+

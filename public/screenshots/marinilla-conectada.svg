@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgMarinilla" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c181c"/>
+      <stop offset="100%" stop-color="#070f12"/>
+    </linearGradient>
+    <linearGradient id="cyanAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="750" fill="url(#bgMarinilla)"/>
+
+  <!-- Browser Bar -->
+  <rect width="1200" height="48" fill="#13242a"/>
+  <circle cx="30" cy="24" r="6" fill="#ef4444"/>
+  <circle cx="50" cy="24" r="6" fill="#f59e0b"/>
+  <circle cx="70" cy="24" r="6" fill="#10b981"/>
+  <rect x="180" y="10" width="840" height="28" rx="14" fill="#081418"/>
+  <text x="440" y="28" fill="#67e8f9" font-family="system-ui, sans-serif" font-size="12">
+    📍 https://marinilla.conectada.eternalia.co/mapa
+  </text>
+
+  <!-- Navbar -->
+  <rect y="48" width="1200" height="70" fill="#0e1f26" stroke="#1d404d" stroke-width="1"/>
+  <text x="60" y="90" fill="#ffffff" font-family="system-ui, sans-serif" font-size="24" font-weight="900">MARINILLA CONECTADA</text>
+  <text x="360" y="85" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="11" font-weight="bold">RED HIPERLOCAL • +85 COMERCIOS ACTIVOS</text>
+
+  <rect x="940" y="65" width="200" height="36" rx="18" fill="url(#cyanAccent)"/>
+  <text x="965" y="88" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🗺️ Explorar Mapa Interactivo</text>
+
+  <!-- Banner -->
+  <rect x="60" y="140" width="1080" height="150" rx="20" fill="#122a33" stroke="#1f4c5c" stroke-width="1"/>
+  <text x="100" y="195" fill="#ffffff" font-family="system-ui, sans-serif" font-size="28" font-weight="bold">Directorio Comercial y Catálogos en Tiempo Real</text>
+  <text x="100" y="225" fill="#a5f3fc" font-family="system-ui, sans-serif" font-size="14">Encuentra restaurantes, ferreterías, servicios y marcas de Marinilla con contacto directo a WhatsApp.</text>
+  <rect x="100" y="245" width="190" height="32" rx="16" fill="#0284c7"/>
+  <text x="120" y="266" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">🔍 Buscar por Sector o Barrio</text>
+
+  <!-- Merchant Cards -->
+  <rect x="60" y="340" width="340" height="350" rx="16" fill="#0e232b" stroke="#1a3d4a" stroke-width="1"/>
+  <rect x="60" y="340" width="340" height="170" rx="16" fill="#163845"/>
+  <text x="175" y="435" font-size="50" text-anchor="middle">🥖</text>
+  <text x="80" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Panadería La Tradición</text>
+  <text x="80" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Pan artesanal caliente desde las 5:30 am</text>
+  <text x="80" y="630" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Parque Principal • Abierto</text>
+  <rect x="250" y="610" width="130" height="36" rx="10" fill="url(#cyanAccent)"/>
+  <text x="270" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">💬 WhatsApp</text>
+
+  <rect x="430" y="340" width="340" height="350" rx="16" fill="#0e232b" stroke="#1a3d4a" stroke-width="1"/>
+  <rect x="430" y="340" width="340" height="170" rx="16" fill="#163845"/>
+  <text x="545" y="435" font-size="50" text-anchor="middle">🥩</text>
+  <text x="450" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Carnes San Jerónimo</text>
+  <text x="450" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Cortes de res y cerdo con entrega a domicilio</text>
+  <text x="450" y="630" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Sector Cantón • Domicilios</text>
+  <rect x="620" y="610" width="130" height="36" rx="10" fill="url(#cyanAccent)"/>
+  <text x="640" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">💬 WhatsApp</text>
+
+  <rect x="800" y="340" width="340" height="350" rx="16" fill="#0e232b" stroke="#1a3d4a" stroke-width="1"/>
+  <rect x="800" y="340" width="340" height="170" rx="16" fill="#163845"/>
+  <text x="915" y="435" font-size="50" text-anchor="middle">☕</text>
+  <text x="820" y="545" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="bold">Café El Balcón Colonial</text>
+  <text x="820" y="570" fill="#94a3b8" font-family="system-ui, sans-serif" font-size="12">Vista panorámica y postres tradicionales</text>
+  <text x="820" y="630" fill="#38bdf8" font-family="system-ui, sans-serif" font-size="14" font-weight="bold">Calle del Convento • Abierto</text>
+  <rect x="990" y="610" width="130" height="36" rx="10" fill="url(#cyanAccent)"/>
+  <text x="1010" y="633" fill="#ffffff" font-family="system-ui, sans-serif" font-size="12" font-weight="bold">💬 WhatsApp</text>
+</svg>
+

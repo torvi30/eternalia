@@ -31,34 +31,11 @@ function saveCustomLocalProjects(list) {
 }
 
 /**
- * Obtiene la lista completa de proyectos del holding (Firestore o fallback local)
+ * Obtiene la lista completa de proyectos del holding y catálogo gastronómico/comercial.
+ * La fuente única y directa de verdad es src/data/projectsConfig.js.
  */
 export async function getProjects() {
-  const localList = getCustomLocalProjects();
-  if (localList && localList.length > 0) {
-    return localList;
-  }
-
-  if (!isFirebaseConfigured) {
-    saveCustomLocalProjects(defaultProjects);
-    return defaultProjects;
-  }
-
-  try {
-    const snap = await getDocs(collection(db, 'projects'));
-    if (!snap.empty) {
-      const items = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      saveCustomLocalProjects(items);
-      return items;
-    } else {
-      saveCustomLocalProjects(defaultProjects);
-      return defaultProjects;
-    }
-  } catch (err) {
-    console.warn("⚠️ [Eternalia Firestore]: Fallback a proyectos locales:", err);
-    saveCustomLocalProjects(defaultProjects);
-    return defaultProjects;
-  }
+  return defaultProjects;
 }
 
 /**

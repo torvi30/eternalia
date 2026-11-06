@@ -23,5 +23,6 @@ Para evitar fragmentación documental y alucinaciones en el desarrollo asistido 
 | ID / Archivo | Funcionalidad | Estado | Fecha |
 |---|---|---|---|
 | [0001-sistema-diseno-dual-y-seo.md](0001-sistema-diseno-dual-y-seo.md) | Sistema Dual Dark/Light Mode y Estrategia SEO Integral | **Completado** | 2026-11-06 |
-| [0002-validacion-formulario-contacto-firebase-firestore-storage.md](0002-validacion-formulario-contacto-firebase-firestore-storage.md) | Formulario de Contacto Conectado a Firestore y Firebase Storage | **En Progreso** | 2026-11-06 |
+| [0002-validacion-formulario-contacto-firebase-firestore-storage.md](0002-validacion-formulario-contacto-firebase-firestore-storage.md) | Formulario de Contacto Conectado a Firestore y Firebase Storage | **Completado** | 2026-11-06 |
+| [0003-catalogo-empresas-categorias-pantallazos-retiro-admin.md](0003-catalogo-empresas-categorias-pantallazos-retiro-admin.md) | Catálogo de Empresas por Categorías, Pantallazos de Restaurantes y Retiro de Admin | **Completado** | 2026-11-06 |
 

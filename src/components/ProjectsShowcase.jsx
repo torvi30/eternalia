@@ -8,28 +8,61 @@ import {
   ArrowUpRight, 
   Search, 
   X,
-  Code2,
   SlidersHorizontal,
-  Layers,
-  Cpu,
-  Users,
-  Globe,
+  UtensilsCrossed,
+  Pizza,
+  Coffee,
   ShoppingBag,
-  ShieldCheck
+  Layers,
+  Maximize2,
+  CheckCircle2,
+  Globe,
+  Eye,
+  Check
 } from 'lucide-react';
 
-const getProjectGlyph = (category) => {
+const getCategoryBadge = (category, language) => {
   switch (category) {
+    case 'restaurants':
+      return {
+        icon: UtensilsCrossed,
+        label: language === 'es' ? 'Restaurante' : 'Restaurant',
+        badgeClass: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/30',
+        dotClass: 'bg-emerald-500',
+        accentBg: 'from-emerald-500/20 to-teal-500/10'
+      };
+    case 'fastfood':
+      return {
+        icon: Pizza,
+        label: language === 'es' ? 'Comidas Rápidas' : 'Fast Food',
+        badgeClass: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/30',
+        dotClass: 'bg-orange-500',
+        accentBg: 'from-orange-500/20 to-amber-500/10'
+      };
+    case 'cafes':
+      return {
+        icon: Coffee,
+        label: language === 'es' ? 'Café & Bakery' : 'Cafe & Bakery',
+        badgeClass: 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/30',
+        dotClass: 'bg-amber-500',
+        accentBg: 'from-amber-500/20 to-yellow-500/10'
+      };
     case 'commerce':
-      return <ShoppingBag className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />;
-    case 'services':
-      return <Users className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />;
-    case 'ventures':
-      return <Cpu className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />;
-    case 'directories':
-      return <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />;
+      return {
+        icon: ShoppingBag,
+        label: language === 'es' ? 'Comercio & Redes' : 'Commerce & Mesh',
+        badgeClass: 'bg-cyan-500/10 text-cyan-800 dark:text-cyan-300 border-cyan-500/30',
+        dotClass: 'bg-cyan-500',
+        accentBg: 'from-cyan-500/20 to-blue-500/10'
+      };
     default:
-      return <Layers className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />;
+      return {
+        icon: Layers,
+        label: language === 'es' ? 'Solución' : 'Solution',
+        badgeClass: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/30',
+        dotClass: 'bg-indigo-500',
+        accentBg: 'from-indigo-500/20 to-cyan-500/10'
+      };
   }
 };
 
@@ -48,6 +81,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeModalProject, setActiveModalProject] = useState(null);
+  const [activeScreenshotIdx, setActiveScreenshotIdx] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -72,33 +106,33 @@ export default function ProjectsShowcase({ onOpenContact }) {
   const categories = [
     { 
       id: 'all', 
-      label: language === 'es' ? 'Todas las Soluciones' : 'All Solutions',
-      mobileLabel: language === 'es' ? '✨ Todas las Soluciones que Ofrecemos' : '✨ All Solutions We Offer',
+      label: language === 'es' ? 'Todas las Marcas' : 'All Brands',
+      mobileLabel: language === 'es' ? '✨ Todas las Marcas' : '✨ All Brands',
       icon: Sparkles 
     },
     { 
+      id: 'restaurants', 
+      label: language === 'es' ? 'Restaurantes' : 'Restaurants',
+      mobileLabel: language === 'es' ? '🍽️ Restaurantes' : '🍽️ Restaurants',
+      icon: UtensilsCrossed 
+    },
+    { 
+      id: 'fastfood', 
+      label: language === 'es' ? 'Comidas Rápidas' : 'Fast Food',
+      mobileLabel: language === 'es' ? '🍔 Comidas Rápidas' : '🍔 Fast Food',
+      icon: Pizza 
+    },
+    { 
+      id: 'cafes', 
+      label: language === 'es' ? 'Cafés & Repostería' : 'Cafes & Bakery',
+      mobileLabel: language === 'es' ? '☕ Cafés' : '☕ Cafes',
+      icon: Coffee 
+    },
+    { 
       id: 'commerce', 
-      label: language === 'es' ? 'Comercio & Frontends' : 'Commerce & Frontends',
-      mobileLabel: language === 'es' ? 'Comercio Digital' : 'Digital Commerce',
+      label: language === 'es' ? 'Comercio & Redes' : 'Commerce & Mesh',
+      mobileLabel: language === 'es' ? '🛍️ Comercio' : '🛍️ Commerce',
       icon: ShoppingBag 
-    },
-    { 
-      id: 'services', 
-      label: language === 'es' ? 'Workforce OS' : 'Workforce OS',
-      mobileLabel: language === 'es' ? 'Workforce OS' : 'Workforce OS',
-      icon: Users 
-    },
-    { 
-      id: 'directories', 
-      label: language === 'es' ? 'Redes Territoriales' : 'Territorial Meshes',
-      mobileLabel: language === 'es' ? 'Redes & Directorio' : 'Networks & Directory',
-      icon: Globe 
-    },
-    { 
-      id: 'ventures', 
-      label: language === 'es' ? 'Soluciones Industriales' : 'Industrial Ventures',
-      mobileLabel: language === 'es' ? 'Industria & IoT' : 'Industry & IoT',
-      icon: Cpu 
     },
   ];
 
@@ -111,6 +145,8 @@ export default function ProjectsShowcase({ onOpenContact }) {
         project.name.toLowerCase().includes(q) ||
         (project.taglineEs && project.taglineEs.toLowerCase().includes(q)) ||
         (project.taglineEn && project.taglineEn.toLowerCase().includes(q)) ||
+        (project.descriptionEs && project.descriptionEs.toLowerCase().includes(q)) ||
+        (project.highlights && project.highlights.some(h => h.toLowerCase().includes(q))) ||
         project.techStack.some(t => t.toLowerCase().includes(q));
       return matchesCat && matchesText;
     });
@@ -125,29 +161,9 @@ export default function ProjectsShowcase({ onOpenContact }) {
     }
   };
 
-  const getStatusBadge = (status) => {
-    if (status === 'live') {
-      return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          {language === 'es' ? 'En Producción' : 'Live Production'}
-        </span>
-      );
-    }
-    if (status === 'beta') {
-      return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-          {language === 'es' ? 'Beta Privada' : 'Private Beta'}
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-slate-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-black/10 dark:border-white/10">
-        <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
-        {language === 'es' ? 'En Desarrollo' : 'In Dev'}
-      </span>
-    );
+  const openLightbox = (project, screenshotIndex = 0) => {
+    setActiveModalProject(project);
+    setActiveScreenshotIdx(screenshotIndex);
   };
 
   return (
@@ -158,23 +174,23 @@ export default function ProjectsShowcase({ onOpenContact }) {
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-700 dark:text-cyan-300 text-xs font-semibold tracking-wider uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-            <span>{language === 'es' ? 'PORTAFOLIO & SOLUCIONES EN VIVO' : 'LIVE PORTFOLIO & SOLUTIONS'}</span>
+            <span>{language === 'es' ? 'PORTAFOLIO & DEMOS EN VIVO' : 'LIVE PORTFOLIO & DEMOS'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-4">
-            {language === 'es' ? 'Proyectos Activos & Soluciones' : 'Active Projects & Solutions'}
+            {language === 'es' ? 'Plataformas & Negocios Conectados' : 'Connected Platforms & Brands'}
           </h2>
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es' 
-              ? 'Conoce todas las soluciones que ofrecemos en el ecosistema Eternalia: plataformas frontends de ultra-alta conversión, infraestructura de Workforce OS, directorios territoriales y telemetría de misión crítica.'
-              : 'Explore all the solutions we offer across the Eternalia ecosystem: high-converting frontends, workforce operating systems, territorial directories, and mission-critical telematics.'}
+              ? 'Explora las plataformas digitales que hemos desarrollado para restaurantes, cadenas de comidas rápidas, cafeterías y redes comerciales. Haz clic en cualquier pantalla para ver el sistema en acción.'
+              : 'Explore the digital platforms we built for restaurants, fast-food chains, cafes, and commercial networks. Click any screen preview to see the system in action.'}
           </p>
         </div>
 
         {/* Filter and Search Bar Console */}
         <div className="max-w-5xl mx-auto mb-12">
-          <div className="glass-panel rounded-2xl p-3.5 sm:p-5 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-2xl flex flex-col gap-3.5">
+          <div className="glass-panel rounded-2xl p-3.5 sm:p-5 border border-black/10 dark:border-white/10 shadow-xl dark:shadow-2xl flex flex-col gap-3.5 bg-white/70 dark:bg-[#0c0d14]/70 backdrop-blur-xl">
             
             {/* Top Row: Categories & Search */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
@@ -199,7 +215,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
                   </span>
                 </button>
 
-                {/* 2. 2x2 Grid for specific solution categories */}
+                {/* 2. Grid for specific categories */}
                 <div className="grid grid-cols-2 gap-1.5 w-full">
                   {categories.slice(1).map((cat) => {
                     const Icon = cat.icon;
@@ -229,7 +245,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
               </div>
 
               {/* DESKTOP CATEGORY SELECTOR */}
-              <div className="hidden md:flex items-center gap-1.5 flex-wrap">
+              <div className="hidden md:flex items-center gap-2 flex-wrap">
                 {categories.map((cat) => {
                   const Icon = cat.icon;
                   const isActive = selectedCategory === cat.id;
@@ -240,16 +256,16 @@ export default function ProjectsShowcase({ onOpenContact }) {
                     <button
                       key={cat.id}
                       onClick={() => setSelectedCategory(cat.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                      className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                         isActive
-                          ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.35)] border border-cyan-400/30 font-bold'
-                          : 'bg-slate-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-zinc-800 border border-black/5 dark:border-white/5'
+                          ? 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.35)] border border-cyan-400/30 font-bold'
+                          : 'bg-slate-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-zinc-800 border border-black/5 dark:border-white/5'
                       }`}
                     >
                       <Icon className="w-3.5 h-3.5 shrink-0" />
-                      <span>{cat.id === 'all' ? (language === 'es' ? '✨ Todas las Soluciones' : '✨ All Solutions') : cat.label}</span>
-                      <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-md ${
-                        isActive ? 'bg-black/25 text-white font-bold' : 'bg-slate-200 dark:bg-zinc-800 text-zinc-500'
+                      <span>{cat.label}</span>
+                      <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                        isActive ? 'bg-black/25 text-white font-bold' : 'bg-slate-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
                       }`}>
                         {count}
                       </span>
@@ -265,7 +281,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={language === 'es' ? 'Buscar solución o tech...' : 'Search solution or tech...'}
+                  placeholder={language === 'es' ? 'Buscar restaurante o plato...' : 'Search brand or food...'}
                   className="w-full pl-9 pr-8 py-2 rounded-xl bg-white dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white placeholder-zinc-400 text-xs focus:outline-none focus:border-cyan-500/60 transition-all font-medium shadow-sm"
                 />
                 {searchQuery && (
@@ -286,12 +302,12 @@ export default function ProjectsShowcase({ onOpenContact }) {
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                 <span className="text-zinc-800 dark:text-zinc-200 font-semibold">
                   {selectedCategory === 'all'
-                    ? (language === 'es' ? 'Todas las Soluciones que Ofrecemos' : 'All Solutions We Offer')
+                    ? (language === 'es' ? 'Todas las Marcas y Plataformas' : 'All Brands & Platforms')
                     : categories.find(c => c.id === selectedCategory)?.label}
                 </span>
               </div>
               <span className="text-zinc-500">
-                {filteredProjects.length} {language === 'es' ? 'soluciones activas' : 'active solutions'}
+                {filteredProjects.length} {language === 'es' ? 'negocios en exhibición' : 'businesses on display'}
               </span>
             </div>
 
@@ -304,47 +320,82 @@ export default function ProjectsShowcase({ onOpenContact }) {
             const tagline = language === 'es' ? project.taglineEs : project.taglineEn;
             const desc = language === 'es' ? project.descriptionEs : project.descriptionEn;
             const metricLabel = language === 'es' ? project.metricLabelEs : project.metricLabelEn;
+            const catBadge = getCategoryBadge(project.category, language);
+            const CatIcon = catBadge.icon;
 
             return (
               <div
                 key={project.id}
-                className="glass-card rounded-3xl p-6 sm:p-7 border border-black/10 dark:border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden shadow-lg"
+                className="glass-card rounded-3xl p-5 sm:p-6 border border-black/10 dark:border-white/10 hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden shadow-lg hover:shadow-2xl bg-white/90 dark:bg-[#0e0f17]/90"
               >
                 {/* Ambient glow highlight */}
-                <div className="absolute top-0 right-0 w-36 h-36 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-bl-full pointer-events-none group-hover:from-cyan-500/15 transition-all" />
+                <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${catBadge.accentBg} rounded-bl-full pointer-events-none opacity-40 group-hover:opacity-80 transition-all duration-500`} />
 
                 <div>
-                  {/* Top Bar: Logo & Status Badge */}
-                  <div className="flex items-center justify-between mb-5">
-                    {/* Project Logo: styled monogram with glow & glyph */}
+                  {/* Top Bar: Brand Monogram & Category Badge */}
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="relative group/monogram shrink-0">
-                        <div className={`absolute -inset-1 bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} rounded-2xl blur-[6px] opacity-35 group-hover/monogram:opacity-70 transition-opacity duration-300`} />
-                        <div className={`relative w-12 h-12 rounded-2xl bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-lg`}>
-                          <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex flex-col items-center justify-center relative overflow-hidden">
-                            <span className="font-mono font-black text-zinc-900 dark:text-white text-sm tracking-wider">
+                        <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${project.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-md`}>
+                          <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex items-center justify-center">
+                            <span className="font-mono font-black text-zinc-900 dark:text-white text-xs tracking-wider">
                               {getProjectMonogram(project.name)}
                             </span>
-                            <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
                           </div>
-                        </div>
-                        {/* Category glyph chip */}
-                        <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-slate-100 dark:bg-[#09090b] border border-black/10 dark:border-white/20 shadow-md">
-                          {getProjectGlyph(project.category)}
                         </div>
                       </div>
 
                       <div>
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 block mb-0.5 font-bold">
-                          {language === 'es' ? project.categoryLabelEs : project.categoryLabelEn}
-                        </span>
-                        <h3 className="text-lg font-bold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-200 transition-colors">
+                        <h3 className="text-base font-extrabold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors leading-tight">
                           {project.name}
                         </h3>
+                        <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 block mt-0.5">
+                          {language === 'es' ? project.categoryLabelEs : project.categoryLabelEn}
+                        </span>
                       </div>
                     </div>
 
-                    {getStatusBadge(project.status)}
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border ${catBadge.badgeClass}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${catBadge.dotClass}`} />
+                      <CatIcon className="w-3 h-3" />
+                      <span>{catBadge.label}</span>
+                    </span>
+                  </div>
+
+                  {/* SCREENSHOT MOCKUP WINDOW (Pantallazo interactivo) */}
+                  <div 
+                    onClick={() => openLightbox(project)}
+                    className="relative rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 bg-slate-100 dark:bg-black/60 shadow-md mb-4 group/screen cursor-pointer"
+                  >
+                    {/* Browser top chrome */}
+                    <div className="h-6 bg-slate-200 dark:bg-zinc-900/90 border-b border-black/5 dark:border-white/10 px-3 flex items-center justify-between">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-red-500/80" />
+                        <span className="w-2 h-2 rounded-full bg-amber-500/80" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-500/80" />
+                      </div>
+                      <span className="text-[9px] font-mono text-zinc-500 truncate max-w-[150px]">
+                        {project.url ? project.url.replace('https://', '') : 'demo.eternalia.co'}
+                      </span>
+                      <Maximize2 className="w-2.5 h-2.5 text-zinc-400" />
+                    </div>
+
+                    {/* Image Preview Container */}
+                    <div className="relative aspect-[16/10] overflow-hidden bg-zinc-900 flex items-center justify-center">
+                      <img 
+                        src={project.screenshotUrl || '/screenshots/don-rafael.svg'} 
+                        alt={`Pantallazo de ${project.name}`}
+                        className="w-full h-full object-cover object-top transition-transform duration-500 group-hover/screen:scale-105"
+                        loading="lazy"
+                      />
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/screen:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                        <span className="px-3 py-1.5 rounded-xl bg-cyan-500 text-zinc-950 font-bold text-xs flex items-center gap-1.5 shadow-lg transform translate-y-2 group-hover/screen:translate-y-0 transition-transform duration-300">
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>{language === 'es' ? 'Ver Pantallazo Completo' : 'View Full Screen'}</span>
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Tagline */}
@@ -352,46 +403,43 @@ export default function ProjectsShowcase({ onOpenContact }) {
                     {tagline}
                   </h4>
 
-                  {/* Description */}
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed mb-5 line-clamp-3">
-                    {desc}
-                  </p>
+                  {/* Highlights (Ventajas del desarrollo) */}
+                  {project.highlights && project.highlights.length > 0 && (
+                    <div className="space-y-1.5 mb-4">
+                      {project.highlights.map((highlight, idx) => (
+                        <div key={idx} className="flex items-start gap-1.5 text-[11px] text-zinc-600 dark:text-zinc-400 leading-tight">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                          <span>{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Impact Metric Banner */}
-                  <div className="p-3 rounded-2xl bg-slate-100 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 flex items-center justify-between mb-5 font-mono">
-                    <span className="text-[11px] text-zinc-600 dark:text-zinc-400">{metricLabel}:</span>
-                    <span className="text-sm font-bold text-cyan-700 dark:text-cyan-300">{project.metricValue}</span>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-900/60 border border-black/5 dark:border-white/5 flex items-center justify-between mb-4 font-mono">
+                    <span className="text-[10px] text-zinc-600 dark:text-zinc-400">{metricLabel}:</span>
+                    <span className="text-xs font-bold text-cyan-700 dark:text-cyan-400">{project.metricValue}</span>
                   </div>
 
-                  {/* Tech stack badges */}
-                  <div className="flex flex-wrap gap-1.5 mb-6">
-                    {project.techStack.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[10px] px-2 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-900 border border-black/5 dark:border-white/5 text-zinc-700 dark:text-zinc-400 font-mono font-medium"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="pt-4 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
+                <div className="pt-3 border-t border-black/10 dark:border-white/10 flex items-center gap-2">
                   <button
-                    onClick={() => handleLaunchProject(project.url)}
-                    className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-xs shadow-[0_0_15px_rgba(99,102,241,0.3)] hover:shadow-[0_0_22px_rgba(6,182,212,0.4)] transition-all flex items-center justify-center gap-1.5 group/btn cursor-pointer"
+                    onClick={() => openLightbox(project)}
+                    className="flex-1 py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer shadow-sm"
                   >
-                    <span>{language === 'es' ? 'Visitar Proyecto' : 'Launch Project'}</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                    <Eye className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                    <span>{language === 'es' ? 'Ver Pantallazos' : 'Screenshots'}</span>
                   </button>
 
                   <button
-                    onClick={() => setActiveModalProject(project)}
-                    className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 transition-colors text-xs font-semibold cursor-pointer shadow-sm"
-                    title={language === 'es' ? 'Ficha Técnica' : 'Project Details'}
+                    onClick={() => handleLaunchProject(project.url)}
+                    className="py-2 px-3 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    title={language === 'es' ? 'Abrir sitio en vivo' : 'Launch live URL'}
                   >
-                    <Code2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                    <span>{language === 'es' ? 'Probar Demo' : 'Live Demo'}</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
@@ -405,7 +453,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
           <div className="text-center py-16 px-4 glass-card rounded-2xl max-w-lg mx-auto border border-black/10 dark:border-white/10 shadow-lg">
             <Search className="w-10 h-10 text-zinc-400 dark:text-zinc-600 mx-auto mb-3" />
             <h4 className="text-base font-bold text-zinc-900 dark:text-white mb-1">
-              {language === 'es' ? 'No se encontraron proyectos' : 'No projects found'}
+              {language === 'es' ? 'No se encontraron resultados' : 'No businesses found'}
             </h4>
             <p className="text-xs text-zinc-600 dark:text-zinc-400 mb-4">
               {language === 'es' 
@@ -421,7 +469,7 @@ export default function ProjectsShowcase({ onOpenContact }) {
           </div>
         )}
 
-        {/* Quick Developer / Admin Helper Card */}
+        {/* Direct Developer Helper Note */}
         <div className="mt-12 p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-zinc-950/70 border border-black/10 dark:border-white/10 backdrop-blur-md max-w-3xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-zinc-600 dark:text-zinc-400 shadow-sm">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 shrink-0">
@@ -429,12 +477,12 @@ export default function ProjectsShowcase({ onOpenContact }) {
             </div>
             <div>
               <span className="font-bold text-zinc-900 dark:text-white block">
-                {language === 'es' ? 'Configuración Rápida de Proyectos' : 'Quick Project Configuration'}
+                {language === 'es' ? 'Gestión Directa del Catálogo' : 'Direct Catalog Management'}
               </span>
               <span>
                 {language === 'es' 
-                  ? 'Puedes añadir o cambiar logos y URLs de tus proyectos en ' 
-                  : 'You can add or update logos and URLs for your projects in '}
+                  ? 'Gestiona marcas, restaurantes y pantallazos directamente en ' 
+                  : 'Manage brands, restaurants, and screenshots directly in '}
                 <code className="text-cyan-700 dark:text-cyan-300 font-mono bg-slate-100 dark:bg-zinc-900 px-1.5 py-0.5 rounded border border-black/5 dark:border-white/5">
                   src/data/projectsConfig.js
                 </code>
@@ -444,102 +492,181 @@ export default function ProjectsShowcase({ onOpenContact }) {
 
           <button
             onClick={onOpenContact}
-            className="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 text-[11px] font-semibold whitespace-nowrap cursor-pointer shadow-sm"
+            className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 text-white text-xs font-bold whitespace-nowrap cursor-pointer shadow-md hover:opacity-95"
           >
-            {language === 'es' ? 'Sumar Nuevo Proyecto' : 'Add New Project'}
+            {language === 'es' ? 'Digitalizar Mi Restaurante' : 'Digitize My Restaurant'}
           </button>
         </div>
 
-        {/* Detailed Project Modal */}
+        {/* DETAILED LIGHTBOX MODAL (Visor de Pantallazos en Alta Resolución) */}
         {activeModalProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl">
-              <button
-                onClick={() => setActiveModalProject(null)}
-                className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="flex items-center gap-4 mb-4">
-                <div className="relative shrink-0">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-tr ${activeModalProject.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow-xl`}>
-                    <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex items-center justify-center">
-                      <span className="font-mono font-black text-zinc-900 dark:text-white text-lg tracking-wider">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="relative w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl bg-white dark:bg-[#111219] text-zinc-900 dark:text-white border border-black/15 dark:border-white/15 shadow-2xl overflow-hidden">
+              
+              {/* Modal Header */}
+              <div className="p-4 sm:p-6 border-b border-black/10 dark:border-white/10 flex items-center justify-between bg-slate-50/80 dark:bg-zinc-900/40">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl bg-gradient-to-tr ${activeModalProject.logoColor || 'from-indigo-600 to-cyan-500'} p-[1.5px] shadow`}>
+                    <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[10px] flex items-center justify-center">
+                      <span className="font-mono font-bold text-zinc-900 dark:text-white text-xs">
                         {getProjectMonogram(activeModalProject.name)}
                       </span>
                     </div>
                   </div>
-                  <div className="absolute -bottom-1 -right-1 p-1 rounded-full bg-slate-100 dark:bg-[#09090b] border border-black/10 dark:border-white/20 shadow-md">
-                    {getProjectGlyph(activeModalProject.category)}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25">
-                      {language === 'es' ? activeModalProject.categoryLabelEs : activeModalProject.categoryLabelEn}
-                    </span>
-                    <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      {activeModalProject.badge || 'Enterprise'}
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-lg font-bold text-zinc-900 dark:text-white">
+                        {activeModalProject.name}
+                      </h3>
+                      <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border border-cyan-500/25">
+                        {language === 'es' ? activeModalProject.categoryLabelEs : activeModalProject.categoryLabelEn}
+                      </span>
+                    </div>
+                    <span className="text-xs text-zinc-500 font-mono">
+                      {activeModalProject.url}
                     </span>
                   </div>
-                  <h3 className="text-xl font-bold text-zinc-900 dark:text-white">
-                    {activeModalProject.name}
-                  </h3>
-                  <span className="text-xs text-cyan-700 dark:text-cyan-400 font-mono flex items-center gap-1 mt-0.5">
-                    <Globe className="w-3 h-3" />
-                    <span>{activeModalProject.url}</span>
-                  </span>
                 </div>
-              </div>
 
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed mb-5">
-                {language === 'es' ? activeModalProject.descriptionEs : activeModalProject.descriptionEn}
-              </p>
-
-              {/* Metrics */}
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-black/5 dark:border-white/5 flex items-center justify-between mb-5 font-mono text-xs">
-                <span className="text-zinc-600 dark:text-zinc-400">
-                  {language === 'es' ? activeModalProject.metricLabelEs : activeModalProject.metricLabelEn}:
-                </span>
-                <span className="font-bold text-cyan-700 dark:text-cyan-300 text-sm">
-                  {activeModalProject.metricValue}
-                </span>
-              </div>
-
-              {/* Tech Stack */}
-              <div className="mb-6">
-                <span className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block mb-2">
-                  {language === 'es' ? 'Tecnologías del Proyecto' : 'Project Tech Stack'}
-                </span>
-                <div className="flex flex-wrap gap-1.5">
-                  {activeModalProject.techStack.map((tech, i) => (
-                    <span key={i} className="text-xs px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-950 border border-black/10 dark:border-white/10 text-zinc-800 dark:text-zinc-300 font-mono">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={() => {
-                    handleLaunchProject(activeModalProject.url);
-                    setActiveModalProject(null);
-                  }}
-                  className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                >
-                  <span>{language === 'es' ? 'Abrir URL en Producción' : 'Launch Live URL'}</span>
-                  <ExternalLink className="w-4 h-4" />
-                </button>
                 <button
                   onClick={() => setActiveModalProject(null)}
-                  className="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-white font-medium text-xs cursor-pointer"
+                  className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
+                  aria-label="Cerrar modal"
                 >
-                  {language === 'es' ? 'Cerrar' : 'Close'}
+                  <X className="w-5 h-5" />
                 </button>
+              </div>
+
+              {/* Modal Scrollable Body */}
+              <div className="p-4 sm:p-6 overflow-y-auto space-y-5">
+                
+                {/* Large Screenshot Frame */}
+                <div className="rounded-2xl overflow-hidden border border-black/10 dark:border-white/15 shadow-2xl bg-black">
+                  <div className="h-7 bg-zinc-800 dark:bg-zinc-900 px-3 flex items-center justify-between border-b border-white/10">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                    </div>
+                    <span className="text-[11px] font-mono text-zinc-300">
+                      {activeModalProject.url || 'https://demo.eternalia.co'}
+                    </span>
+                    <span className="text-[10px] text-emerald-400 font-mono">SSL 256-bit</span>
+                  </div>
+                  <div className="relative aspect-[16/10] bg-zinc-950">
+                    <img 
+                      src={
+                        activeModalProject.gallery && activeModalProject.gallery[activeScreenshotIdx]
+                          ? activeModalProject.gallery[activeScreenshotIdx]
+                          : (activeModalProject.screenshotUrl || '/screenshots/don-rafael.svg')
+                      } 
+                      alt={`Pantalla completa de ${activeModalProject.name}`}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+
+                {/* Multiple Screenshot Switcher (if gallery > 1) */}
+                {activeModalProject.gallery && activeModalProject.gallery.length > 1 && (
+                  <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                    {activeModalProject.gallery.map((screen, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveScreenshotIdx(idx)}
+                        className={`relative rounded-lg overflow-hidden border-2 w-20 aspect-[16/10] shrink-0 cursor-pointer ${
+                          activeScreenshotIdx === idx ? 'border-cyan-500' : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={screen} alt={`Vista ${idx + 1}`} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Description & Impact Metrics */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="md:col-span-2 space-y-3">
+                    <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
+                      {language === 'es' ? activeModalProject.taglineEs : activeModalProject.taglineEn}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed">
+                      {language === 'es' ? activeModalProject.descriptionEs : activeModalProject.descriptionEn}
+                    </p>
+
+                    {/* Highlights list */}
+                    {activeModalProject.highlights && (
+                      <div className="space-y-1.5 pt-2">
+                        <span className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block mb-1">
+                          {language === 'es' ? 'Ventajas Clave del Sistema:' : 'Key System Advantages:'}
+                        </span>
+                        {activeModalProject.highlights.map((h, i) => (
+                          <div key={i} className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300">
+                            <Check className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                            <span>{h}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-3">
+                    {/* Metric Card */}
+                    <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-black/5 dark:border-white/10">
+                      <span className="text-[11px] text-zinc-500 dark:text-zinc-400 block mb-1">
+                        {language === 'es' ? activeModalProject.metricLabelEs : activeModalProject.metricLabelEn}
+                      </span>
+                      <span className="text-xl font-black text-cyan-700 dark:text-cyan-300 font-mono block">
+                        {activeModalProject.metricValue}
+                      </span>
+                    </div>
+
+                    {/* Tech Stack Chips */}
+                    <div className="p-4 rounded-2xl bg-slate-50 dark:bg-zinc-900/80 border border-black/5 dark:border-white/10">
+                      <span className="text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block mb-2">
+                        {language === 'es' ? 'Stack Tecnológico:' : 'Tech Stack:'}
+                      </span>
+                      <div className="flex flex-wrap gap-1">
+                        {activeModalProject.techStack.map((tech, i) => (
+                          <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-white dark:bg-zinc-950 text-zinc-700 dark:text-zinc-300 border border-black/5 dark:border-white/10 font-mono">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Modal Footer with Direct Conversion CTAs */}
+              <div className="p-4 sm:p-6 border-t border-black/10 dark:border-white/10 bg-slate-50/80 dark:bg-zinc-900/40 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <button
+                  onClick={() => {
+                    setActiveModalProject(null);
+                    onOpenContact();
+                  }}
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>{language === 'es' ? 'Quiero una Solución Como Esta' : 'I Want a Solution Like This'}</span>
+                </button>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto">
+                  <button
+                    onClick={() => handleLaunchProject(activeModalProject.url)}
+                    className="flex-1 sm:flex-initial px-5 py-3 rounded-xl bg-slate-200 hover:bg-slate-300 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-white font-bold text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <span>{language === 'es' ? 'Abrir Demo en Vivo' : 'Open Live Demo'}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    onClick={() => setActiveModalProject(null)}
+                    className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium text-xs cursor-pointer"
+                  >
+                    {language === 'es' ? 'Cerrar' : 'Close'}
+                  </button>
+                </div>
               </div>
 
             </div>

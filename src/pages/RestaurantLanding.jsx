@@ -9,7 +9,6 @@ import {
   Clock,
   ShoppingBag,
   Layers,
-  BarChart3,
   Package,
   Palette,
   MapPin,
@@ -175,29 +174,6 @@ export default function RestaurantLanding() {
         '1-tap toggle for out-of-stock dishes (eliminates frustrated cancellations).',
         'Daily specials management with featured dishes, combos, and time-based promos.',
         'Live pricing updates without caching delays across all diner devices.'
-      ]
-    },
-    {
-      id: 'metricas',
-      nameEs: 'Dashboard de Métricas & Ventas',
-      nameEn: 'Live Sales Analytics & Metrics',
-      taglineEs: 'Conoce tus horas pico, ticket promedio y tus productos más vendidos',
-      taglineEn: 'Identify peak rush hours, average order tickets, and top-seller dishes',
-      img: '/products/restaurants/metricas.jpg',
-      icon: BarChart3,
-      badgeEs: 'Analítica en Vivo',
-      badgeEn: 'Live Analytics',
-      featuresEs: [
-        'Detección automática de las horas pico de mayor afluencia y pedidos recibidos.',
-        'Ranking de productos estrella (Top Sellers) y análisis de categorías más rentables.',
-        'Cálculo automático del Ticket Promedio diario y mensual para toma de decisiones.',
-        'Exportación instantánea a archivos CSV para tu contador o sistema contable.'
-      ],
-      featuresEn: [
-        'Automated detection of peak rush hours and order volume trends.',
-        'Top-seller dish rankings and most profitable category breakdown.',
-        'Automatic calculation of average order ticket to optimize cross-selling.',
-        '1-click CSV export ready for accounting and financial reconciliation.'
       ]
     },
     {
@@ -444,7 +420,7 @@ export default function RestaurantLanding() {
           {/* 3. DESKTOP BROWSER PREVIEW */}
           <div className="max-w-5xl mx-auto mt-8">
             <div className="bg-white/90 dark:bg-[#0d0e14]/90 rounded-3xl p-4 sm:p-7 border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl">
-              
+
               <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-900">
                 <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
                   <div className="flex items-center gap-1.5">
@@ -507,8 +483,8 @@ export default function RestaurantLanding() {
                   key={mod.id}
                   onClick={() => setActiveModule(index)}
                   className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${isActive
-                      ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/25 border border-orange-400/40'
-                      : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10'
+                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/25 border border-orange-400/40'
+                    : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10'
                     }`}
                 >
                   <Icon className="w-4 h-4 shrink-0" />
@@ -805,11 +781,10 @@ export default function RestaurantLanding() {
                     key={mod.id}
                     onClick={() => setActiveModule(idx)}
                     title={language === 'es' ? mod.nameEs : mod.nameEn}
-                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
-                      activeModule === idx
+                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${activeModule === idx
                         ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
                         : 'border-white/10 opacity-50 hover:opacity-100'
-                    }`}
+                      }`}
                   >
                     <img
                       src={mod.img}

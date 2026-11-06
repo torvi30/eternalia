@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { 
-  UtensilsCrossed, 
-  ArrowRight, 
-  Sparkles, 
-  CheckCircle2, 
+import {
+  UtensilsCrossed,
+  ArrowRight,
+  Sparkles,
+  CheckCircle2,
   Maximize2,
   ChevronLeft,
   ChevronRight,
   Clock,
-  BarChart3,
   Layers,
   Package,
   Eye,
@@ -64,18 +63,6 @@ export default function FeaturedProducts({ onOpenContact }) {
       img: '/products/restaurants/productos.jpg',
       captionEs: 'Catálogo con fotografías HD, precios en COP y activación/pausa de platos en 1 clic.',
       captionEn: 'HD food catalog with live prices in COP and 1-tap dish availability toggle.'
-    },
-    {
-      id: 'metricas',
-      labelEs: 'Dashboard de Métricas & Ventas',
-      labelEn: 'Sales & Revenue Analytics',
-      shortLabelEs: 'Métricas',
-      shortLabelEn: 'Metrics',
-      icon: BarChart3,
-      url: 'restaurant.eternalia.co/admin/metricas',
-      img: '/products/restaurants/metricas.jpg',
-      captionEs: 'Analítica de ventas del mes, horas pico, ranking de platos más vendidos y exportación CSV.',
-      captionEn: 'Monthly revenue metrics, rush peak hours, top-seller dishes, and CSV export.'
     },
     {
       id: 'branding',
@@ -200,7 +187,7 @@ export default function FeaturedProducts({ onOpenContact }) {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-orange-500/10 via-amber-500/5 to-cyan-500/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
@@ -221,12 +208,12 @@ export default function FeaturedProducts({ onOpenContact }) {
 
         {/* Featured Product Banner Card */}
         <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl overflow-hidden relative">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             {/* Left Column: Product Information & Value Proposition */}
             <div className="lg:col-span-5 space-y-6">
-              
+
               <div className="flex items-center gap-2.5">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -301,7 +288,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
             {/* Right Column: Multi-Screen Desktop Browser Showcase */}
             <div className="lg:col-span-7 flex flex-col items-center">
-              
+
               {/* Module Screen Selector Tabs */}
               <div className="w-full flex items-center justify-between gap-1.5 p-1 rounded-2xl bg-slate-200 dark:bg-zinc-900 border border-black/5 dark:border-white/10 mb-4 overflow-x-auto">
                 {desktopScreens.map((screen, idx) => {
@@ -311,11 +298,10 @@ export default function FeaturedProducts({ onOpenContact }) {
                     <button
                       key={screen.id}
                       onClick={() => setActiveScreenIndex(idx)}
-                      className={`flex-1 py-1.5 px-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${
-                        isActive
+                      className={`flex-1 py-1.5 px-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${isActive
                           ? 'bg-orange-500 text-white shadow-md'
                           : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                      }`}
+                        }`}
                     >
                       <Icon className="w-3.5 h-3.5 shrink-0" />
                       <span>{language === 'es' ? screen.shortLabelEs : screen.shortLabelEn}</span>
@@ -326,7 +312,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
               {/* Desktop Browser Window */}
               <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-950 group/browser relative">
-                
+
                 {/* Browser Top Chrome */}
                 <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
                   <div className="flex items-center gap-1.5">
@@ -334,7 +320,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                     <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                   </div>
-                  
+
                   {/* Dynamic URL bar matching active screen */}
                   <div className="px-3 py-0.5 rounded-md bg-white/70 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 text-[10px] font-mono text-zinc-600 dark:text-zinc-300 truncate max-w-[280px]">
                     🔒 {currentScreen.url}
@@ -353,7 +339,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                 </div>
 
                 {/* Screenshot Frame with Navigation Controls */}
-                <div 
+                <div
                   onClick={() => setIsLightboxOpen(true)}
                   className="relative aspect-[16/9] bg-zinc-950 overflow-hidden cursor-pointer"
                 >
@@ -415,16 +401,15 @@ export default function FeaturedProducts({ onOpenContact }) {
                     key={screen.id}
                     onClick={() => setActiveScreenIndex(idx)}
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
-                    className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${
-                      activeScreenIndex === idx 
-                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30' 
+                    className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${activeScreenIndex === idx
+                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30'
                         : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
-                    }`}
+                      }`}
                   >
-                    <img 
-                      src={screen.img} 
-                      alt={screen.labelEs} 
-                      className="w-full h-full object-cover rounded-lg" 
+                    <img
+                      src={screen.img}
+                      alt={screen.labelEs}
+                      className="w-full h-full object-cover rounded-lg"
                     />
                   </button>
                 ))}
@@ -440,11 +425,11 @@ export default function FeaturedProducts({ onOpenContact }) {
 
       {/* Fullscreen Lightbox Modal (Keyboard & Touch-Swipe Optimized) */}
       {isLightboxOpen && (
-        <div 
+        <div
           onClick={() => setIsLightboxOpen(false)}
           className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
@@ -479,10 +464,10 @@ export default function FeaturedProducts({ onOpenContact }) {
 
             {/* Modal Image Area with Floating Side Navigation Arrows */}
             <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-hidden min-h-[300px]">
-              <img 
+              <img
                 key={currentScreen.id}
-                src={currentScreen.img} 
-                alt={currentScreen.labelEs} 
+                src={currentScreen.img}
+                alt={currentScreen.labelEs}
                 className="max-h-[64vh] sm:max-h-[70vh] w-auto max-w-full object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200"
               />
 
@@ -531,16 +516,15 @@ export default function FeaturedProducts({ onOpenContact }) {
                     key={screen.id}
                     onClick={() => setActiveScreenIndex(idx)}
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
-                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
-                      activeScreenIndex === idx 
-                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100' 
+                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${activeScreenIndex === idx
+                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
                         : 'border-white/10 opacity-50 hover:opacity-100'
-                    }`}
+                      }`}
                   >
-                    <img 
-                      src={screen.img} 
-                      alt={screen.labelEs} 
-                      className="w-full h-full object-cover rounded" 
+                    <img
+                      src={screen.img}
+                      alt={screen.labelEs}
+                      className="w-full h-full object-cover rounded"
                     />
                   </button>
                 ))}

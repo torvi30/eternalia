@@ -31,7 +31,6 @@ export const projectsConfig = [
     gallery: [
       "/products/restaurants/pedidos.jpg",
       "/products/restaurants/productos.jpg",
-      "/products/restaurants/metricas.jpg",
       "/products/restaurants/categorias.jpg",
       "/products/restaurants/inventario.png"
     ],
@@ -128,9 +127,9 @@ export const projectsConfig = [
     categoryLabelEs: "Hamburguesería & Delivery",
     categoryLabelEn: "Fast-Casual Burger",
     url: "https://smashburger.pedidos.eternalia.co",
-    screenshotUrl: "/products/restaurants/metricas.jpg",
+    screenshotUrl: "/products/restaurants/menu-cliente-vivo.jpg",
     gallery: [
-      "/products/restaurants/metricas.jpg",
+      "/products/restaurants/menu-cliente-vivo.jpg",
       "/products/restaurants/pedidos.jpg",
       "/products/restaurants/productos.jpg"
     ],

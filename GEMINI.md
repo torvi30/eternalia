@@ -19,3 +19,10 @@
 - **Soporte Completo Dark / Light Mode**: Todo componente creado o modificado en la landing page debe soportar ambos modos mediante clases `dark:` y variables adaptativas con contraste WCAG 2.1 AA.
 - **Auditoría de SEO**: Mantener metadatos, datos estructurados Schema.org, semántica HTML y velocidad de carga en los más altos estándares bajo el rol de `design-seo-specialist`.
 
+## Regla de Planes, Especificaciones y Tareas (ADR-0003)
+- **Obligatoriedad de Plan Previo**: Toda funcionalidad nueva o cambio mayor debe contar con un archivo consolidado en `plans/` que contenga en el mismo documento:
+  1. Plan de Implementación (arquitectura, alcance, dependencias).
+  2. Especificaciones Técnicas y Funcionales (requerimientos, diseño Dark/Light, contratos, criterios de aceptación).
+  3. Desglose de Tareas Accionables (checklist interactivo `[ ]` / `[x]`).
+- **Seguimiento Activo**: Las tareas deben actualizarse a `[x]` a medida que se implemente la solución.
+

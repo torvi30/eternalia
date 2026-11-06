@@ -15,3 +15,4 @@ Gobernar la experiencia visual, la accesibilidad (WCAG 2.1 AA) y el posicionamie
    - Schema.org JSON-LD para Organización y Aplicaciones SaaS.
    - Archivos de rastreo `robots.txt` y `sitemap.xml`.
    - Semántica HTML estricta y auditoría continua de Core Web Vitals.
+

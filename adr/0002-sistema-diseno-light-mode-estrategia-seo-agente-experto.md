@@ -60,3 +60,4 @@ Se aprueba la implementación de un sistema de tema dual:
 
 ### Mitigaciones
 - Todos los nuevos componentes que se agreguen a la landing o a la aplicación deben soportar explícitamente clases condicionales `dark:` y modos contrastados.
+

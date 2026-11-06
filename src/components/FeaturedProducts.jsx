@@ -1,24 +1,15 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import {
-  UtensilsCrossed,
-  Monitor,
-  Tablet,
-  Smartphone,
-  ArrowRight,
-  Sparkles,
-  CheckCircle2,
-  TrendingUp,
-  ShieldCheck,
-  Zap,
-  Layers,
-  ChevronRight
+import { 
+  UtensilsCrossed, 
+  ArrowRight, 
+  Sparkles, 
+  CheckCircle2, 
+  Maximize2
 } from 'lucide-react';
 
 export default function FeaturedProducts({ onOpenContact }) {
   const { language } = useLanguage();
-  const [activeDevice, setActiveDevice] = useState('desktop');
 
   return (
     <section id="productos-disponibles" className="py-24 relative overflow-hidden scroll-mt-20">
@@ -125,120 +116,34 @@ export default function FeaturedProducts({ onOpenContact }) {
 
             </div>
 
-            {/* Right Column: Multi-Device Responsive Simulator */}
+            {/* Right Column: Desktop Browser Preview */}
             <div className="lg:col-span-7 flex flex-col items-center">
-
-              {/* Responsive Device Switcher Tabs */}
-              <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-200 dark:bg-zinc-900 border border-black/5 dark:border-white/10 mb-5">
-                <button
-                  onClick={() => setActiveDevice('desktop')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'desktop'
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
-                >
-                  <Monitor className="w-3.5 h-3.5" />
-                  <span>{language === 'es' ? 'Escritorio' : 'Desktop'}</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveDevice('tablet')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'tablet'
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
-                >
-                  <Tablet className="w-3.5 h-3.5" />
-                  <span>{language === 'es' ? 'Tablet (Cocina)' : 'Tablet'}</span>
-                </button>
-
-                <button
-                  onClick={() => setActiveDevice('mobile')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'mobile'
-                      ? 'bg-orange-500 text-white shadow-md'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                    }`}
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                  <span>{language === 'es' ? 'Móvil (Mesero/QR)' : 'Mobile'}</span>
-                </button>
-              </div>
-
-              {/* Dynamic Frame Display */}
-              <div className="w-full flex items-center justify-center min-h-[300px]">
-
-                {/* Desktop View */}
-                {activeDevice === 'desktop' && (
-                  <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-950 animate-in fade-in duration-300">
-                    <div className="h-6 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-red-500" />
-                        <span className="w-2 h-2 rounded-full bg-amber-500" />
-                        <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      </div>
-                      <span className="text-[10px] font-mono text-zinc-500">
-                        restaurant.eternalia.co/pedidos
-                      </span>
-                      <span className="text-[9px] font-mono text-emerald-500 font-bold">1920x1080</span>
-                    </div>
-                    <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
-                      <img
-                        src="/products/restaurants/pedidos.jpg"
-                        alt="Pantalla de Pedidos en Escritorio"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
+              <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-950">
+                <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                   </div>
-                )}
-
-                {/* Tablet View */}
-                {activeDevice === 'tablet' && (
-                  <div className="w-[85%] rounded-3xl p-2.5 bg-zinc-900 border-4 border-zinc-700 shadow-2xl animate-in zoom-in-95 duration-300">
-                    <div className="rounded-xl overflow-hidden border border-white/10 bg-zinc-950">
-                      <div className="h-5 bg-zinc-800 px-3 flex items-center justify-between border-b border-white/10 text-[9px] font-mono text-zinc-400">
-                        <span>iPad Pro 11&quot; • Comandero</span>
-                        <span className="text-orange-400 font-bold">Tablet POS</span>
-                      </div>
-                      <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden">
-                        <img
-                          src="/products/restaurants/productos.jpg"
-                          alt="Pantalla de Menú en Tablet"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Mobile View */}
-                {activeDevice === 'mobile' && (
-                  <div className="w-[260px] rounded-[36px] p-2.5 bg-zinc-900 border-4 border-zinc-700 shadow-2xl animate-in zoom-in-95 duration-300">
-                    <div className="w-20 h-3.5 bg-zinc-800 rounded-full mx-auto mb-2" />
-                    <div className="rounded-[24px] overflow-hidden border border-white/10 bg-zinc-950">
-                      <div className="h-5 bg-zinc-800 px-3 flex items-center justify-between border-b border-white/10 text-[8px] font-mono text-zinc-400">
-                        <span>Menú QR</span>
-                        <span className="text-emerald-400 font-bold">5G</span>
-                      </div>
-                      <div className="relative aspect-[9/16] bg-zinc-950 overflow-hidden">
-                        <img
-                          src="/products/restaurants/pedidos.jpg"
-                          alt="Pantalla Móvil"
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-24 h-1 bg-zinc-700 rounded-full mx-auto mt-2" />
-                  </div>
-                )}
-
+                  <span className="text-[11px] font-mono text-zinc-500">
+                    restaurant.eternalia.co/pedidos
+                  </span>
+                  <span className="text-[10px] font-mono text-emerald-500 font-bold">1920x1080 Full HD</span>
+                </div>
+                <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
+                  <img
+                    src="/products/restaurants/pedidos.jpg"
+                    alt="Pantalla de Pedidos en Escritorio"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
 
               <div className="mt-3 text-center text-[11px] font-mono text-zinc-500">
                 {language === 'es'
-                  ? 'Soporte responsive verificado para iPad, POS táctil Android, iPhone y monitores de caja.'
-                  : 'Verified responsive layout for iPad, Android POS touchscreens, iPhone, and desktop monitors.'}
+                  ? 'Panel de control de pedidos, comandas a cocina y caja en tiempo real.'
+                  : 'Real-time order control, kitchen tickets, and cashier dashboard.'}
               </div>
-
             </div>
 
           </div>

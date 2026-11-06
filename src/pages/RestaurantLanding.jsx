@@ -32,7 +32,6 @@ import {
 export default function RestaurantLanding() {
   const { language, toggleLanguage } = useLanguage();
   const { isDark, toggleTheme } = useTheme();
-  const [activeDevice, setActiveDevice] = useState('desktop'); // desktop | tablet | mobile
   const [activeModule, setActiveModule] = useState(0);
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [activeZoomImg, setActiveZoomImg] = useState(null);
@@ -298,131 +297,35 @@ export default function RestaurantLanding() {
 
           </div>
 
-          {/* 3. MULTI-DEVICE SIMULATOR (ESCRITORIO / TABLET / MÓVIL) */}
+          {/* 3. DESKTOP BROWSER PREVIEW */}
           <div className="max-w-5xl mx-auto mt-8">
             <div className="bg-white/90 dark:bg-[#0d0e14]/90 rounded-3xl p-4 sm:p-7 border border-black/10 dark:border-white/15 shadow-2xl backdrop-blur-xl">
-
-              {/* Device Selector Header */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-5 border-b border-black/10 dark:border-white/10">
-                <div>
-                  <span className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider block">
-                    {language === 'es' ? 'Simulador de Adaptabilidad Responsive' : 'Responsive Adaptability Preview'}
+              
+              <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-900">
+                <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                  </div>
+                  <span className="text-[10px] font-mono text-zinc-500 truncate">
+                    🔒 https://restaurant.eternalia.co/admin/pedidos
                   </span>
-                  <h3 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-white">
-                    {language === 'es' ? 'Una sola plataforma, óptima en cualquier pantalla' : 'One unified platform, flawless on any screen'}
-                  </h3>
+                  <span className="text-[10px] text-emerald-500 font-mono font-bold">1920 x 1080 Full HD</span>
                 </div>
-
-                {/* Device Switcher Buttons */}
-                <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-zinc-900 border border-black/5 dark:border-white/10">
-                  <button
-                    onClick={() => setActiveDevice('desktop')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'desktop'
-                        ? 'bg-orange-500 text-white shadow-md'
-                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                      }`}
-                  >
-                    <Monitor className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Escritorio (Caja/Admin)' : 'Desktop'}</span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveDevice('tablet')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'tablet'
-                        ? 'bg-orange-500 text-white shadow-md'
-                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                      }`}
-                  >
-                    <Tablet className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Tablet (Comandero Cocina)' : 'Tablet'}</span>
-                  </button>
-
-                  <button
-                    onClick={() => setActiveDevice('mobile')}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeDevice === 'mobile'
-                        ? 'bg-orange-500 text-white shadow-md'
-                        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
-                      }`}
-                  >
-                    <Smartphone className="w-3.5 h-3.5" />
-                    <span>{language === 'es' ? 'Móvil (Mesero/Cliente)' : 'Mobile'}</span>
-                  </button>
+                <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
+                  <img
+                    src="/products/restaurants/pedidos.jpg"
+                    alt="Vista de Pedidos en Escritorio"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
               </div>
 
-              {/* Dynamic Frame Display */}
-              <div className="py-6 flex justify-center items-center overflow-hidden transition-all duration-300">
-
-                {/* Desktop Frame */}
-                {activeDevice === 'desktop' && (
-                  <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-900 animate-in fade-in duration-300">
-                    <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
-                      <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                      </div>
-                      <span className="text-[10px] font-mono text-zinc-500 truncate">
-                        🔒 https://restaurant.eternalia.co/admin/pedidos
-                      </span>
-                      <span className="text-[10px] text-emerald-500 font-mono font-bold">1920 x 1080 Full HD</span>
-                    </div>
-                    <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
-                      <img
-                        src="/products/restaurants/pedidos.jpg"
-                        alt="Vista de Pedidos en Escritorio"
-                        className="w-full h-full object-contain"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Tablet Frame */}
-                {activeDevice === 'tablet' && (
-                  <div className="w-[85%] sm:w-[75%] rounded-3xl p-3 bg-zinc-900 border-4 border-zinc-700 shadow-2xl animate-in zoom-in-95 duration-300">
-                    <div className="rounded-2xl overflow-hidden border border-white/10 bg-zinc-950">
-                      <div className="h-6 bg-zinc-800 px-3 flex items-center justify-between border-b border-white/10">
-                        <span className="text-[9px] font-mono text-zinc-400">iPad Pro 11&quot; • Pantalla de Cocina / POS</span>
-                        <span className="text-[9px] text-orange-400 font-mono">Modo Tablet</span>
-                      </div>
-                      <div className="relative aspect-[4/3] bg-zinc-950 overflow-hidden">
-                        <img
-                          src="/products/restaurants/productos.jpg"
-                          alt="Vista de Menú en Tablet"
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Mobile Frame */}
-                {activeDevice === 'mobile' && (
-                  <div className="w-[320px] rounded-[40px] p-3 bg-zinc-900 border-4 border-zinc-700 shadow-2xl animate-in zoom-in-95 duration-300">
-                    <div className="w-24 h-4 bg-zinc-800 rounded-full mx-auto mb-2" />
-                    <div className="rounded-[28px] overflow-hidden border border-white/10 bg-zinc-950">
-                      <div className="h-6 bg-zinc-800 px-3 flex items-center justify-between border-b border-white/10">
-                        <span className="text-[9px] font-mono text-zinc-400">Menú QR Móvil</span>
-                        <span className="text-[9px] text-emerald-400 font-mono">5G Live</span>
-                      </div>
-                      <div className="relative aspect-[9/16] bg-zinc-950 overflow-hidden">
-                        <img
-                          src="/products/restaurants/pedidos.jpg"
-                          alt="Vista Móvil de Pedidos"
-                          className="w-full h-full object-cover object-top"
-                        />
-                      </div>
-                    </div>
-                    <div className="w-28 h-1 bg-zinc-700 rounded-full mx-auto mt-2" />
-                  </div>
-                )}
-
-              </div>
-
-              <div className="text-center pt-3 border-t border-black/5 dark:border-white/5 text-xs text-zinc-500">
+              <div className="text-center pt-3 border-t border-black/5 dark:border-white/5 text-xs text-zinc-500 mt-4">
                 {language === 'es'
-                  ? '⚡ La interfaz se sincroniza en milisegundos: si un cliente pide en su celular o el cajero añade un pedido, la pantalla de cocina se actualiza en tiempo real.'
-                  : '⚡ Real-time synchronization: when a customer orders via QR on mobile, the kitchen tablet ticket updates instantly.'}
+                  ? '⚡ Sincronización en milisegundos con comanderos de cocina, pedidos de salón e impresión térmica de comandas.'
+                  : '⚡ Millisecond synchronization with kitchen printers, dining room orders, and POS tickets.'}
               </div>
 
             </div>

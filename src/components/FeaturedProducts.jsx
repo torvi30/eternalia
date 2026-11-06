@@ -14,6 +14,10 @@ import {
   Layers,
   Package,
   Eye,
+  ShoppingBag,
+  Palette,
+  MapPin,
+  Calendar,
   X
 } from 'lucide-react';
 
@@ -24,9 +28,21 @@ export default function FeaturedProducts({ onOpenContact }) {
 
   const desktopScreens = [
     {
+      id: 'menu-cliente',
+      labelEs: 'Menú en Vivo para Clientes (Dark UI)',
+      labelEn: 'Live Customer Menu (Dark UI)',
+      shortLabelEs: 'Menú en Vivo',
+      shortLabelEn: 'Live Menu',
+      icon: ShoppingBag,
+      url: 'chickenking.menu.eternalia.co',
+      img: '/products/restaurants/menu-cliente-vivo.jpg',
+      captionEs: 'Experiencia interactiva del cliente: empanadas de colores, adiciones, selección rápida y carrito flotante.',
+      captionEn: 'Interactive diner experience: colored artisanal snacks, sides, quick select, and floating cart checkout.'
+    },
+    {
       id: 'pedidos',
-      labelEs: 'Pedidos & Mesas QR',
-      labelEn: 'Orders & Table QR',
+      labelEs: 'Gestión de Pedidos & Mesas QR',
+      labelEn: 'Orders & Table QR Management',
       shortLabelEs: 'Pedidos',
       shortLabelEn: 'Orders',
       icon: Clock,
@@ -37,10 +53,10 @@ export default function FeaturedProducts({ onOpenContact }) {
     },
     {
       id: 'productos',
-      labelEs: 'Menú Digital & Platos',
-      labelEn: 'Digital Menu & Dishes',
-      shortLabelEs: 'Menú & Platos',
-      shortLabelEn: 'Menu & Dishes',
+      labelEs: 'Menú Digital & Catálogo de Platos',
+      labelEn: 'Digital Menu & Dish Catalog',
+      shortLabelEs: 'Platos & Precios',
+      shortLabelEn: 'Dishes & Prices',
       icon: UtensilsCrossed,
       url: 'restaurant.eternalia.co/admin/productos',
       img: '/products/restaurants/productos.jpg',
@@ -49,8 +65,8 @@ export default function FeaturedProducts({ onOpenContact }) {
     },
     {
       id: 'metricas',
-      labelEs: 'Métricas & Ventas',
-      labelEn: 'Sales & Metrics',
+      labelEs: 'Dashboard de Métricas & Ventas',
+      labelEn: 'Sales & Revenue Analytics',
       shortLabelEs: 'Métricas',
       shortLabelEn: 'Metrics',
       icon: BarChart3,
@@ -60,9 +76,45 @@ export default function FeaturedProducts({ onOpenContact }) {
       captionEn: 'Monthly revenue metrics, rush peak hours, top-seller dishes, and CSV export.'
     },
     {
+      id: 'branding',
+      labelEs: 'Personalización de Colores & 10 Paletas UI',
+      labelEn: 'Color Branding & 10 UI Palettes',
+      shortLabelEs: 'Colores & Branding',
+      shortLabelEn: 'Branding',
+      icon: Palette,
+      url: 'restaurant.eternalia.co/admin/personalizacion',
+      img: '/products/restaurants/personalizacion-colores.jpg',
+      captionEs: 'Configura colores de fondo, tarjetas, botones y footer con 10 estilos recomendados y vista previa en tiempo real.',
+      captionEn: 'Custom brand color styling for backgrounds, cards, and buttons with 10 pre-crafted UX palettes.'
+    },
+    {
+      id: 'mapa',
+      labelEs: 'Ubicación en Google Maps & Datos de Tienda',
+      labelEn: 'Google Maps Location & Store Data',
+      shortLabelEs: 'Ubicación Maps',
+      shortLabelEn: 'Maps Location',
+      icon: MapPin,
+      url: 'restaurant.eternalia.co/admin/configuracion',
+      img: '/products/restaurants/configuracion-mapa.jpg',
+      captionEs: 'Geolocalización con mapa interactivo embebido, selección de tipo de tienda (asadero) y textos de checkout.',
+      captionEn: 'Interactive Google Maps store pin, restaurant type classification, and checkout terms.'
+    },
+    {
+      id: 'horarios',
+      labelEs: 'Horarios de Atención & Opciones de Servicio',
+      labelEn: 'Opening Hours & Delivery Options',
+      shortLabelEs: 'Horarios & Domicilios',
+      shortLabelEn: 'Hours & Delivery',
+      icon: Calendar,
+      url: 'restaurant.eternalia.co/admin/horarios',
+      img: '/products/restaurants/horarios-servicio.png',
+      captionEs: 'Horarios por día (Lunes a Domingo), costos base de domicilio, rango de entrega y pedidos para recoger.',
+      captionEn: 'Day-by-day schedules, delivery base pricing, free shipping threshold, and pickup options.'
+    },
+    {
       id: 'categorias',
-      labelEs: 'Categorías del Menú',
-      labelEn: 'Menu Categories',
+      labelEs: 'Categorías del Menú & Estructura',
+      labelEn: 'Menu Categories & Structure',
       shortLabelEs: 'Categorías',
       shortLabelEn: 'Categories',
       icon: Layers,
@@ -73,8 +125,8 @@ export default function FeaturedProducts({ onOpenContact }) {
     },
     {
       id: 'inventario',
-      labelEs: 'Control de Inventario',
-      labelEn: 'Stock & Inventory',
+      labelEs: 'Control de Inventario & Alertas de Stock',
+      labelEn: 'Stock & Inventory Control',
       shortLabelEs: 'Inventario',
       shortLabelEn: 'Inventory',
       icon: Package,
@@ -309,16 +361,17 @@ export default function FeaturedProducts({ onOpenContact }) {
                 </span>
               </div>
 
-              {/* Mini Desktop Thumbnail Carousel */}
-              <div className="grid grid-cols-5 gap-2 mt-4 w-full">
+              {/* Mini Desktop Thumbnail Carousel (All 9 Real Screens) */}
+              <div className="flex items-center gap-2 mt-4 w-full overflow-x-auto pb-1">
                 {desktopScreens.map((screen, idx) => (
                   <button
                     key={screen.id}
                     onClick={() => setActiveScreenIndex(idx)}
-                    className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] ${
+                    title={language === 'es' ? screen.labelEs : screen.labelEn}
+                    className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${
                       activeScreenIndex === idx 
-                        ? 'border-orange-500 shadow-md scale-105' 
-                        : 'border-transparent opacity-60 hover:opacity-100'
+                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30' 
+                        : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
                     }`}
                   >
                     <img 

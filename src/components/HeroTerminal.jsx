@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   Terminal as TerminalIcon, 
@@ -9,7 +8,6 @@ import {
 
 export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
   const { t, language } = useLanguage();
-  const navigate = useNavigate();
   const [inputVal, setInputVal] = useState('');
   const [isDeploying, setIsDeploying] = useState(false);
   const terminalEndRef = useRef(null);
@@ -40,7 +38,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
     let responseEntry = null;
 
     switch (cmd) {
-      case 'projects':
+      case 'projects': {
         const el = document.getElementById('proyectos');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         responseEntry = {
@@ -54,6 +52,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
           )
         };
         break;
+      }
 
       case 'help':
         responseEntry = {

@@ -51,7 +51,8 @@ import {
   Palette,
   Check,
   ArrowUpRight,
-  Zap
+  Zap,
+  Layers
 } from 'lucide-react';
 
 const COLOR_PRESETS = [

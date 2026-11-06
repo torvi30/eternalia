@@ -1,31 +1,25 @@
-import { useState, useId } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import ContactModal from '../components/ContactModal';
 import {
   UtensilsCrossed,
-  Monitor,
-  Tablet,
-  Smartphone,
   CheckCircle2,
-  TrendingUp,
   Clock,
-  QrCode,
-  Printer,
   ShoppingBag,
   Layers,
   BarChart3,
   Package,
-  ShieldCheck,
-  Zap,
+  Palette,
+  MapPin,
+  Calendar,
   ArrowRight,
   ArrowLeft,
   Sparkles,
   DollarSign,
   Sun,
   Moon,
-  Globe,
   Maximize2
 } from 'lucide-react';
 
@@ -40,6 +34,98 @@ export default function RestaurantLanding() {
   const [monthlySales, setMonthlySales] = useState(15000000); // 15 millones COP por defecto
 
   const modules = [
+    {
+      id: 'menu-cliente',
+      nameEs: 'Menú Digital en Vivo (Cliente)',
+      nameEn: 'Live Customer Digital Menu',
+      taglineEs: 'Diseño Dark Mode de alta gama con carrito flotante y fotos apetitosas',
+      taglineEn: 'Upscale Dark Mode UI with floating checkout cart and appetizing food shots',
+      img: '/products/restaurants/menu-cliente-vivo.jpg',
+      icon: ShoppingBag,
+      badgeEs: 'Experiencia del Comensal',
+      badgeEn: 'Diner Experience',
+      featuresEs: [
+        'Presentación visual impactante con fotos de platos, pasteles y empanadas gourmet.',
+        'Contadores interactivos (+ / -) para selección ágil de cantidades sin salir del menú.',
+        'Barra flotante inferior con total en pesos (COP) y botón directo a pedido.',
+        'Sin descargas pesadas de apps: abre instantáneamente desde cualquier escaneo QR o enlace.'
+      ],
+      featuresEn: [
+        'High-impact visual layout with HD imagery of gourmet snacks, sides, and main courses.',
+        'Interactive (+ / -) count buttons for rapid item adding without navigating away.',
+        'Bottom floating order bar with real-time total and 1-click checkout initiation.',
+        'Zero app downloads: loads in milliseconds via QR scan or shared social link.'
+      ]
+    },
+    {
+      id: 'branding',
+      nameEs: 'Personalización de Colores & 10 Paletas UI',
+      nameEn: 'Color Branding & 10 UI Palettes',
+      taglineEs: 'Adapta la identidad de tu restaurante con paletas recomendadas por diseñadores',
+      taglineEn: 'Tailor your restaurant brand identity with designer-crafted color schemes',
+      img: '/products/restaurants/personalizacion-colores.jpg',
+      icon: Palette,
+      badgeEs: 'Personalización Total',
+      badgeEn: 'Full Customization',
+      featuresEs: [
+        'Configuración de 4 colores clave: fondo general, tarjetas de productos, botones de acción y footer.',
+        '10 paletas temáticas pre-diseñadas (Trattoria & Fuego, Burger & Cheddar, Gourmet Botánico, etc.).',
+        'Previsualizador en tiempo real que muestra el contraste de tu landing antes de guardar.',
+        'Interruptor para activar badges de promociones y descuentos visibles en el directorio.'
+      ],
+      featuresEn: [
+        'Tune 4 core colors: landing background, dish cards, CTA buttons, and footer accents.',
+        '10 thematic preset palettes (Steakhouse Royale, Burger & Cheddar, Botanical Gourmet, etc.).',
+        'Live split preview verifying WCAG text-contrast before applying changes live.',
+        'Toggle switch for instant banner badges on special offers and discount campaigns.'
+      ]
+    },
+    {
+      id: 'mapa',
+      nameEs: 'Ubicación en Google Maps & Datos de Tienda',
+      nameEn: 'Google Maps Location & Store Data',
+      taglineEs: 'Geolocalización exacta de tu sede para facilitar llegadas y domicilios',
+      taglineEn: 'Accurate branch geolocation powering effortless customer arrival and dispatch',
+      img: '/products/restaurants/configuracion-mapa.jpg',
+      icon: MapPin,
+      badgeEs: 'Geolocalización',
+      badgeEn: 'Geolocation',
+      featuresEs: [
+        'Mapa interactivo embebido con pin personalizado de tu restaurante o asadero.',
+        'Selección de categoría de tienda para títulos de encabezado y directorios locales.',
+        'Instrucciones de pago y notas de entrega personalizadas bajo el total de checkout.',
+        'Imagen por defecto para platos nuevos que aún no tengan fotografía tomada.'
+      ],
+      featuresEn: [
+        'Interactive embedded Google Maps view pinpointing your kitchen or dining room.',
+        'Store classification dropdown tailored for local search discovery.',
+        'Custom payment instructions and delivery terms displayed right below checkout total.',
+        'Smart fallback placeholder imagery for newly added dishes awaiting photo shoots.'
+      ]
+    },
+    {
+      id: 'horarios',
+      nameEs: 'Horarios de Atención & Opciones de Entrega',
+      nameEn: 'Opening Hours & Delivery Options',
+      taglineEs: 'Control de apertura por días, tarifas de flete y rangos de despacho',
+      taglineEn: 'Day-by-day operating schedules, delivery fees, and estimated transit times',
+      img: '/products/restaurants/horarios-servicio.png',
+      icon: Calendar,
+      badgeEs: 'Logística & Turnos',
+      badgeEn: 'Logistics & Hours',
+      featuresEs: [
+        'Programación semanal detallada de lunes a domingo con rangos horarios precisos.',
+        'Activación selectiva de canales de entrega: "Para recoger en barra" y "Domicilio a casa".',
+        'Definición de tarifa base de envío y umbral de compra para envío gratuito.',
+        'Muestra del tiempo estimado de entrega (ej. 30-45 min) para expectativas claras del cliente.'
+      ],
+      featuresEn: [
+        'Detailed Monday-to-Sunday opening hours schedule with precise open/close times.',
+        'Independent toggle for fulfillment modes: "Curbside pickup" and "Home delivery".',
+        'Base courier fee configuration and minimum ticket threshold for free shipping promos.',
+        'Live estimated delivery transit time badge (e.g. 30-45 min) keeping customers informed.'
+      ]
+    },
     {
       id: 'pedidos',
       nameEs: 'Gestión de Pedidos & Comandas',

@@ -42,7 +42,7 @@ export default function PublicLanding() {
           onOpenContact={() => setIsContactOpen(true)}
           onExploreClick={(e) => {
             e.preventDefault();
-            scrollToSection('ecosistema');
+            scrollToSection('productos-disponibles');
           }}
           onDemoClick={(e) => {
             e.preventDefault();
@@ -50,10 +50,10 @@ export default function PublicLanding() {
           }}
         />
 
-        <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
-
-        {/* Productos SaaS Disponibles con Simulador Responsive */}
+        {/* Productos SaaS Disponibles - Posición Prioritaria Destacada */}
         <FeaturedProducts onOpenContact={() => setIsContactOpen(true)} />
+
+        <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
 
         <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
 

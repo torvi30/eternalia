@@ -157,10 +157,17 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
             {/* Desktop Navigation Links */}
             <nav className="hidden md:flex items-center gap-1 px-3 py-1.5 rounded-full bg-slate-100/80 dark:bg-zinc-950/70 border border-black/[0.06] dark:border-white/[0.08] backdrop-blur-md shadow-sm">
               <button
+                onClick={() => scrollTo('productos-disponibles')}
+                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
+              >
+                {language === 'es' ? 'Productos' : 'Products'}
+              </button>
+
+              <button
                 onClick={() => scrollTo('proyectos')}
                 className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
               >
-                {language === 'es' ? 'Soluciones' : 'Solutions'}
+                {language === 'es' ? 'Portafolio' : 'Portfolio'}
               </button>
 
               <Link

@@ -38,6 +38,7 @@ import {
   Mail, 
   Server,
   Briefcase,
+  Paperclip,
   Activity,
   BarChart3,
   TrendingUp,
@@ -749,6 +750,22 @@ export default function AdminDashboard() {
                           <p className="text-xs text-zinc-300 bg-zinc-900/60 p-2.5 rounded-xl border border-white/5 mt-2 italic">
                             "{lead.clientNotes || lead.message}"
                           </p>
+                        )}
+
+                        {lead.attachment && lead.attachment.url && (
+                          <div className="pt-1">
+                            <a
+                              href={lead.attachment.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-colors"
+                              title="Descargar archivo adjunto de Firebase Storage"
+                            >
+                              <Paperclip className="w-3.5 h-3.5 text-cyan-400" />
+                              <span className="truncate max-w-[220px]">Adjunto: {lead.attachment.name || 'Archivo'}</span>
+                              <ExternalLink className="w-3 h-3 text-cyan-400 shrink-0" />
+                            </a>
+                          </div>
                         )}
                       </div>
 

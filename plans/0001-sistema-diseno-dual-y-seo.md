@@ -94,3 +94,4 @@ Escenario 1: Alternancia de tema
 ### Fase 4: Aseguramiento de Calidad y Cierre
 - [x] Tarea 4.1: Compilar proyecto con `npm run build` verificando 0 errores.
 - [x] Tarea 4.2: Confirmar commits bajo ADR-0001 con coautoría obligatoria de `jsdnlb`.
+

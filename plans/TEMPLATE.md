@@ -75,3 +75,4 @@ Escenario 1: Flujo exitoso
 
 ### Fase 4: Despliegue y Commit (ADR-0001)
 - [ ] Tarea 4.1: Realizar commit incluyendo coautor obligatorio `jsdnlb`
+

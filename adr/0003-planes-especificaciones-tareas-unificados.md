@@ -67,3 +67,4 @@ Este archivo **DEBE consolidar en un solo documento** las siguientes tres seccio
 
 ### Mitigaciones
 - Se provee una plantilla oficial [`plans/TEMPLATE.md`](../plans/TEMPLATE.md) para que la creación de un nuevo plan tome menos de 2 minutos.
+

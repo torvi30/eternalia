@@ -9,7 +9,8 @@ import {
   query, 
   orderBy 
 } from 'firebase/firestore';
-import { db, isFirebaseConfigured } from '../firebase/config';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { db, storage, isFirebaseConfigured } from '../firebase/config';
 
 // Sample seed leads for rich demo experience if database is empty
 const SEED_LEADS = [
@@ -85,11 +86,66 @@ function saveLocalLead(lead) {
 }
 
 /**
- * Guarda una solicitud de contacto, alianza o inversor en Firestore
+ * Sube un archivo adjunto (RFP, documento, imagen) a Firebase Storage
  */
-export async function saveInquiry(inquiryData) {
-  const localRecord = {
+export async function uploadInquiryAttachment(file) {
+  if (!file) return null;
+
+  try {
+    if (!isFirebaseConfigured || !storage) {
+      console.warn("⚠️ [Eternalia Firebase Storage]: Simulando subida local de archivo:", file.name);
+      return {
+        url: URL.createObjectURL(file),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        uploadedAt: new Date().toISOString()
+      };
+    }
+
+    const cleanFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+    const storagePath = `inquiries/${Date.now()}_${cleanFileName}`;
+    const storageRef = ref(storage, storagePath);
+
+    const snapshot = await uploadBytes(storageRef, file);
+    const downloadUrl = await getDownloadURL(snapshot.ref);
+
+    console.log("✅ [Eternalia Firebase Storage]: Archivo subido exitosamente:", downloadUrl);
+    return {
+      url: downloadUrl,
+      path: storagePath,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      uploadedAt: new Date().toISOString()
+    };
+  } catch (err) {
+    console.error("❌ [Eternalia Firebase Storage] Error al subir archivo:", err);
+    return {
+      url: null,
+      name: file.name,
+      size: file.size,
+      error: err.message
+    };
+  }
+}
+
+/**
+ * Guarda una solicitud de contacto, alianza o inversor en Firestore (y sube adjuntos si existen a Firebase Storage)
+ */
+export async function saveInquiry(inquiryData, attachmentFile = null) {
+  let attachmentMetadata = null;
+  if (attachmentFile) {
+    attachmentMetadata = await uploadInquiryAttachment(attachmentFile);
+  }
+
+  const payload = {
     ...inquiryData,
+    ...(attachmentMetadata ? { attachment: attachmentMetadata } : {})
+  };
+
+  const localRecord = {
+    ...payload,
     id: `inquiry-mock-${Date.now()}`,
     type: 'contact',
     status: 'pending_review',
@@ -101,13 +157,13 @@ export async function saveInquiry(inquiryData) {
 
   try {
     if (!isFirebaseConfigured) {
-      console.warn("⚠️ [Eternalia Firebase]: Simulando registro exitoso de solicitud:", inquiryData);
+      console.warn("⚠️ [Eternalia Firebase]: Simulando registro exitoso de solicitud en Firestore:", payload);
       await new Promise((resolve) => setTimeout(resolve, 600));
       return { success: true, id: localRecord.id };
     }
 
     const docRef = await addDoc(collection(db, 'inquiries'), {
-      ...inquiryData,
+      ...payload,
       type: 'contact',
       status: 'pending_review',
       createdAt: serverTimestamp(),

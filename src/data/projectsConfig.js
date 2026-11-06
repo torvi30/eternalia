@@ -27,9 +27,13 @@ export const projectsConfig = [
     categoryLabelEs: "Restaurante & Parrilla",
     categoryLabelEn: "Steakhouse & Grill",
     url: "https://donrafael.menu.eternalia.co",
-    screenshotUrl: "/screenshots/don-rafael.svg",
+    screenshotUrl: "/products/restaurants/pedidos.jpg",
     gallery: [
-      "/screenshots/don-rafael.svg"
+      "/products/restaurants/pedidos.jpg",
+      "/products/restaurants/productos.jpg",
+      "/products/restaurants/metricas.jpg",
+      "/products/restaurants/categorias.jpg",
+      "/products/restaurants/inventario.png"
     ],
     highlights: [
       "Menú QR para mesas sin esperas",
@@ -57,9 +61,11 @@ export const projectsConfig = [
     categoryLabelEs: "Cocina Italiana Tradicional",
     categoryLabelEn: "Traditional Italian",
     url: "https://trattorianonna.reservas.eternalia.co",
-    screenshotUrl: "/screenshots/la-trattoria.svg",
+    screenshotUrl: "/products/restaurants/productos.jpg",
     gallery: [
-      "/screenshots/la-trattoria.svg"
+      "/products/restaurants/productos.jpg",
+      "/products/restaurants/pedidos.jpg",
+      "/products/restaurants/categorias.jpg"
     ],
     highlights: [
       "Reservas 100% online confirmadas por WhatsApp",
@@ -87,9 +93,10 @@ export const projectsConfig = [
     categoryLabelEs: "Catering & Eventos",
     categoryLabelEn: "Hospitality ERP",
     url: "https://banquetesarmar.eternalia.co",
-    screenshotUrl: "/screenshots/don-rafael.svg",
+    screenshotUrl: "/products/restaurants/categorias.jpg",
     gallery: [
-      "/screenshots/don-rafael.svg"
+      "/products/restaurants/categorias.jpg",
+      "/products/restaurants/inventario.png"
     ],
     highlights: [
       "Costeo dinámico de insumos por persona",
@@ -121,9 +128,11 @@ export const projectsConfig = [
     categoryLabelEs: "Hamburguesería & Delivery",
     categoryLabelEn: "Fast-Casual Burger",
     url: "https://smashburger.pedidos.eternalia.co",
-    screenshotUrl: "/screenshots/smash-burger.svg",
+    screenshotUrl: "/products/restaurants/metricas.jpg",
     gallery: [
-      "/screenshots/smash-burger.svg"
+      "/products/restaurants/metricas.jpg",
+      "/products/restaurants/pedidos.jpg",
+      "/products/restaurants/productos.jpg"
     ],
     highlights: [
       "0% comisiones por plataformas de terceros",

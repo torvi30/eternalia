@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
 import { 
@@ -17,6 +17,8 @@ export default function Navbar({ onOpenContact }) {
   const { language, toggleLanguage } = useLanguage();
   const { isDark, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,6 +29,17 @@ export default function Navbar({ onOpenContact }) {
   }, []);
 
   const scrollTo = (id) => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 150);
+      return;
+    }
+
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -69,13 +82,13 @@ export default function Navbar({ onOpenContact }) {
 
             {/* Desktop Navigation Links (Píldora Central Llamativa y Diferenciada) */}
             <nav className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 backdrop-blur-md shadow-sm">
-              <Link
-                to="/restaurantes"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 hover:border-orange-500/50 rounded-full transition-all shadow-[0_0_12px_rgba(249,115,22,0.15)]"
+              <button
+                onClick={() => scrollTo('productos-disponibles')}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 hover:border-orange-500/50 rounded-full transition-all shadow-[0_0_12px_rgba(249,115,22,0.15)] cursor-pointer"
               >
                 <UtensilsCrossed className="w-3.5 h-3.5" />
                 <span>{language === 'es' ? '🍽️ Restaurantes' : '🍽️ Restaurants'}</span>
-              </Link>
+              </button>
 
               <button
                 onClick={() => scrollTo('directorio-local')}

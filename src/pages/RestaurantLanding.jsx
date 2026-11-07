@@ -309,7 +309,7 @@ export default function RestaurantLanding() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#07080c] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#07080c] text-zinc-900 dark:text-zinc-100 transition-colors duration-300 selection:bg-blue-600 selection:text-white">
 
       {/* 1. TOP ANNOUNCEMENT & DEDICATED HEADER */}
       <header className="sticky top-0 z-40 bg-white/85 dark:bg-[#090a10]/85 backdrop-blur-xl border-b border-black/[0.08] dark:border-white/[0.08]">
@@ -319,10 +319,10 @@ export default function RestaurantLanding() {
           <div className="flex items-center gap-2.5 sm:gap-4 overflow-hidden">
             <Link
               to="/"
-              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-orange-500/50 dark:hover:border-orange-500/50 text-xs sm:text-sm font-bold text-zinc-900 dark:text-white shadow-sm hover:shadow transition-all group cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-blue-500/50 dark:hover:border-cyan-500/50 text-xs sm:text-sm font-bold text-zinc-900 dark:text-white shadow-sm hover:shadow transition-all group cursor-pointer shrink-0"
               title={language === 'es' ? 'Volver a la página principal' : 'Back to main page'}
             >
-              <ArrowLeft className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+              <ArrowLeft className="w-4 h-4 text-blue-600 dark:text-cyan-400 group-hover:-translate-x-1 transition-transform shrink-0" />
               <span>
                 {language === 'es' ? (
                   <>Volver<span className="hidden sm:inline"> al Inicio</span></>
@@ -335,14 +335,14 @@ export default function RestaurantLanding() {
             <div className="h-5 w-px bg-zinc-300 dark:bg-zinc-700 hidden sm:block" />
 
             <div className="flex items-center gap-2 min-w-0">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] shadow-sm shrink-0">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 p-[1.5px] shadow-sm shrink-0">
                 <div className="w-full h-full bg-white dark:bg-[#0e0f16] rounded-[10px] flex items-center justify-center">
-                  <UtensilsCrossed className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+                  <UtensilsCrossed className="w-4 h-4 text-blue-600 dark:text-cyan-400" />
                 </div>
               </div>
               <div className="truncate">
                 <span className="font-extrabold text-xs sm:text-sm text-zinc-900 dark:text-white block leading-tight truncate">
-                  EternalIA <span className="text-orange-600 dark:text-orange-400">Gastronomía OS</span>
+                  EternalIA <span className="text-blue-600 dark:text-cyan-400">Gastronomía OS</span>
                 </span>
                 <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 hidden sm:block -mt-0.5 truncate">
                   Restaurantes &amp; Comidas Rápidas
@@ -373,7 +373,7 @@ export default function RestaurantLanding() {
             {/* CTA Request Demo */}
             <button
               onClick={() => setIsContactOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-lg shadow-orange-500/25 transition-all cursor-pointer active:scale-95"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-lg shadow-blue-500/25 transition-all cursor-pointer active:scale-95"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'Solicitar Demo Gratis' : 'Request Free Demo'}</span>
@@ -386,12 +386,12 @@ export default function RestaurantLanding() {
       {/* 2. HERO SECTION CON INTRO GASTRONÓMICA */}
       <section className="relative pt-12 pb-20 overflow-hidden">
         {/* Glow ambient background */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-orange-500/15 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-b from-blue-600/15 via-cyan-500/10 to-transparent blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-4">
               <UtensilsCrossed className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'PLATAFORMA 100% OPERATIVA & PROBADA' : '100% LIVE & PROVEN PLATFORM'}</span>
             </div>
@@ -411,9 +411,9 @@ export default function RestaurantLanding() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <button
                 onClick={() => setIsContactOpen(true)}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-sm shadow-xl shadow-orange-500/30 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-sm shadow-xl shadow-blue-500/30 flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-95"
               >
-                <Sparkles className="w-4 h-4 text-amber-200" />
+                <Sparkles className="w-4 h-4 text-cyan-200" />
                 <span>{language === 'es' ? 'Implementar en Mi Negocio' : 'Deploy in My Restaurant'}</span>
               </button>
 
@@ -422,14 +422,14 @@ export default function RestaurantLanding() {
                 className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-black/10 dark:border-white/10 font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm"
               >
                 <span>{language === 'es' ? 'Ver Módulos Reales' : 'Explore Real Modules'}</span>
-                <ArrowRight className="w-4 h-4 text-orange-500" />
+                <ArrowRight className="w-4 h-4 text-blue-500 dark:text-cyan-400" />
               </a>
             </div>
 
             {/* Quick trust metrics */}
             <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-3xl mx-auto text-left font-mono">
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-lg sm:text-xl font-black text-orange-600 dark:text-orange-400 block">0%</span>
+                <span className="text-lg sm:text-xl font-black text-blue-600 dark:text-cyan-400 block">0%</span>
                 <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Comisiones por ventas</span>
               </div>
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
@@ -437,7 +437,7 @@ export default function RestaurantLanding() {
                 <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Comanda en comanderos</span>
               </div>
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-lg sm:text-xl font-black text-amber-600 dark:text-amber-400 block">3 en 1</span>
+                <span className="text-lg sm:text-xl font-black text-indigo-600 dark:text-indigo-400 block">3 en 1</span>
                 <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Mesa QR, Takeout, Domicilio</span>
               </div>
               <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
@@ -490,7 +490,7 @@ export default function RestaurantLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'ARQUITECTURA DE MÓDULOS' : 'CORE SYSTEM MODULES'}</span>
             </div>
@@ -514,11 +514,11 @@ export default function RestaurantLanding() {
                   key={mod.id}
                   onClick={() => setActiveModule(index)}
                   className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${isActive
-                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-500/25 border border-orange-400/40 ring-2 ring-orange-500/20'
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/40 ring-2 ring-blue-500/20'
                     : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10 hover:border-black/15 dark:hover:border-white/20'
                     }`}
                 >
-                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-orange-500" />
+                  <Icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-white' : 'text-blue-500 dark:text-cyan-400'}`} />
                   <span className="whitespace-nowrap">{language === 'es' ? mod.nameEs : mod.nameEn}</span>
                 </button>
               );
@@ -530,8 +530,8 @@ export default function RestaurantLanding() {
 
             {/* Left: Module Details & Features */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/30">
-                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/10 text-blue-700 dark:text-cyan-400 border border-blue-500/30">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
                 <span>{language === 'es' ? currentModule.badgeEs : currentModule.badgeEn}</span>
               </div>
 
@@ -556,7 +556,7 @@ export default function RestaurantLanding() {
               <div className="pt-4 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => setIsContactOpen(true)}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-md shadow-blue-600/20 transition-all cursor-pointer flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>{language === 'es' ? 'Implementar en Mi Restaurante' : 'Deploy in My Restaurant'}</span>
@@ -565,7 +565,7 @@ export default function RestaurantLanding() {
                   onClick={() => setIsLightboxOpen(true)}
                   className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/10"
                 >
-                  <Maximize2 className="w-3.5 h-3.5 text-orange-500" />
+                  <Maximize2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
                   <span>{language === 'es' ? 'Ver Pantalla Completa' : 'Full Screen Preview'}</span>
                 </button>
               </div>
@@ -596,7 +596,7 @@ export default function RestaurantLanding() {
                     className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-4 py-2 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg flex items-center gap-2">
+                    <span className="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-lg shadow-blue-600/30 flex items-center gap-2">
                       <Maximize2 className="w-4 h-4" />
                       <span>{language === 'es' ? 'Click para Pantalla Completa' : 'Click to View Full Screen'}</span>
                     </span>
@@ -615,7 +615,7 @@ export default function RestaurantLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3">
               <Sparkles className="w-3.5 h-3.5" />
               <span>{language === 'es' ? 'VENTAJAS COMPETITIVAS' : 'KEY ADVANTAGES'}</span>
             </div>
@@ -632,8 +632,8 @@ export default function RestaurantLanding() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Pilar 1 */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
-              <div className="w-12 h-12 rounded-2xl bg-orange-500/15 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-blue-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-blue-500/15 text-blue-600 dark:text-cyan-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <QrCode className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
@@ -647,8 +647,8 @@ export default function RestaurantLanding() {
             </div>
 
             {/* Pilar 2 */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-indigo-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <Clock className="w-6 h-6" />
               </div>
               <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
@@ -662,7 +662,7 @@ export default function RestaurantLanding() {
             </div>
 
             {/* Pilar 3: Directorio Local & WhatsApp */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-cyan-500/40 transition-all text-left group">
               <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <MapPin className="w-6 h-6" />
               </div>
@@ -677,7 +677,7 @@ export default function RestaurantLanding() {
             </div>
 
             {/* Pilar 4 */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-emerald-500/40 transition-all text-left group">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
@@ -697,9 +697,9 @@ export default function RestaurantLanding() {
       </section>
 
       {/* 6. CALL TO ACTION FINAL */}
-      <section className="py-20 bg-gradient-to-t from-orange-600/15 to-transparent text-center">
+      <section className="py-20 bg-gradient-to-t from-blue-600/15 to-transparent text-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="w-16 h-16 rounded-2xl bg-orange-500 text-white flex items-center justify-center mx-auto mb-6 shadow-xl shadow-orange-500/30">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center mx-auto mb-6 shadow-xl shadow-blue-500/30">
             <UtensilsCrossed className="w-8 h-8" />
           </div>
 
@@ -715,7 +715,7 @@ export default function RestaurantLanding() {
 
           <button
             onClick={() => setIsContactOpen(true)}
-            className="px-9 py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-black text-base shadow-2xl shadow-orange-500/30 cursor-pointer active:scale-95 transition-all"
+            className="px-9 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-black text-base shadow-2xl shadow-blue-600/30 cursor-pointer active:scale-95 transition-all"
           >
             {language === 'es' ? 'Agendar Demostración' : 'Schedule Live Demo'}
           </button>
@@ -738,7 +738,7 @@ export default function RestaurantLanding() {
             {/* Modal Header */}
             <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
-                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-cyan-400 font-mono text-xs font-bold shrink-0">
                   {activeModule + 1} / {modules.length}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-white truncate">
@@ -776,7 +776,7 @@ export default function RestaurantLanding() {
                   e.stopPropagation();
                   handlePrevModule();
                 }}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
                 aria-label="Anterior"
               >
@@ -789,7 +789,7 @@ export default function RestaurantLanding() {
                   e.stopPropagation();
                   handleNextModule();
                 }}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
                 aria-label="Siguiente"
               >
@@ -803,7 +803,7 @@ export default function RestaurantLanding() {
                 <span className="truncate">
                   {language === 'es' ? currentModule.taglineEs : currentModule.taglineEn}
                 </span>
-                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                <span className="shrink-0 text-cyan-400 font-medium sm:hidden">
                   {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
                 </span>
               </div>
@@ -816,7 +816,7 @@ export default function RestaurantLanding() {
                     onClick={() => setActiveModule(idx)}
                     title={language === 'es' ? mod.nameEs : mod.nameEn}
                     className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${activeModule === idx
-                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
+                        ? 'border-blue-500 ring-2 ring-cyan-500/50 scale-105 opacity-100'
                         : 'border-white/10 opacity-50 hover:opacity-100'
                       }`}
                   >

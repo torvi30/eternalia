@@ -50,8 +50,8 @@ export default function TrustAndSecurity() {
     },
     {
       icon: Headphones,
-      accent: 'from-amber-500 to-orange-500',
-      badgeColor: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/25',
+      accent: 'from-blue-600 to-cyan-500',
+      badgeColor: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/25',
       badge: language === 'es' ? 'Soporte Local Continuo' : 'Direct Human Support',
       title: language === 'es' ? 'Acompañamiento Técnico Real y Personalizado' : 'Personal Technical Onboarding & Care',
       desc: language === 'es'

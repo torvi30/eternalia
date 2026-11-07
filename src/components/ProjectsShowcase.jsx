@@ -35,9 +35,9 @@ const getCategoryBadge = (category, language) => {
       return {
         icon: Pizza,
         label: language === 'es' ? 'Comidas Rápidas' : 'Fast Food',
-        badgeClass: 'bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-500/30',
-        dotClass: 'bg-orange-500',
-        accentBg: 'from-orange-500/20 to-amber-500/10'
+        badgeClass: 'bg-blue-500/10 text-blue-700 dark:text-cyan-400 border-blue-500/30',
+        dotClass: 'bg-blue-500',
+        accentBg: 'from-blue-500/20 to-cyan-500/10'
       };
     case 'cafes':
       return {

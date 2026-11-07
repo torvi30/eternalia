@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -231,17 +231,20 @@ export default function RestaurantLanding() {
 
   const currentModule = modules[activeModule];
 
-  const handlePrevModule = () => {
+  const handlePrevModule = useCallback(() => {
     setActiveModule((prev) => (prev === 0 ? modules.length - 1 : prev - 1));
-  };
+  }, [modules.length]);
 
-  const handleNextModule = () => {
+  const handleNextModule = useCallback(() => {
     setActiveModule((prev) => (prev === modules.length - 1 ? 0 : prev + 1));
-  };
+  }, [modules.length]);
 
-  // Keyboard navigation when fullscreen lightbox is open
+  // Keyboard navigation & body scroll lock when fullscreen lightbox is open
   useEffect(() => {
     if (!isLightboxOpen) return;
+
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
 
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -257,8 +260,11 @@ export default function RestaurantLanding() {
     };
 
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen]);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isLightboxOpen, handleNextModule, handlePrevModule]);
 
   // Touch swipe handlers for mobile devices
   const minSwipeDistance = 45;

@@ -13,13 +13,22 @@ export default function InvestorRelationsModal({ isOpen, onClose, onOpenContact 
   const { t } = useLanguage();
 
   useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === 'Escape') {
         onClose();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
@@ -86,13 +95,17 @@ Web: https://eternalia.io
   ];
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 cursor-pointer"
+      onClick={onClose}
+    >
       
       {/* Container Card */}
       <div 
-        className="relative w-full max-w-4xl bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left overflow-hidden my-8"
+        className="relative w-full max-w-4xl bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left overflow-hidden my-8 cursor-default"
         role="dialog"
         aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
       >
         {/* Ambient Top Glow */}
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />

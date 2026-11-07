@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   X, 
@@ -27,6 +27,27 @@ export default function ContactModal({ isOpen, onClose }) {
   });
   const [attachmentFile, setAttachmentFile] = useState(null);
   const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success'
+
+  // Lock background scroll and listen for ESC key
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -76,9 +97,12 @@ export default function ContactModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div 
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer"
+      onClick={onClose}
+    >
       <div 
-        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto"
+        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto cursor-default"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow ambient inside dialog */}
@@ -87,6 +111,8 @@ export default function ContactModal({ isOpen, onClose }) {
         {/* Close Button */}
         <button
           onClick={onClose}
+          type="button"
+          aria-label="Cerrar modal de contacto"
           className="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 dark:bg-zinc-900 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
         >
           <X className="w-5 h-5" />

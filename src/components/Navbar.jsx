@@ -20,7 +20,8 @@ import {
   Sun,
   Moon,
   UtensilsCrossed,
-  Building2
+  Building2,
+  MapPin
 } from 'lucide-react';
 
 export default function Navbar({ onOpenContact, onOpenInvestors }) {
@@ -168,6 +169,13 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 <UtensilsCrossed className="w-3 h-3" />
                 <span>{language === 'es' ? 'Restaurantes' : 'Restaurants'}</span>
               </Link>
+
+              <button
+                onClick={() => scrollTo('directorio-local')}
+                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
+              >
+                {language === 'es' ? 'Directorio Local' : 'Local Directory'}
+              </button>
 
               <button
                 onClick={() => scrollTo('empresas')}
@@ -353,7 +361,7 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 {/* Botón Principal: Productos Disponibles */}
                 <button
                   onClick={() => scrollTo('productos-disponibles')}
-                  className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-950/60 dark:to-cyan-950/60 border border-cyan-500/30 hover:border-cyan-500 text-left transition-all mb-3 flex items-center justify-between cursor-pointer group shadow-sm"
+                  className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-950/60 dark:to-cyan-950/60 border border-cyan-500/30 hover:border-cyan-500 text-left transition-all mb-2.5 flex items-center justify-between cursor-pointer group shadow-sm"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2.5 rounded-xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-300">
@@ -369,6 +377,27 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                     </div>
                   </div>
                   <ChevronRight className="w-4 h-4 text-zinc-400 dark:text-zinc-500 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 group-hover:translate-x-0.5 transition-all" />
+                </button>
+
+                {/* Botón: Directorio Comercial Local */}
+                <button
+                  onClick={() => scrollTo('directorio-local')}
+                  className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/50 dark:to-teal-950/50 border border-emerald-500/30 hover:border-emerald-500 text-left transition-all mb-3 flex items-center justify-between cursor-pointer group shadow-sm"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
+                      <MapPin className="w-4 h-4 text-emerald-500" />
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-zinc-900 dark:text-white block group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
+                        {language === 'es' ? '📍 Directorio Local & Ofertas' : '📍 Local Directory & Deals'}
+                      </span>
+                      <span className="text-[10px] text-zinc-600 dark:text-zinc-400">
+                        {language === 'es' ? 'Comercios de tu pueblo, ofertas y pedidos WhatsApp' : 'Local town businesses, deals & WhatsApp orders'}
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-emerald-500 group-hover:translate-x-0.5 transition-all" />
                 </button>
 
                 <div className="grid grid-cols-2 gap-2">

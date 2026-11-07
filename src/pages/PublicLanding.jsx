@@ -3,6 +3,7 @@ import GlowBackground from '../components/GlowBackground';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import FeaturedProducts from '../components/FeaturedProducts';
+import LocalDirectorySection from '../components/LocalDirectorySection';
 import CompanyMarquee from '../components/CompanyMarquee';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
@@ -42,6 +43,9 @@ export default function PublicLanding() {
 
         {/* Productos SaaS Disponibles - Posición Prioritaria Destacada */}
         <FeaturedProducts onOpenContact={() => setIsContactOpen(true)} />
+
+        {/* Directorio Comercial Multi-Municipio & Promociones Activas */}
+        <LocalDirectorySection onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Red de Empresas & Clientes - Marquee Infinito de Logos */}
         <CompanyMarquee />

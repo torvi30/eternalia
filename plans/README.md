@@ -27,4 +27,5 @@ Para evitar fragmentación documental y alucinaciones en el desarrollo asistido 
 | [0003-catalogo-empresas-categorias-pantallazos-retiro-admin.md](0003-catalogo-empresas-categorias-pantallazos-retiro-admin.md) | Catálogo de Empresas por Categorías, Pantallazos de Restaurantes y Retiro de Admin | **Completado** | 2026-11-06 |
 | [0004-landing-dedicada-restaurantes-y-modulo-productos-responsive.md](0004-landing-dedicada-restaurantes-y-modulo-productos-responsive.md) | Landing Dedicada para Software de Restaurantes y Módulo Responsive en Home | **Completado** | 2026-11-06 |
 | [0005-retiro-cotizador-directorio-y-marquee-logos-empresas.md](0005-retiro-cotizador-directorio-y-marquee-logos-empresas.md) | Retiro de Cotizador y Directorio + Marquee Infinito de Logos de Empresas | **Completado** | 2026-11-06 |
+| [0006-seccion-directorio-comercial-local-y-promociones.md](0006-seccion-directorio-comercial-local-y-promociones.md) | Sección de Directorio Comercial Local Multi-Municipio y Promociones Activas | **Completado** | 2026-11-06 |
 

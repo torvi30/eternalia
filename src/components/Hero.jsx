@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   ArrowRight, 
-  Sparkles, 
+  MapPin, 
   UtensilsCrossed
 } from 'lucide-react';
 
-export default function Hero({ onExploreClick }) {
-  const { t } = useLanguage();
+export default function Hero() {
+  const { t, language } = useLanguage();
 
   return (
     <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
@@ -59,15 +59,18 @@ export default function Hero({ onExploreClick }) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
 
-            {/* Secondary CTA: Explorar Productos & Demos */}
-            <a
-              href="#productos-disponibles"
-              onClick={onExploreClick}
+            {/* Secondary CTA: Directorio Comercial & Promociones */}
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('directorio-local');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-xl font-semibold text-zinc-800 dark:text-zinc-100 bg-white/90 dark:bg-zinc-900/90 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 transition-all duration-200 backdrop-blur-md shadow-sm text-sm sm:text-base cursor-pointer transform hover:-translate-y-0.5"
             >
-              <Sparkles className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>{t.hero.ctaSecondary}</span>
-            </a>
+              <MapPin className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>{language === 'es' ? 'Directorio Comercial & Ofertas' : 'Commercial Directory & Deals'}</span>
+            </button>
 
           </div>
 

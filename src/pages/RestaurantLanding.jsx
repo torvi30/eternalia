@@ -629,14 +629,14 @@ export default function RestaurantLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             {/* Pilar 1 */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
               <div className="w-12 h-12 rounded-2xl bg-orange-500/15 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <QrCode className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
                 {language === 'es' ? 'Canal Directo & Menú QR' : 'Direct Channel & QR Menu'}
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -647,11 +647,11 @@ export default function RestaurantLanding() {
             </div>
 
             {/* Pilar 2 */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
               <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <Clock className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
                 {language === 'es' ? 'Sincronización en Segundos' : 'Real-Time Sync'}
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
@@ -661,12 +661,27 @@ export default function RestaurantLanding() {
               </p>
             </div>
 
-            {/* Pilar 3 */}
-            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+            {/* Pilar 3: Directorio Local & WhatsApp */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <MapPin className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
+                {language === 'es' ? 'Directorio Local & WhatsApp' : 'Town Directory & WhatsApp'}
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                {language === 'es'
+                  ? 'Tu negocio aparece en el directorio de tu municipio con ubicación en Google Maps, redes sociales, horarios en vivo y pedidos a un solo clic por WhatsApp.'
+                  : 'Your restaurant lists in your municipality directory with Google Maps pin, social media channels, live hours, and 1-click WhatsApp orders.'}
+              </p>
+            </div>
+
+            {/* Pilar 4 */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+              <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2">
                 {language === 'es' ? 'Puesta en Marcha & Entregas Rápidas' : 'Fast Onboarding & Delivery'}
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">

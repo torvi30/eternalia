@@ -204,7 +204,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
           {/* 4 Feature Badges */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-4xl mx-auto mt-6 text-left font-mono text-xs">
             <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
+              <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
               <span className="text-zinc-800 dark:text-zinc-200 font-bold">
                 {language === 'es' ? 'Ubicación Maps' : 'Google Maps'}
               </span>
@@ -239,8 +239,8 @@ export default function LocalDirectorySection({ onOpenContact }) {
             <div className="lg:col-span-5 space-y-6">
 
               <div className="flex items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/30">
-                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/10 text-blue-700 dark:text-cyan-400 border border-blue-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                   {language === 'es' ? 'Directorio en Producción' : 'Live Production Directory'}
                 </span>
                 <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
@@ -271,9 +271,9 @@ export default function LocalDirectorySection({ onOpenContact }) {
               <div className="pt-3 flex flex-wrap items-center gap-3">
                 <button
                   onClick={onOpenContact}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 active:scale-95"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 active:scale-95"
                 >
-                  <Sparkles className="w-4 h-4 text-amber-200" />
+                  <Sparkles className="w-4 h-4 text-cyan-200" />
                   <span>{language === 'es' ? 'Sumar Mi Negocio al Directorio' : 'List My Business in Directory'}</span>
                 </button>
 
@@ -281,7 +281,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                   onClick={() => setIsLightboxOpen(true)}
                   className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/10"
                 >
-                  <Maximize2 className="w-3.5 h-3.5 text-orange-500" />
+                  <Maximize2 className="w-3.5 h-3.5 text-blue-500" />
                   <span>{language === 'es' ? 'Ver Pantalla Completa' : 'Full Screen'}</span>
                 </button>
               </div>
@@ -302,11 +302,11 @@ export default function LocalDirectorySection({ onOpenContact }) {
                       onClick={() => setActiveScreenIndex(index)}
                       className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
                         isActive
-                          ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-500/25 border border-orange-400/40 ring-2 ring-orange-500/20'
+                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/40 ring-2 ring-blue-500/20'
                           : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10 hover:border-black/15 dark:hover:border-white/20'
                       }`}
                     >
-                      <Icon className="w-3.5 h-3.5 shrink-0 text-orange-500" />
+                      <Icon className="w-3.5 h-3.5 shrink-0 text-cyan-400" />
                       <span className="whitespace-nowrap">{language === 'es' ? screen.shortLabelEs : screen.shortLabelEn}</span>
                     </button>
                   );
@@ -355,7 +355,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
 
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/browser:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3.5 py-1.5 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg flex items-center gap-1.5">
+                    <span className="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-lg flex items-center gap-1.5">
                       <Eye className="w-3.5 h-3.5" />
                       <span>{language === 'es' ? 'Click para Pantalla Completa' : 'Click to View Full Screen'}</span>
                     </span>
@@ -389,7 +389,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
 
               {/* Active Screen Caption */}
               <div className="mt-3.5 text-center text-xs text-zinc-600 dark:text-zinc-400 flex items-center justify-center gap-2">
-                <Store className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                <Store className="w-3.5 h-3.5 text-blue-500 shrink-0" />
                 <span className="truncate">
                   {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
                 </span>
@@ -404,7 +404,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
                     className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${
                       activeScreenIndex === idx
-                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30'
+                        ? 'border-blue-500 shadow-md scale-105 opacity-100 ring-2 ring-blue-500/30'
                         : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
                     }`}
                   >
@@ -442,7 +442,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
             {/* Modal Header */}
             <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
-                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-cyan-400 font-mono text-xs font-bold shrink-0">
                   {activeScreenIndex + 1} / {directoryScreens.length}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-white truncate">
@@ -480,7 +480,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
                 aria-label="Anterior"
               >
@@ -493,7 +493,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
                 aria-label="Siguiente"
               >
@@ -507,7 +507,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                 <span className="truncate">
                   {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
                 </span>
-                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                <span className="shrink-0 text-cyan-400 font-medium sm:hidden">
                   {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
                 </span>
               </div>
@@ -521,7 +521,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
                     className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
                       activeScreenIndex === idx
-                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
+                        ? 'border-blue-500 ring-2 ring-blue-500/50 scale-105 opacity-100'
                         : 'border-white/10 opacity-50 hover:opacity-100'
                     }`}
                   >

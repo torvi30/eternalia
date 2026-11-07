@@ -1,263 +1,159 @@
-import { useState, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import {
   MapPin,
-  Search,
   Flame,
   Clock,
   MessageCircle,
-  ExternalLink,
+  Share2,
   Sparkles,
   Maximize2,
   ChevronLeft,
   ChevronRight,
   X,
-  Tag,
-  Store,
-  Share2
+  CheckCircle2,
+  ArrowRight,
+  Eye,
+  Store
 } from 'lucide-react';
 
-// Capturas reales del software en producción
-const directoryScreenshots = [
+const directoryScreens = [
   {
-    id: 'general',
-    titleEs: 'Directorio Hiperlocal por Municipio',
-    titleEn: 'Hyperlocal Municipality Directory',
+    id: 'directorio-municipio',
+    labelEs: 'Directorio Hiperlocal por Municipio',
+    labelEn: 'Hyperlocal Municipality Directory',
+    shortLabelEs: 'Directorio General',
+    shortLabelEn: 'General Directory',
+    icon: MapPin,
+    url: 'directorio.eternalia.co/marinilla',
     img: '/directory/directorio-general.jpg',
-    captionEs: 'Vista general del directorio con buscador en tiempo real, filtros por categoría y conteo de negocios abiertos.'
+    taglineEs: 'Buscador en tiempo real por municipio (Marinilla, Rionegro, San Antonio) con filtros de categorías y comercios abiertos.',
+    taglineEn: 'Real-time municipality directory with category filters, town switching, and live open status.',
+    featuresEs: [
+      'Ubicación exacta de cada sede con enlace a Google Maps para fácil llegada y despachos.',
+      'Selector de municipio para descubrir negocios de tu pueblo en un solo toque.',
+      'Buscador instantáneo por nombre de local, platos específicos o categorías comerciales.',
+      'Sincronización de horarios que indica en tiempo real si el comercio está Abierto o Cerrado.'
+    ],
+    featuresEn: [
+      'Exact physical address and Google Maps pin for seamless arrival and deliveries.',
+      'Town selector to explore businesses in your municipality in a single tap.',
+      'Instant search by venue name, specific dish, or business category.',
+      'Live opening hours indicator showing real-time Open or Closed status.'
+    ]
   },
   {
-    id: 'promociones',
-    titleEs: 'Activación de Promociones Flash & Ofertas Especiales',
-    titleEn: 'Flash Deals & Special Offers Activation',
+    id: 'promociones-flash',
+    labelEs: 'Activación de Promociones Flash & Ofertas Especiales',
+    labelEn: 'Flash Deals & Special Offers Activation',
+    shortLabelEs: 'Promociones & Descuentos',
+    shortLabelEn: 'Deals & Promos',
+    icon: Flame,
+    url: 'directorio.eternalia.co/marinilla?filtro=ofertas',
     img: '/directory/directorio-promociones.jpg',
-    captionEs: 'Los negocios con promociones activadas destacan con badges de fuego y banner de oferta directa a WhatsApp.'
+    taglineEs: 'Vitrina de descuentos y promociones del día destacadas con badge de fuego para multiplicar ventas locales.',
+    taglineEn: 'High-converting deal showcase with flame badges driving local diner rush on weekends.',
+    featuresEs: [
+      'Badge destacado con fuego (ej. "Buñuelos con queso", "2x1 en Hamburguesas") visible para todo el pueblo.',
+      'Banner de Oferta Especial con descuento exclusivo y botón directo para pedir.',
+      'Los comensales filtran con 1 clic todos los locales con promociones activas en su zona.',
+      'Lanza campañas relámpago de fin de semana sin pagar comisiones publicitarias ni porcentajes.'
+    ],
+    featuresEn: [
+      'Highlighted flame badge (e.g., "Cheese Buñuelos", "2x1 Burgers") visible across town.',
+      'Special Offer Banner with exclusive discounts and direct 1-click checkout.',
+      'Diners filter all venues running live promotions in their area in 1 tap.',
+      'Launch weekend flash promos without paying marketing fees or commission cuts.'
+    ]
   },
   {
-    id: 'filtros',
-    titleEs: 'Filtros Dinámicos por Estado y Descuentos',
-    titleEn: 'Dynamic Filters by Open Status and Discounts',
+    id: 'redes-whatsapp',
+    labelEs: 'Redes Sociales, Horarios & Contacto WhatsApp en 1 Clic',
+    labelEn: 'Social Channels, Hours & 1-Click WhatsApp',
+    shortLabelEs: 'Redes, Horarios & WhatsApp',
+    shortLabelEn: 'Social & WhatsApp',
+    icon: MessageCircle,
+    url: 'directorio.eternalia.co/marinilla?abiertos=true',
     img: '/directory/directorio-filtros.jpg',
-    captionEs: 'Los comensales filtran rápidamente qué locales tienen promociones activas y cuáles están abiertos en el instante.'
-  }
-];
-
-// Negocios reales de los municipios según producción
-const businesses = [
-  {
-    id: 'esquina-sabor',
-    name: 'La esquina del sabor',
-    town: 'marinilla',
-    townLabel: 'Marinilla, Antioquia',
-    category: 'Panadería',
-    isOpen: true,
-    schedule: 'Viernes: 06:00 - 23:00',
-    logoText: 'ES',
-    logoBg: 'from-amber-600 to-yellow-500',
-    hasDiscount: true,
-    promoBadge: 'Buñuelos con queso',
-    promoDetail: 'OFERTA ESPECIAL: Buñuelos con queso al 20% de descuento en pedidos hoy.',
-    actionType: 'menu',
-    actionLabelEs: 'Ir a la Panadería',
-    actionLabelEn: 'Visit Bakery',
-    whatsapp: '573147809921',
-    tags: ['pan', 'buñuelos', 'desayunos', 'café']
-  },
-  {
-    id: 'chicken-king',
-    name: 'Chicken king',
-    town: 'rionegro',
-    townLabel: 'Rionegro Antioquia, Antioquia',
-    category: 'Asadero',
-    isOpen: true,
-    schedule: 'Viernes: 09:00 - 21:00',
-    logoText: 'CK',
-    logoBg: 'from-red-600 to-amber-600',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'menu',
-    actionLabelEs: 'Ir al asadero',
-    actionLabelEn: 'Visit Grill',
-    whatsapp: '573147809922',
-    tags: ['pollo', 'asadero', 'almuerzos', 'broaster']
-  },
-  {
-    id: 'la-amistacita',
-    name: 'La Amistacita',
-    town: 'marinilla',
-    townLabel: 'Cra. 33 #33-03, Marinilla',
-    category: 'Comidas Rápidas',
-    isOpen: true,
-    schedule: 'Viernes: 15:00 - 23:00',
-    logoText: 'LA',
-    logoBg: 'from-orange-500 to-red-500',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'whatsapp',
-    actionLabelEs: 'Escribir por WhatsApp',
-    actionLabelEn: 'Chat on WhatsApp',
-    whatsapp: '573147809923',
-    tags: ['hamburguesas', 'arepas de queso', 'salchipapas']
-  },
-  {
-    id: 'alegrarte',
-    name: 'Alegrarte',
-    town: 'marinilla',
-    townLabel: 'Marinilla, Antioquia',
-    category: 'Restaurante',
-    isOpen: true,
-    schedule: 'Viernes: 10:00 - 21:00',
-    logoText: 'AL',
-    logoBg: 'from-amber-700 to-stone-600',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'menu',
-    actionLabelEs: 'Ir al Restaurante',
-    actionLabelEn: 'Visit Restaurant',
-    whatsapp: '573147809924',
-    tags: ['restaurante', 'almuerzos', 'comida gourmet']
-  },
-  {
-    id: 'brosty-rul',
-    name: 'Brosty Rul',
-    town: 'marinilla',
-    townLabel: 'Marinilla, Antioquia',
-    category: 'Restaurante',
-    isOpen: true,
-    schedule: 'Viernes: 09:00 - 21:00',
-    logoText: 'BR',
-    logoBg: 'from-yellow-600 to-orange-600',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'menu',
-    actionLabelEs: 'Ir al Restaurante',
-    actionLabelEn: 'Visit Restaurant',
-    whatsapp: '573147809925',
-    tags: ['pollo broaster', 'combos', 'comidas rapidas']
-  },
-  {
-    id: 'mandilocas-marinilla',
-    name: 'Mandilocas Marinilla',
-    town: 'marinilla',
-    townLabel: 'Cra. 36 #23-72, Marinilla',
-    category: 'Comidas Rápidas',
-    isOpen: true,
-    schedule: 'Viernes: 16:30 - 22:30',
-    logoText: 'MM',
-    logoBg: 'from-red-600 to-yellow-500',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'menu',
-    actionLabelEs: 'Ir a Comidas Rápidas',
-    actionLabelEn: 'Visit Fast Food',
-    whatsapp: '573147809926',
-    tags: ['mandioca', 'salchipapas', 'hamburguesas']
-  },
-  {
-    id: 'mandilocas-sanantonio',
-    name: 'Mandilocas San Antonio',
-    town: 'san-antonio',
-    townLabel: 'Calle 21A #55 B 29, San Antonio',
-    category: 'Comidas Rápidas',
-    isOpen: true,
-    schedule: 'Viernes: 16:30 - 22:30',
-    logoText: 'MS',
-    logoBg: 'from-red-600 to-amber-500',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'menu',
-    actionLabelEs: 'Ir a Comidas Rápidas',
-    actionLabelEn: 'Visit Fast Food',
-    whatsapp: '573147809927',
-    tags: ['san antonio', 'mandioca', 'comidas rapidas']
-  },
-  {
-    id: 'parceros-foods',
-    name: 'Parceros foods',
-    town: 'marinilla',
-    townLabel: 'Calle 28 # 37-37, Marinilla',
-    category: 'Comidas Rápidas',
-    isOpen: true,
-    schedule: 'Viernes: 16:00 - 22:30',
-    logoText: 'PF',
-    logoBg: 'from-rose-600 to-amber-700',
-    hasDiscount: true,
-    promoBadge: '2x1 en Hamburguesas',
-    promoDetail: 'OFERTA ESPECIAL: 2x1 en combo doble artesanal pidiendo hoy por la web.',
-    actionType: 'whatsapp',
-    actionLabelEs: 'Pedir por WhatsApp',
-    actionLabelEn: 'Order on WhatsApp',
-    whatsapp: '573147809928',
-    tags: ['hamburguesas', '2x1', 'promo', 'combos']
-  },
-  {
-    id: 'banquetes-almar',
-    name: 'Banquetes Almar',
-    town: 'marinilla',
-    townLabel: 'Marinilla, Antioquia',
-    category: 'Salón de eventos',
-    isOpen: false,
-    schedule: 'Viernes: 09:00 - 17:00',
-    logoText: 'BA',
-    logoBg: 'from-zinc-700 to-stone-900',
-    hasDiscount: false,
-    promoBadge: null,
-    promoDetail: null,
-    actionType: 'whatsapp',
-    actionLabelEs: 'Consultar Fechas',
-    actionLabelEn: 'Check Booking',
-    whatsapp: '573147809929',
-    tags: ['eventos', 'bodas', 'catering', 'banquetes']
+    taglineEs: 'Perfil comercial completo con redes sociales integradas, horarios y pedido directo al chat de WhatsApp.',
+    taglineEn: 'Complete business profile featuring social media integration, live hours, and 1-tap WhatsApp ordering.',
+    featuresEs: [
+      'Contactar a un solo clic por WhatsApp: el cliente toca el botón y abre el chat oficial con pedido listo.',
+      'Redes sociales integradas: enlaces directos al Instagram y Facebook oficial de tu marca.',
+      'Horarios de atención en vivo sincronizados con tus turnos (lunes a domingo).',
+      'Cero comisiones: las ventas y contactos son directos a tu negocio sin intermediarios.'
+    ],
+    featuresEn: [
+      '1-click WhatsApp contact: customers tap to open the official chat with orders ready.',
+      'Integrated social links: direct access to your brand Instagram and Facebook profiles.',
+      'Live operating hours synchronized with your daily schedules (Monday to Sunday).',
+      'Zero commissions: sales and inquiries flow straight to your counter with no middleman.'
+    ]
   }
 ];
 
 export default function LocalDirectorySection({ onOpenContact }) {
   const { language } = useLanguage();
-  const [selectedTown, setSelectedTown] = useState('all');
-  const [filterMode, setFilterMode] = useState('all'); // 'all' | 'discounts' | 'open'
-  const [searchQuery, setSearchQuery] = useState('');
+  const [activeScreenIndex, setActiveScreenIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
 
-  // Filtro reactivo en tiempo real
-  const filteredBusinesses = useMemo(() => {
-    return businesses.filter((item) => {
-      // Filtro por municipio
-      const matchesTown = selectedTown === 'all' || item.town === selectedTown;
+  const currentScreen = directoryScreens[activeScreenIndex];
 
-      // Filtro por modo
-      let matchesFilter = true;
-      if (filterMode === 'discounts') {
-        matchesFilter = item.hasDiscount;
-      } else if (filterMode === 'open') {
-        matchesFilter = item.isOpen;
+  const handleNext = useCallback(() => {
+    setActiveScreenIndex((prev) => (prev + 1) % directoryScreens.length);
+  }, []);
+
+  const handlePrev = useCallback(() => {
+    setActiveScreenIndex((prev) => (prev - 1 + directoryScreens.length) % directoryScreens.length);
+  }, []);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        handlePrev();
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setIsLightboxOpen(false);
       }
+    };
 
-      // Filtro por búsqueda
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        !q ||
-        item.name.toLowerCase().includes(q) ||
-        item.category.toLowerCase().includes(q) ||
-        item.townLabel.toLowerCase().includes(q) ||
-        item.tags.some((tag) => tag.toLowerCase().includes(q));
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, handleNext, handlePrev]);
 
-      return matchesTown && matchesFilter && matchesSearch;
-    });
-  }, [selectedTown, filterMode, searchQuery]);
-
-  const activeDiscountsCount = businesses.filter((b) => b.hasDiscount).length;
-  const openCount = businesses.filter((b) => b.isOpen).length;
+  // Touch swipe support
+  const minSwipeDistance = 45;
+  const handleTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+  const handleTouchMove = (e) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
 
   return (
-    <section id="directorio-local" className="py-20 relative overflow-hidden bg-slate-50/80 dark:bg-[#07080c] transition-colors duration-300 border-t border-black/5 dark:border-white/5 scroll-mt-16">
-      
+    <section
+      id="directorio-local"
+      className="py-20 relative overflow-hidden bg-slate-50/80 dark:bg-[#07080c] transition-colors duration-300 border-t border-black/5 dark:border-white/5 scroll-mt-16"
+    >
       {/* Glow ambient background */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-indigo-500/10 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
 
@@ -267,358 +163,222 @@ export default function LocalDirectorySection({ onOpenContact }) {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
             <MapPin className="w-3.5 h-3.5" />
-            <span>{language === 'es' ? 'DIRECTORIO TERRITORIAL & RED LOCAL' : 'HYPERLOCAL TOWN DIRECTORY'}</span>
+            <span>{language === 'es' ? 'DIRECTORIO TERRITORIAL MULTI-MUNICIPIO' : 'HYPERLOCAL TOWN DIRECTORY'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
-            {language === 'es' ? 'Descubre Negocios Locales y sus Ofertas en Vivo' : 'Discover Local Businesses & Live Promotions'}
+            {language === 'es'
+              ? 'Directorio Local por Municipio: Ubicación, Redes, Horarios y WhatsApp en 1 Clic'
+              : 'Town Directory: Location, Social Links, Live Hours & 1-Click WhatsApp'}
           </h2>
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es'
-              ? 'En EternalIA cada municipio cuenta con su propio directorio interactivo. Cada negocio muestra su ubicación en Google Maps, enlaces a redes sociales, horarios de atención en vivo y botón para contactar o pedir a un solo clic por WhatsApp.'
-              : 'In EternalIA each town features its own interactive directory. Each profile showcases verified Google Maps location, social media links, live opening hours, and 1-click WhatsApp ordering.'}
+              ? 'Cada negocio en EternalIA cuenta con su vitrina comercial en el directorio de su pueblo. Sin maquetas ficticias: explora las capturas reales del sistema en producción con ubicación en Google Maps, enlaces a redes sociales, horarios de atención en vivo y promociones del día.'
+              : 'Every EternalIA business gets its verified profile in their town directory. No fictional mockups: explore real production screenshots featuring Google Maps location, social links, live hours, and instant WhatsApp ordering.'}
           </p>
 
-          {/* Quick Metrics Bar */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 mt-6 flex-wrap">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-200/70 dark:bg-zinc-800/80 border border-black/5 dark:border-white/10 text-xs font-mono font-bold text-zinc-800 dark:text-zinc-200">
-              <Store className="w-3.5 h-3.5 text-indigo-500" />
-              <span>{businesses.length} {language === 'es' ? 'Negocios Registrados' : 'Registered Businesses'}</span>
-            </span>
-
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-xs font-mono font-bold text-rose-700 dark:text-rose-400 animate-pulse">
-              <Flame className="w-3.5 h-3.5 text-rose-500" />
-              <span>{activeDiscountsCount} {language === 'es' ? 'Ofertas Activas' : 'Active Deals'}</span>
-            </span>
-
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-xs font-mono font-bold text-emerald-700 dark:text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span>{openCount} {language === 'es' ? 'Abiertos Ahora' : 'Open Right Now'}</span>
-            </span>
-
-            <button
-              onClick={() => setIsLightboxOpen(true)}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-zinc-900 border border-orange-500/40 hover:border-orange-500 text-orange-600 dark:text-orange-400 text-xs font-bold transition-all shadow-sm cursor-pointer"
-            >
-              <Maximize2 className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? 'Ver Pantallazos Oficiales' : 'View Production Screens'}</span>
-            </button>
-          </div>
-
-          {/* 4 CARACTERÍSTICAS DEL PERFIL EN EL DIRECTORIO */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-5xl mx-auto mt-8 text-left">
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#10111a] border border-black/10 dark:border-white/10 shadow-sm flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 shrink-0">
-                <MapPin className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                  {language === 'es' ? 'Ubicación en Mapa' : 'Exact Location'}
-                </h4>
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5">
-                  {language === 'es' ? 'Dirección física y Google Maps para llegar fácil o despachar.' : 'Address & Google Maps link for easy diner arrival.'}
-                </p>
-              </div>
+          {/* 4 Feature Badges */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-4xl mx-auto mt-6 text-left font-mono text-xs">
+            <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm flex items-center gap-2">
+              <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
+              <span className="text-zinc-800 dark:text-zinc-200 font-bold">
+                {language === 'es' ? 'Ubicación Maps' : 'Google Maps'}
+              </span>
             </div>
-
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#10111a] border border-black/10 dark:border-white/10 shadow-sm flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-pink-500/10 text-pink-600 dark:text-pink-400 shrink-0">
-                <Share2 className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                  {language === 'es' ? 'Redes Sociales' : 'Social Channels'}
-                </h4>
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5">
-                  {language === 'es' ? 'Canales oficiales conectados: Instagram, Facebook y web.' : 'Direct integration with Instagram, Facebook and website.'}
-                </p>
-              </div>
+            <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm flex items-center gap-2">
+              <Share2 className="w-4 h-4 text-pink-500 shrink-0" />
+              <span className="text-zinc-800 dark:text-zinc-200 font-bold">
+                {language === 'es' ? 'Redes Sociales' : 'Social Channels'}
+              </span>
             </div>
-
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#10111a] border border-black/10 dark:border-white/10 shadow-sm flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
-                <Clock className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                  {language === 'es' ? 'Horarios en Vivo' : 'Live Operating Hours'}
-                </h4>
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5">
-                  {language === 'es' ? 'Indicador Abierto / Cerrado automático según tus turnos y días.' : 'Real-time Open / Closed status per day and shift.'}
-                </p>
-              </div>
+            <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm flex items-center gap-2">
+              <Clock className="w-4 h-4 text-emerald-500 shrink-0" />
+              <span className="text-zinc-800 dark:text-zinc-200 font-bold">
+                {language === 'es' ? 'Horarios en Vivo' : 'Live Hours'}
+              </span>
             </div>
-
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#10111a] border border-black/10 dark:border-white/10 shadow-sm flex items-start gap-3">
-              <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 shrink-0">
-                <MessageCircle className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-zinc-900 dark:text-white">
-                  {language === 'es' ? 'WhatsApp a 1 Clic' : '1-Click WhatsApp'}
-                </h4>
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-tight mt-0.5">
-                  {language === 'es' ? 'Atención y pedidos directos al chat sin comisiones de apps.' : 'Direct customer chat & orders with 0% commissions.'}
-                </p>
-              </div>
+            <div className="p-3 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm flex items-center gap-2">
+              <MessageCircle className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <span className="text-zinc-800 dark:text-zinc-200 font-bold">
+                {language === 'es' ? 'WhatsApp 1 Clic' : '1-Click WhatsApp'}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* 2. TOWN TABS & FILTER BAR */}
-        <div className="bg-white dark:bg-[#10111a] rounded-3xl p-4 sm:p-6 border border-black/10 dark:border-white/10 shadow-xl mb-8 space-y-4">
-          
-          {/* Top Row: Town/Pueblo Selector */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
-            <span className="text-xs font-mono uppercase text-zinc-400 dark:text-zinc-500 hidden sm:inline-block shrink-0 mr-1">
-              {language === 'es' ? 'Municipio:' : 'Town:'}
-            </span>
+        {/* 2. SHOWCASE CONTAINER (MATCHING RESTAURANT SHOWCASE DESIGN) */}
+        <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl overflow-hidden relative">
 
-            {[
-              { id: 'all', label: language === 'es' ? '📍 Todos los Pueblos' : '📍 All Towns' },
-              { id: 'marinilla', label: '📍 Marinilla' },
-              { id: 'rionegro', label: '📍 Rionegro' },
-              { id: 'san-antonio', label: '📍 San Antonio' }
-            ].map((town) => (
-              <button
-                key={town.id}
-                onClick={() => setSelectedTown(town.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                  selectedTown === town.id
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-500/25 ring-2 ring-indigo-500/20'
-                    : 'bg-slate-100 dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:bg-slate-200 dark:hover:bg-zinc-800'
-                }`}
-              >
-                {town.label}
-              </button>
-            ))}
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
-          {/* Middle Row: Search Input */}
-          <div className="relative">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={language === 'es' ? 'Buscar negocio, producto (ej: pizza, buñuelos, pollo) o categoría...' : 'Search business, dish (e.g. burger, pizza, bakery) or tags...'}
-              className="w-full pl-10 pr-10 py-2.5 rounded-2xl bg-slate-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 text-xs sm:text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-orange-500"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-white text-xs cursor-pointer"
-              >
-                ✕
-              </button>
-            )}
-          </div>
+            {/* Left Column: Screen Selector & Detailed Value Proposition */}
+            <div className="lg:col-span-5 space-y-6">
 
-          {/* Bottom Row: Quick Status & Offer Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
-            <button
-              onClick={() => setFilterMode('all')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                filterMode === 'all'
-                  ? 'bg-zinc-900 text-white dark:bg-white dark:text-zinc-900 shadow-sm'
-                  : 'bg-slate-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800'
-              }`}
-            >
-              {language === 'es' ? `Todos (${businesses.length})` : `All (${businesses.length})`}
-            </button>
+              <div className="flex items-center gap-2.5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/10 text-orange-700 dark:text-orange-400 border border-orange-500/30">
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                  {language === 'es' ? 'Directorio en Producción' : 'Live Production Directory'}
+                </span>
+                <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
+                  {activeScreenIndex + 1} / {directoryScreens.length}
+                </span>
+              </div>
 
-            <button
-              onClick={() => setFilterMode('discounts')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                filterMode === 'discounts'
-                  ? 'bg-rose-600 text-white shadow-md shadow-rose-500/25 ring-2 ring-rose-500/20'
-                  : 'bg-rose-500/10 text-rose-700 dark:text-rose-400 hover:bg-rose-500/20 border border-rose-500/20'
-              }`}
-            >
-              <Flame className="w-3.5 h-3.5" />
-              <span>{language === 'es' ? `Con Descuentos (${activeDiscountsCount})` : `With Deals (${activeDiscountsCount})`}</span>
-            </button>
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white leading-tight mb-2">
+                  {language === 'es' ? currentScreen.labelEs : currentScreen.labelEn}
+                </h3>
+                <p className="text-sm text-zinc-600 dark:text-zinc-300 font-medium leading-relaxed">
+                  {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
+                </p>
+              </div>
 
-            <button
-              onClick={() => setFilterMode('open')}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1.5 ${
-                filterMode === 'open'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-500/25 ring-2 ring-emerald-500/20'
-                  : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20'
-              }`}
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span>{language === 'es' ? `Abiertos ahora (${openCount})` : `Open Now (${openCount})`}</span>
-            </button>
-          </div>
-
-        </div>
-
-        {/* 3. BUSINESS CARDS GRID */}
-        {filteredBusinesses.length === 0 ? (
-          <div className="text-center py-12 bg-white dark:bg-[#10111a] rounded-3xl border border-black/10 dark:border-white/10 p-8">
-            <Store className="w-10 h-10 text-zinc-400 mx-auto mb-3" />
-            <h4 className="text-base font-bold text-zinc-800 dark:text-zinc-200 mb-1">
-              {language === 'es' ? 'No se encontraron negocios con esos filtros' : 'No businesses found matching filters'}
-            </h4>
-            <p className="text-xs text-zinc-500 mb-4">
-              {language === 'es' ? 'Intenta seleccionando "Todos los Pueblos" o borrando el término de búsqueda.' : 'Try selecting "All Towns" or clearing the search bar.'}
-            </p>
-            <button
-              onClick={() => {
-                setSelectedTown('all');
-                setFilterMode('all');
-                setSearchQuery('');
-              }}
-              className="px-4 py-2 rounded-xl bg-orange-500 text-white text-xs font-bold cursor-pointer"
-            >
-              {language === 'es' ? 'Restablecer Filtros' : 'Reset Filters'}
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-            {filteredBusinesses.map((biz) => (
-              <div
-                key={biz.id}
-                className="bg-white dark:bg-[#11121c] rounded-3xl border border-black/10 dark:border-white/10 p-5 shadow-lg hover:shadow-2xl hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden"
-              >
-                {/* Active Promo Corner Badge */}
-                {biz.hasDiscount && biz.promoBadge && (
-                  <div className="absolute top-0 right-0">
-                    <div className="bg-gradient-to-l from-rose-600 to-amber-600 text-white text-[10px] font-black tracking-wide uppercase px-3 py-1 rounded-bl-2xl shadow-md flex items-center gap-1">
-                      <Flame className="w-3 h-3 text-yellow-300" />
-                      <span>{biz.promoBadge}</span>
-                    </div>
+              {/* 4 Detailed Bullet Features */}
+              <div className="space-y-2.5 pt-1">
+                {(language === 'es' ? currentScreen.featuresEs : currentScreen.featuresEn).map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2.5 text-xs text-zinc-700 dark:text-zinc-300">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                    <span className="leading-relaxed">{feature}</span>
                   </div>
-                )}
+                ))}
+              </div>
 
-                <div>
-                  {/* Category & Status Badges */}
-                  <div className="flex items-center justify-between gap-2 mb-4">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-black/5 dark:border-white/10">
-                      {biz.category}
-                    </span>
+              {/* Action Buttons */}
+              <div className="pt-3 flex flex-wrap items-center gap-3">
+                <button
+                  onClick={onOpenContact}
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 active:scale-95"
+                >
+                  <Sparkles className="w-4 h-4 text-amber-200" />
+                  <span>{language === 'es' ? 'Sumar Mi Negocio al Directorio' : 'List My Business in Directory'}</span>
+                </button>
 
-                    <span
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        biz.isOpen
-                          ? 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
-                          : 'bg-zinc-500/10 text-zinc-600 dark:text-zinc-400 border border-zinc-500/20'
+                <button
+                  onClick={() => setIsLightboxOpen(true)}
+                  className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/10"
+                >
+                  <Maximize2 className="w-3.5 h-3.5 text-orange-500" />
+                  <span>{language === 'es' ? 'Ver Pantalla Completa' : 'Full Screen'}</span>
+                </button>
+              </div>
+
+            </div>
+
+            {/* Right Column: Interactive Browser Window & Screenshot Viewer */}
+            <div className="lg:col-span-7">
+
+              {/* Navigation Pills (Mobile Swipeable, Desktop Wrapped) */}
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-4 sm:flex-wrap">
+                {directoryScreens.map((screen, index) => {
+                  const Icon = screen.icon;
+                  const isActive = activeScreenIndex === index;
+                  return (
+                    <button
+                      key={screen.id}
+                      onClick={() => setActiveScreenIndex(index)}
+                      className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
+                        isActive
+                          ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-500/25 border border-orange-400/40 ring-2 ring-orange-500/20'
+                          : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10 hover:border-black/15 dark:hover:border-white/20'
                       }`}
                     >
-                      <span className={`w-1.5 h-1.5 rounded-full ${biz.isOpen ? 'bg-emerald-500' : 'bg-zinc-400'}`} />
-                      <span>{biz.isOpen ? (language === 'es' ? 'ABIERTO' : 'OPEN') : (language === 'es' ? 'CERRADO' : 'CLOSED')}</span>
+                      <Icon className="w-3.5 h-3.5 shrink-0 text-orange-500" />
+                      <span className="whitespace-nowrap">{language === 'es' ? screen.shortLabelEs : screen.shortLabelEn}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Desktop Browser Window */}
+              <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-950 group/browser relative">
+
+                {/* Top Browser Chrome */}
+                <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+                  </div>
+
+                  {/* URL Bar */}
+                  <div className="px-3 py-0.5 rounded-md bg-white/70 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 text-[10px] font-mono text-zinc-600 dark:text-zinc-300 truncate max-w-[200px] sm:max-w-[280px]">
+                    🔒 {currentScreen.url}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="text-[9px] font-mono text-emerald-500 font-bold hidden sm:inline">1920x1080 Full HD</span>
+                    <button
+                      onClick={() => setIsLightboxOpen(true)}
+                      className="p-1 text-zinc-400 hover:text-white cursor-pointer"
+                      title={language === 'es' ? 'Ampliar pantalla completa' : 'Full screen view'}
+                    >
+                      <Maximize2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Screenshot Frame */}
+                <div
+                  onClick={() => setIsLightboxOpen(true)}
+                  className="relative aspect-[16/10] bg-zinc-950 overflow-hidden cursor-pointer"
+                >
+                  <img
+                    key={currentScreen.id}
+                    src={currentScreen.img}
+                    alt={currentScreen.labelEs}
+                    className="w-full h-full object-contain animate-in fade-in duration-300"
+                  />
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/browser:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="px-3.5 py-1.5 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg flex items-center gap-1.5">
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>{language === 'es' ? 'Click para Pantalla Completa' : 'Click to View Full Screen'}</span>
                     </span>
                   </div>
 
-                  {/* Logo Avatar & Brand Title */}
-                  <div className="flex flex-col items-center text-center mb-4">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${biz.logoBg} p-1 shadow-md mb-3 group-hover:scale-105 transition-transform flex items-center justify-center text-white font-black text-lg tracking-wider`}>
-                      <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/20">
-                        {biz.logoText}
-                      </div>
-                    </div>
-
-                    <h3 className="text-base font-extrabold text-zinc-900 dark:text-white leading-tight">
-                      {biz.name}
-                    </h3>
-
-                    <div className="flex items-center gap-1 text-[11px] text-zinc-500 dark:text-zinc-400 mt-1">
-                      <MapPin className="w-3 h-3 text-orange-500 shrink-0" />
-                      <span className="truncate">{biz.townLabel}</span>
-                    </div>
-
-                    <div className="flex items-center gap-1 text-[10px] font-mono text-zinc-400 mt-0.5">
-                      <Clock className="w-2.5 h-2.5 text-zinc-400 shrink-0" />
-                      <span>{biz.schedule}</span>
-                    </div>
-                  </div>
-
-                  {/* Special Offer Highlight Banner */}
-                  {biz.hasDiscount && biz.promoDetail && (
-                    <div className="mb-4 p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-left">
-                      <div className="flex items-center gap-1 text-[10px] font-black uppercase text-rose-700 dark:text-rose-300 mb-0.5">
-                        <Tag className="w-3 h-3" />
-                        <span>{language === 'es' ? 'OFERTA ESPECIAL' : 'SPECIAL DEAL'}</span>
-                      </div>
-                      <p className="text-[11px] text-rose-900 dark:text-rose-200 leading-tight">
-                        {biz.promoDetail}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Profile quick links: WhatsApp, Instagram, Facebook, Maps */}
-                <div className="flex items-center justify-center gap-2 py-2 mb-2 border-t border-black/5 dark:border-white/5 text-zinc-500 dark:text-zinc-400">
-                  <a
-                    href={`https://wa.me/${biz.whatsapp}?text=Hola%20${encodeURIComponent(biz.name)},%20te%20contacto%20desde%20el%20Directorio%20de%20EternalIA.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={language === 'es' ? 'Contactar por WhatsApp' : 'Chat on WhatsApp'}
-                    className="w-7 h-7 rounded-full bg-slate-100 hover:bg-emerald-500 hover:text-white dark:bg-zinc-800 dark:hover:bg-emerald-500 flex items-center justify-center transition-colors cursor-pointer"
+                  {/* Previous / Next Arrow Controls */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrev();
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 hover:bg-black/90 text-white transition-all cursor-pointer opacity-80 hover:opacity-100"
+                    aria-label="Captura anterior"
                   >
-                    <MessageCircle className="w-3.5 h-3.5" />
-                  </a>
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
 
-                  <span
-                    title={language === 'es' ? 'Instagram Oficial' : 'Official Instagram'}
-                    className="w-7 h-7 rounded-full bg-slate-100 hover:bg-pink-600 hover:text-white dark:bg-zinc-800 dark:hover:bg-pink-600 flex items-center justify-center transition-colors cursor-pointer"
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNext();
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/60 hover:bg-black/90 text-white transition-all cursor-pointer opacity-80 hover:opacity-100"
+                    aria-label="Siguiente captura"
                   >
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                    </svg>
-                  </span>
-
-                  <span
-                    title={language === 'es' ? 'Facebook Oficial' : 'Official Facebook'}
-                    className="w-7 h-7 rounded-full bg-slate-100 hover:bg-blue-600 hover:text-white dark:bg-zinc-800 dark:hover:bg-blue-600 flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-                    </svg>
-                  </span>
-
-                  <a
-                    href={`https://maps.google.com/?q=${encodeURIComponent(biz.name + ' ' + biz.townLabel)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    title={language === 'es' ? 'Ubicación en Google Maps' : 'View on Google Maps'}
-                    className="w-7 h-7 rounded-full bg-slate-100 hover:bg-orange-500 hover:text-white dark:bg-zinc-800 dark:hover:bg-orange-500 flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    <MapPin className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-
-                {/* Card Action Button */}
-                <div className="pt-1">
-                  <a
-                    href={`https://wa.me/${biz.whatsapp}?text=Hola%20${encodeURIComponent(biz.name)},%20te%20contacto%20desde%20el%20Directorio%20de%20EternalIA.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full py-2.5 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                      biz.actionType === 'whatsapp'
-                        ? 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm'
-                        : 'bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-white'
-                    }`}
-                  >
-                    {biz.actionType === 'whatsapp' ? (
-                      <MessageCircle className="w-3.5 h-3.5" />
-                    ) : (
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    )}
-                    <span>{language === 'es' ? biz.actionLabelEs : biz.actionLabelEn}</span>
-                  </a>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
 
               </div>
-            ))}
-          </div>
-        )}
 
-        {/* 4. CONVERSION BANNER FOR MERCHANTS & STORE OWNERS */}
+              {/* Active Screen Caption */}
+              <div className="mt-3.5 text-center text-xs text-zinc-600 dark:text-zinc-400 flex items-center justify-center gap-2">
+                <Store className="w-3.5 h-3.5 text-orange-500 shrink-0" />
+                <span className="truncate">
+                  {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* 3. BOTTOM MERCHANTS VALUE BANNER */}
         <div className="mt-14 bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 rounded-3xl p-6 sm:p-10 text-white shadow-2xl relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="max-w-2xl text-center md:text-left">
@@ -633,11 +393,11 @@ export default function LocalDirectorySection({ onOpenContact }) {
               </h3>
               <p className="text-white/90 text-xs sm:text-sm leading-relaxed mb-4">
                 {language === 'es'
-                  ? 'Al implementar tu sistema con EternalIA, tu restaurante o local obtiene su vitrina verificada en el directorio de tu municipio con todas las herramientas para atraer y atender clientes:'
-                  : 'When deploying with EternalIA, your restaurant or business gets a verified profile in your town directory equipped with tools to attract local diners:'}
+                  ? 'Al implementar tu sistema con EternalIA, tu restaurante o comercio obtiene su perfil oficial en el directorio de tu municipio con ubicación en Google Maps, redes sociales integradas, horarios en vivo y pedidos a un solo clic por WhatsApp.'
+                  : 'When deploying with EternalIA, your restaurant or business gets a verified profile in your town directory equipped with Google Maps location, social links, live hours, and 1-tap WhatsApp ordering.'}
               </p>
 
-              {/* 4 Key profile pillars */}
+              {/* 4 Key profile pills */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-mono text-[11px]">
                 <div className="p-2 rounded-xl bg-black/20 backdrop-blur-sm border border-white/10 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-amber-300 shrink-0" />
@@ -661,9 +421,10 @@ export default function LocalDirectorySection({ onOpenContact }) {
             <div className="shrink-0 flex flex-col sm:flex-row gap-3 w-full md:w-auto">
               <button
                 onClick={onOpenContact}
-                className="px-6 py-3.5 rounded-2xl bg-white text-orange-700 hover:bg-slate-100 font-extrabold text-xs sm:text-sm shadow-xl transition-all cursor-pointer active:scale-95 text-center"
+                className="px-6 py-3.5 rounded-2xl bg-white text-orange-700 hover:bg-slate-100 font-extrabold text-xs sm:text-sm shadow-xl transition-all cursor-pointer active:scale-95 text-center flex items-center justify-center gap-2"
               >
-                {language === 'es' ? 'Registrar Mi Negocio' : 'Register My Business'}
+                <span>{language === 'es' ? 'Registrar Mi Negocio' : 'Register My Business'}</span>
+                <ArrowRight className="w-4 h-4 text-orange-600" />
               </button>
               <button
                 onClick={() => setIsLightboxOpen(true)}
@@ -677,76 +438,112 @@ export default function LocalDirectorySection({ onOpenContact }) {
 
       </div>
 
-      {/* 5. LIGHTBOX MODAL DE PANTALLAZOS REALES DEL DIRECTORIO */}
+      {/* 4. FULLSCREEN LIGHTBOX MODAL */}
       {isLightboxOpen && (
         <div
           onClick={() => setIsLightboxOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none overscroll-contain"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none overscroll-contain"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="relative max-w-5xl w-full max-h-[96vh] flex flex-col rounded-3xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            className="relative max-w-6xl w-full max-h-[96vh] flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950 overscroll-contain"
+            style={{ overscrollBehavior: 'contain' }}
           >
-            {/* Header */}
-            <div className="h-12 bg-zinc-900/90 px-4 sm:px-6 flex items-center justify-between border-b border-white/10 shrink-0">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold">
-                  {lightboxIndex + 1} / {directoryScreenshots.length}
+            {/* Modal Header */}
+            <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
+                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                  {activeScreenIndex + 1} / {directoryScreens.length}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-white truncate">
-                  {language === 'es' ? directoryScreenshots[lightboxIndex].titleEs : directoryScreenshots[lightboxIndex].titleEn}
+                  {language === 'es' ? currentScreen.labelEs : currentScreen.labelEn}
                 </span>
               </div>
 
-              <button
-                onClick={() => setIsLightboxOpen(false)}
-                className="p-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                aria-label="Cerrar modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
+              <div className="flex items-center gap-3 shrink-0">
+                <span className="hidden md:inline-block text-[11px] text-zinc-400 font-mono">
+                  {language === 'es' ? '← / → Teclas para cambiar' : '← / → Keys to navigate'}
+                </span>
+                <button
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="flex items-center gap-1.5 text-zinc-300 hover:text-white text-xs font-bold px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition-colors cursor-pointer"
+                  aria-label="Cerrar modal"
+                >
+                  <X className="w-4 h-4" />
+                  <span className="hidden sm:inline">Cerrar (ESC)</span>
+                </button>
+              </div>
             </div>
 
-            {/* Image Frame */}
-            <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 min-h-[350px]">
+            {/* Modal Image Area */}
+            <div className="relative flex-1 bg-black flex items-center justify-center p-2 sm:p-4 overflow-hidden min-h-[300px]">
               <img
-                src={directoryScreenshots[lightboxIndex].img}
-                alt={directoryScreenshots[lightboxIndex].titleEs}
-                className="max-h-[66vh] w-auto max-w-full object-contain rounded-xl shadow-2xl animate-in fade-in duration-200"
+                key={currentScreen.id}
+                src={currentScreen.img}
+                alt={currentScreen.labelEs}
+                className="max-h-[64vh] sm:max-h-[70vh] w-auto max-w-full object-contain rounded-lg shadow-2xl animate-in fade-in zoom-in-95 duration-200"
               />
 
-              {/* Prev / Next controls */}
+              {/* Prev Button */}
               <button
-                onClick={() => setLightboxIndex((prev) => (prev > 0 ? prev - 1 : directoryScreenshots.length - 1))}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/70 hover:bg-orange-500 text-white transition-all cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
                 aria-label="Anterior"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-6 h-6" />
               </button>
 
+              {/* Next Button */}
               <button
-                onClick={() => setLightboxIndex((prev) => (prev < directoryScreenshots.length - 1 ? prev + 1 : 0))}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2.5 rounded-full bg-black/70 hover:bg-orange-500 text-white transition-all cursor-pointer"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
                 aria-label="Siguiente"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Footer */}
-            <div className="bg-zinc-900/90 px-4 py-3 border-t border-white/10 shrink-0 flex items-center justify-between text-xs text-zinc-400">
-              <span className="truncate">
-                {language === 'es' ? directoryScreenshots[lightboxIndex].captionEs : directoryScreenshots[lightboxIndex].captionEn}
-              </span>
-              <div className="flex items-center gap-2 shrink-0">
-                {directoryScreenshots.map((_, idx) => (
+            {/* Modal Footer with Thumbnails */}
+            <div className="bg-zinc-900/90 px-3 sm:px-4 py-2 border-t border-white/10 shrink-0">
+              <div className="flex items-center justify-between gap-2 mb-1.5 text-[11px] text-zinc-400">
+                <span className="truncate">
+                  {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
+                </span>
+                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                  {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
+                </span>
+              </div>
+
+              {/* Thumbnail Strip */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                {directoryScreens.map((screen, idx) => (
                   <button
-                    key={idx}
-                    onClick={() => setLightboxIndex(idx)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
-                      lightboxIndex === idx ? 'bg-orange-500 scale-125' : 'bg-zinc-600 hover:bg-zinc-400'
+                    key={screen.id}
+                    onClick={() => setActiveScreenIndex(idx)}
+                    title={language === 'es' ? screen.labelEs : screen.labelEn}
+                    className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${
+                      activeScreenIndex === idx
+                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
+                        : 'border-white/10 opacity-50 hover:opacity-100'
                     }`}
-                  />
+                  >
+                    <img
+                      src={screen.img}
+                      alt={screen.labelEs}
+                      className="w-full h-full object-cover rounded"
+                    />
+                  </button>
                 ))}
               </div>
             </div>

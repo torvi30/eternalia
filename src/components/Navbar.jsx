@@ -160,6 +160,47 @@ export default function Navbar({ onOpenContact }) {
             </div>
 
           </div>
+
+          {/* Mobile Navigation Strip: Siempre accesible en celulares sin menú hamburguesa ni 3 rayitas */}
+          <nav 
+            aria-label="Navegación móvil rápida"
+            className="md:hidden mt-2.5 pt-2 border-t border-black/[0.06] dark:border-white/[0.06] overflow-x-auto no-scrollbar"
+          >
+            <div className="flex items-center gap-1.5 pb-0.5 px-0.5 min-w-max">
+              <button
+                onClick={() => scrollTo('productos-disponibles')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-[0_0_12px_rgba(37,99,235,0.35)] shrink-0 active:scale-95 cursor-pointer"
+              >
+                <UtensilsCrossed className="w-3.5 h-3.5 text-cyan-200" />
+                <span>{language === 'es' ? 'Restaurantes' : 'Restaurants'}</span>
+              </button>
+
+              <button
+                onClick={() => scrollTo('directorio-local')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
+              >
+                <MapPin className="w-3.5 h-3.5 text-cyan-500" />
+                <span>{language === 'es' ? 'Directorio Comercial' : 'Directorio'}</span>
+              </button>
+
+              <button
+                onClick={() => scrollTo('empresas')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
+              >
+                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
+                <span>{language === 'es' ? 'Empresas & Clientes' : 'Empresas'}</span>
+              </button>
+
+              <button
+                onClick={() => scrollTo('seguridad')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-indigo-500 dark:text-cyan-400" />
+                <span>{language === 'es' ? 'Seguridad' : 'Security'}</span>
+              </button>
+            </div>
+          </nav>
+
         </div>
       </header>
 

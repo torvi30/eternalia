@@ -9,7 +9,7 @@ export default function Hero() {
   const { t, language } = useLanguage();
 
   return (
-    <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
+    <section className="relative pt-32 pb-8 sm:pt-32 md:pt-36 md:pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Announcement Badge */}

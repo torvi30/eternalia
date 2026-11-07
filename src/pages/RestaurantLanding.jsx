@@ -16,7 +16,7 @@ import {
   ArrowRight,
   ArrowLeft,
   Sparkles,
-  DollarSign,
+  QrCode,
   Sun,
   Moon,
   Maximize2,
@@ -33,9 +33,6 @@ export default function RestaurantLanding() {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
-
-  // ROI Calculator State
-  const [monthlySales, setMonthlySales] = useState(15000000); // 15 millones COP por defecto
 
   const modules = [
     {
@@ -223,11 +220,6 @@ export default function RestaurantLanding() {
       ]
     }
   ];
-
-  // Calculate commission savings (averaging 25% charged by platforms like Rappi/UberEats/iFood)
-  const deliveryPlatformCommissionRate = 0.25;
-  const monthlyCommissionLoss = Math.round(monthlySales * deliveryPlatformCommissionRate);
-  const yearlyCommissionLoss = monthlyCommissionLoss * 12;
 
   const currentModule = modules[activeModule];
 
@@ -506,8 +498,8 @@ export default function RestaurantLanding() {
             </p>
           </div>
 
-          {/* Module Selector Navigation Tabs */}
-          <div className="flex items-center justify-center gap-2 flex-wrap mb-10">
+          {/* Module Selector Navigation Tabs (Swipeable Pills on Mobile, Centered on Desktop) */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 sm:flex-wrap sm:justify-center sm:pb-0">
             {modules.map((mod, index) => {
               const Icon = mod.icon;
               const isActive = activeModule === index;
@@ -515,13 +507,13 @@ export default function RestaurantLanding() {
                 <button
                   key={mod.id}
                   onClick={() => setActiveModule(index)}
-                  className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${isActive
-                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-lg shadow-orange-500/25 border border-orange-400/40'
-                    : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10'
+                  className={`px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${isActive
+                    ? 'bg-gradient-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-500/25 border border-orange-400/40 ring-2 ring-orange-500/20'
+                    : 'bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/5 dark:border-white/10 hover:border-black/15 dark:hover:border-white/20'
                     }`}
                 >
-                  <Icon className="w-4 h-4 shrink-0" />
-                  <span>{language === 'es' ? mod.nameEs : mod.nameEn}</span>
+                  <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-orange-500" />
+                  <span className="whitespace-nowrap">{language === 'es' ? mod.nameEs : mod.nameEn}</span>
                 </button>
               );
             })}
@@ -555,19 +547,20 @@ export default function RestaurantLanding() {
                 ))}
               </div>
 
-              <div className="pt-4 flex items-center gap-3">
+              <div className="pt-4 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => setIsContactOpen(true)}
-                  className="px-6 py-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2"
                 >
-                  {language === 'es' ? 'Cotizar Este Módulo' : 'Quote This Module'}
+                  <Sparkles className="w-4 h-4" />
+                  <span>{language === 'es' ? 'Implementar en Mi Restaurante' : 'Deploy in My Restaurant'}</span>
                 </button>
                 <button
                   onClick={() => setIsLightboxOpen(true)}
-                  className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-bold text-xs flex items-center gap-1.5 cursor-pointer border border-black/5 dark:border-white/10"
                 >
-                  <Maximize2 className="w-3.5 h-3.5" />
-                  <span>{language === 'es' ? 'Ampliar Pantalla' : 'Zoom Screen'}</span>
+                  <Maximize2 className="w-3.5 h-3.5 text-orange-500" />
+                  <span>{language === 'es' ? 'Ver Pantalla Completa' : 'Full Screen Preview'}</span>
                 </button>
               </div>
             </div>
@@ -611,83 +604,70 @@ export default function RestaurantLanding() {
         </div>
       </section>
 
-      {/* 5. CALCULADORA DE RETORNO DE INVERSIÓN (AHORRO EN COMISIONES) */}
+      {/* 5. PILARES CLAVE: POR QUÉ ELEGIR ETERNALIA GASTRONOMÍA OS */}
       <section className="py-20 relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>{language === 'es' ? 'VENTAJAS COMPETITIVAS' : 'KEY ADVANTAGES'}</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-4">
+              {language === 'es' ? 'Tecnología Diseñada para Potenciar tu Negocio' : 'Engineered to Scale Your Restaurant Operations'}
+            </h2>
+            <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base">
+              {language === 'es'
+                ? 'Un ecosistema integral que conecta tus mesas, cocina y despachos bajo una sola plataforma confiable y sin intermediarios.'
+                : 'An integrated ecosystem synchronizing your dining room, kitchen, and delivery under one reliable, middleman-free platform.'}
+            </p>
+          </div>
 
-          <div className="bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent rounded-3xl p-6 sm:p-10 border border-orange-500/30 shadow-2xl backdrop-blur-xl">
-
-            <div className="text-center max-w-2xl mx-auto mb-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
-                <DollarSign className="w-3.5 h-3.5" />
-                <span>{language === 'es' ? 'CALCULADORA DE RENTABILIDAD' : 'PROFITABILITY CALCULATOR'}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Pilar 1 */}
+            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-orange-500/15 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <QrCode className="w-6 h-6" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">
-                {language === 'es' ? '¿Cuánto Dinero Estás Regalando en Comisiones?' : 'How Much Are You Losing to Commission Fees?'}
-              </h2>
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-2">
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+                {language === 'es' ? 'Canal Directo & Menú QR' : 'Direct Channel & QR Menu'}
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 {language === 'es'
-                  ? 'Las aplicaciones de terceros cobran entre el 20% y el 30% en cada orden. Con tu propia plataforma de EternalIA, ese dinero se queda en tu caja.'
-                  : '3rd-party delivery apps take 20% to 30% cut of every order. With your proprietary EternalIA frontend, 100% stays in your register.'}
+                  ? 'Tus clientes piden escaneando la mesa o desde tu propio enlace web sin depender de aplicaciones de terceros que recortan tus utilidades.'
+                  : 'Diners order directly by scanning their table QR code or your branded link without third-party commission deductions.'}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              {/* Slider Input */}
-              <div className="space-y-4 p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/10 shadow-sm">
-                <label htmlFor="monthly-sales-slider" className="block text-xs font-bold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
-                  {language === 'es' ? 'Ventas Mensuales en Domicilios / Pedidos:' : 'Monthly Delivery / Order Volume:'}
-                </label>
-
-                <div className="text-3xl font-black text-orange-600 dark:text-orange-400 font-mono">
-                  ${monthlySales.toLocaleString('es-CO')} <span className="text-xs font-sans text-zinc-500 font-normal">COP / mes</span>
-                </div>
-
-                <input
-                  id="monthly-sales-slider"
-                  type="range"
-                  min="2000000"
-                  max="60000000"
-                  step="1000000"
-                  value={monthlySales}
-                  onChange={(e) => setMonthlySales(Number(e.target.value))}
-                  className="w-full accent-orange-500 cursor-pointer h-2 bg-slate-200 dark:bg-zinc-800 rounded-lg"
-                />
-
-                <div className="flex justify-between text-[11px] font-mono text-zinc-400">
-                  <span>$2M COP</span>
-                  <span>$30M COP</span>
-                  <span>$60M COP</span>
-                </div>
+            {/* Pilar 2 */}
+            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <Clock className="w-6 h-6" />
               </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+                {language === 'es' ? 'Sincronización en Segundos' : 'Real-Time Sync'}
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                {language === 'es'
+                  ? 'Las órdenes llegan instantáneamente a los comanderos de cocina, barra y caja. Menos errores, mayor rotación de mesas y despacho ágil.'
+                  : 'Orders flow in real time to kitchen display screens, bar, and POS register. Minimize errors and speed up table turnover.'}
+              </p>
+            </div>
 
-              {/* Savings Results */}
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
-                  <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300 block mb-1">
-                    {language === 'es' ? 'Ahorro Estimado al Mes (Tasa 25% de comisiones):' : 'Estimated Monthly Savings (25% rate):'}
-                  </span>
-                  <span className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400 font-mono block">
-                    +${monthlyCommissionLoss.toLocaleString('es-CO')} COP
-                  </span>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-orange-500/10 border border-orange-500/30">
-                  <span className="text-xs font-bold text-orange-800 dark:text-orange-300 block mb-1">
-                    {language === 'es' ? 'Ahorro Anual que Vuelve a tu Bolsillo:' : 'Yearly Capital Returned to Your Pocket:'}
-                  </span>
-                  <span className="text-2xl sm:text-3xl font-black text-orange-600 dark:text-orange-400 font-mono block">
-                    +${yearlyCommissionLoss.toLocaleString('es-CO')} COP
-                  </span>
-                </div>
-
-                <button
-                  onClick={() => setIsContactOpen(true)}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-xs shadow-lg transition-all cursor-pointer"
-                >
-                  {language === 'es' ? 'Recuperar Mis Ganancias Ahora' : 'Reclaim My Profits Today'}
-                </button>
+            {/* Pilar 3 */}
+            <div className="p-7 sm:p-8 rounded-3xl bg-white dark:bg-[#11121a] border border-black/10 dark:border-white/15 shadow-xl hover:border-orange-500/40 transition-all text-left group">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                <CheckCircle2 className="w-6 h-6" />
               </div>
+              <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
+                {language === 'es' ? 'Puesta en Marcha Llave en Mano' : 'Turnkey Setup'}
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                {language === 'es'
+                  ? 'Configuramos tu menú, categorías, fotos de platillos y horarios para que tú y tu personal comiencen a operar desde el primer día.'
+                  : 'We set up your catalog, categories, menu photography, and operational hours so your team starts operating seamlessly from day one.'}
+              </p>
             </div>
 
           </div>

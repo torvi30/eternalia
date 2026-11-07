@@ -10,7 +10,7 @@ export default function Hero({ onExploreClick }) {
   const { t } = useLanguage();
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Announcement Badge */}

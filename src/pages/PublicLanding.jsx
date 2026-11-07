@@ -34,14 +34,9 @@ export default function PublicLanding() {
       {/* Main Content Sections */}
       <main className="flex-grow z-10">
         <Hero 
-          onOpenContact={() => setIsContactOpen(true)}
           onExploreClick={(e) => {
             e.preventDefault();
             scrollToSection('productos-disponibles');
-          }}
-          onDemoClick={(e) => {
-            e.preventDefault();
-            scrollToSection('empresas');
           }}
         />
 

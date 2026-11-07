@@ -65,14 +65,14 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
       subtitle: language === 'es' ? 'Escribe hoy, entrega programada mañana' : 'Write today, delivered tomorrow',
       icon: Mail,
       accent: 'from-amber-500 to-orange-500',
-      action: () => scrollTo('ecosistema'),
+      action: () => scrollTo('productos-disponibles'),
     },
     {
       title: language === 'es' ? 'Legado & Memorias' : 'Legacy & Memories',
       subtitle: language === 'es' ? 'Historias, anécdotas y recetas en texto' : 'Shared stories, anecdotes and life notes',
       icon: BookOpen,
       accent: 'from-cyan-500 to-blue-500',
-      action: () => scrollTo('ecosistema'),
+      action: () => scrollTo('productos-disponibles'),
     },
     {
       title: language === 'es' ? 'Códigos QR & Placas' : 'QR Codes & Plaques',
@@ -86,7 +86,7 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
       subtitle: language === 'es' ? 'Custodios de seguridad y entrega garantizada' : 'Verified custodians & guaranteed delivery',
       icon: UserCheck,
       accent: 'from-indigo-500 to-purple-500',
-      action: () => scrollTo('ecosistema'),
+      action: () => scrollTo('empresas'),
     },
   ];
 
@@ -160,13 +160,6 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
               >
                 {language === 'es' ? 'Productos' : 'Products'}
-              </button>
-
-              <button
-                onClick={() => scrollTo('proyectos')}
-                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
-              >
-                {language === 'es' ? 'Portafolio' : 'Portfolio'}
               </button>
 
               <Link
@@ -365,9 +358,9 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                   <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all" />
                 </Link>
 
-                {/* Botón Principal: Todas las Soluciones */}
+                {/* Botón Principal: Productos Disponibles */}
                 <button
-                  onClick={() => scrollTo('proyectos')}
+                  onClick={() => scrollTo('productos-disponibles')}
                   className="w-full p-3.5 rounded-2xl bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-950/60 dark:to-cyan-950/60 border border-cyan-500/30 hover:border-cyan-500 text-left transition-all mb-3 flex items-center justify-between cursor-pointer group shadow-sm"
                 >
                   <div className="flex items-center gap-3">
@@ -376,10 +369,10 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                     </div>
                     <div>
                       <span className="text-xs font-bold text-zinc-900 dark:text-white block group-hover:text-cyan-600 dark:group-hover:text-cyan-200 transition-colors">
-                        {language === 'es' ? 'Todas las Soluciones que Ofrecemos' : 'All Solutions We Offer'}
+                        {language === 'es' ? 'Productos & Software Disponible' : 'Available Software & Products'}
                       </span>
                       <span className="text-[10px] text-zinc-600 dark:text-zinc-400">
-                        {language === 'es' ? 'Portafolio de plataformas y frontends activos' : 'Live active platforms & frontends'}
+                        {language === 'es' ? 'Menú digital, comandas y pantalla completa' : 'Interactive digital menu & tickets'}
                       </span>
                     </div>
                   </div>

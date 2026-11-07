@@ -2,10 +2,8 @@ import { useState } from 'react';
 import GlowBackground from '../components/GlowBackground';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import BentoGrid from '../components/BentoGrid';
 import FeaturedProducts from '../components/FeaturedProducts';
 import CompanyMarquee from '../components/CompanyMarquee';
-import ProjectsShowcase from '../components/ProjectsShowcase';
 import TechSpecs from '../components/TechSpecs';
 import InfrastructureStatus from '../components/InfrastructureStatus';
 import CallToAction from '../components/CallToAction';
@@ -54,10 +52,6 @@ export default function PublicLanding() {
 
         {/* Red de Empresas & Clientes - Marquee Infinito de Logos */}
         <CompanyMarquee />
-
-        <BentoGrid onOpenContact={() => setIsContactOpen(true)} />
-
-        <ProjectsShowcase onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Especificaciones Corporativas */}
         <TechSpecs />

@@ -3,7 +3,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { Terminal } from 'lucide-react';
 
 export default function Footer({ onOpenContact, onOpenInvestors }) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
     <footer className="relative bg-slate-100 dark:bg-[#07070a] border-t border-black/[0.08] dark:border-white/[0.08] pt-16 pb-12 overflow-hidden transition-colors">
@@ -52,22 +52,22 @@ export default function Footer({ onOpenContact, onOpenInvestors }) {
             </h4>
             <ul className="space-y-2.5 text-xs text-zinc-600 dark:text-zinc-400">
               <li>
-                <a href="#ecosistema" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-                  {t.nav.ecosystem}
+                <a href="#productos-disponibles" className="hover:text-zinc-900 dark:text-white transition-colors">
+                  {language === 'es' ? 'Productos & Software' : 'Products & Software'}
                 </a>
               </li>
               <li>
-                <a href="#cotizador" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-                  {t.nav.quoteBtn || "Cotizador Interactivo"}
+                <Link to="/restaurantes" className="hover:text-zinc-900 dark:text-white transition-colors">
+                  {language === 'es' ? 'Software Restaurantes' : 'Restaurant Software'}
+                </Link>
+              </li>
+              <li>
+                <a href="#empresas" className="hover:text-zinc-900 dark:text-white transition-colors">
+                  {language === 'es' ? 'Empresas & Clientes' : 'Client Network'}
                 </a>
               </li>
               <li>
-                <a href="#directorio" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
-                  {t.nav.directory}
-                </a>
-              </li>
-              <li>
-                <a href="#infraestructura" className="hover:text-zinc-900 dark:hover:text-white transition-colors">
+                <a href="#infraestructura" className="hover:text-zinc-900 dark:text-white transition-colors">
                   {t.nav.statusBtn || "Estado Servidores (SLA)"}
                 </a>
               </li>

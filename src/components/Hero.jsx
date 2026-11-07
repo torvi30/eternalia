@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   ArrowRight, 
   Sparkles, 
   Compass, 
   Activity, 
-  Globe2, 
   Zap, 
   Layers, 
   Terminal, 
-  Server
+  Server,
+  UtensilsCrossed
 } from 'lucide-react';
 import HeroTerminal from './HeroTerminal';
 
@@ -123,14 +124,14 @@ export default function Hero({ onOpenContact, onExploreClick, onDemoClick }) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
 
-            {/* Secondary CTA: Ver Proyectos en Vivo */}
-            <a
-              href="#proyectos"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-900/90 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-cyan-500/40 transition-all duration-200 backdrop-blur-md shadow-md"
+            {/* Secondary CTA: Software para Restaurantes */}
+            <Link
+              to="/restaurantes"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-900/90 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-orange-500/40 transition-all duration-200 backdrop-blur-md shadow-md"
             >
-              <Globe2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-              <span>{language === 'es' ? 'Ver Proyectos Activos' : 'View Live Projects'}</span>
-            </a>
+              <UtensilsCrossed className="w-4 h-4 text-orange-500" />
+              <span>{language === 'es' ? 'Software para Restaurantes' : 'Restaurant Software'}</span>
+            </Link>
 
             {/* Tertiary CTA: Red de Empresas & Clientes */}
             <a

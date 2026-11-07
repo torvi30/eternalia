@@ -39,7 +39,7 @@ export default function HeroTerminal({ onOpenContact, onNavigateSection }) {
 
     switch (cmd) {
       case 'projects': {
-        const el = document.getElementById('proyectos');
+        const el = document.getElementById('productos-disponibles');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         responseEntry = {
           type: 'output',

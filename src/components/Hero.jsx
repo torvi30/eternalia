@@ -1,10 +1,15 @@
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { 
+  ArrowRight, 
+  UtensilsCrossed 
+} from 'lucide-react';
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
-    <section className="relative pt-24 pb-6 md:pt-32 md:pb-10 overflow-hidden">
+    <section className="relative pt-24 pb-8 md:pt-32 md:pb-12 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Announcement Badge */}
@@ -36,9 +41,22 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-xl text-zinc-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-4 sm:mb-6 font-normal transition-colors">
+          <p className="text-base sm:text-xl text-zinc-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-8 font-normal transition-colors">
             {t.hero.subtitle}
           </p>
+
+          {/* Action CTA: Botón directo a Gastronomía OS */}
+          <div className="flex justify-center">
+            <Link
+              to="/restaurantes"
+              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 hover:from-orange-500 hover:to-amber-400 transition-all duration-300 shadow-[0_4px_25px_rgba(249,115,22,0.35)] dark:shadow-[0_0_30px_rgba(249,115,22,0.45)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base"
+            >
+              <UtensilsCrossed className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
+              <span>{language === 'es' ? 'Ver Software para Restaurantes' : 'View Restaurant Software'}</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
         </div>
 
       </div>

@@ -324,16 +324,17 @@ export default function RestaurantLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
           {/* Logo & Back Link */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 sm:gap-4">
             <Link
               to="/"
-              className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 hover:text-zinc-900 dark:hover:text-white transition-colors group"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-orange-500/50 dark:hover:border-orange-500/50 text-xs sm:text-sm font-bold text-zinc-900 dark:text-white shadow-sm hover:shadow transition-all group cursor-pointer"
+              title={language === 'es' ? 'Volver a la página principal' : 'Back to main page'}
             >
-              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-              <span>{language === 'es' ? 'EternalIA Hub' : 'EternalIA Hub'}</span>
+              <ArrowLeft className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover:-translate-x-1 transition-transform" />
+              <span>{language === 'es' ? 'Volver al Inicio' : 'Back to Home'}</span>
             </Link>
 
-            <div className="h-4 w-px bg-zinc-300 dark:bg-zinc-700 hidden sm:block" />
+            <div className="h-5 w-px bg-zinc-300 dark:bg-zinc-700 hidden sm:block" />
 
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] shadow-sm">

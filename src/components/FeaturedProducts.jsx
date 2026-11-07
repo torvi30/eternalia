@@ -140,8 +140,13 @@ export default function FeaturedProducts({ onOpenContact }) {
   useEffect(() => {
     if (!isLightboxOpen) return;
 
-    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -156,10 +161,31 @@ export default function FeaturedProducts({ onOpenContact }) {
       }
     };
 
+    let lastWheelTime = 0;
+    const handleWheel = (e) => {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastWheelTime < 280) return;
+      if (Math.abs(e.deltaY) > 20 || Math.abs(e.deltaX) > 20) {
+        lastWheelTime = now;
+        if (e.deltaY > 0 || e.deltaX > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.documentElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('wheel', handleWheel);
     };
   }, [isLightboxOpen, handleNext, handlePrev]);
 
@@ -433,14 +459,15 @@ export default function FeaturedProducts({ onOpenContact }) {
       {isLightboxOpen && (
         <div
           onClick={() => setIsLightboxOpen(false)}
-          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none"
+          className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/95 backdrop-blur-md animate-in fade-in duration-200 select-none overscroll-contain"
         >
           <div
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
-            className="relative max-w-6xl w-full max-h-[96vh] flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950"
+            className="relative max-w-6xl w-full max-h-[96vh] flex flex-col rounded-2xl overflow-hidden border border-white/20 shadow-2xl bg-zinc-950 overscroll-contain"
+            style={{ overscrollBehavior: 'contain' }}
           >
             {/* Modal Header */}
             <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">

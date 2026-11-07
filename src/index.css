@@ -31,6 +31,14 @@
     overflow-x: hidden;
     transition: background-color 0.25s ease, color 0.25s ease;
   }
+
+  /* Prevent background scrolling when any modal or lightbox is active */
+  html.modal-open,
+  body.modal-open {
+    overflow: hidden !important;
+    height: 100% !important;
+    overscroll-behavior: none !important;
+  }
 }
 
 /* Hide scrollbar globally where needed */

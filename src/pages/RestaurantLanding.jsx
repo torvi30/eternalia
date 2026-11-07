@@ -243,8 +243,13 @@ export default function RestaurantLanding() {
   useEffect(() => {
     if (!isLightboxOpen) return;
 
-    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const handleKeyDown = (e) => {
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -259,10 +264,31 @@ export default function RestaurantLanding() {
       }
     };
 
+    let lastWheelTime = 0;
+    const handleWheel = (e) => {
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastWheelTime < 280) return;
+      if (Math.abs(e.deltaY) > 20 || Math.abs(e.deltaX) > 20) {
+        lastWheelTime = now;
+        if (e.deltaY > 0 || e.deltaX > 0) {
+          handleNextModule();
+        } else {
+          handlePrevModule();
+        }
+      }
+    };
+
     window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.documentElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('wheel', handleWheel);
     };
   }, [isLightboxOpen, handleNextModule, handlePrevModule]);
 

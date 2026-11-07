@@ -18,6 +18,7 @@ import { saveInquiry } from '../services/inquiryService';
 export default function ContactModal({ isOpen, onClose }) {
   const { t, language } = useLanguage();
   const fileInputRef = useRef(null);
+  const backdropRef = useRef(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -32,8 +33,14 @@ export default function ContactModal({ isOpen, onClose }) {
   useEffect(() => {
     if (!isOpen) return;
 
-    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    // Apply modal-open class to both html and body
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -43,9 +50,29 @@ export default function ContactModal({ isOpen, onClose }) {
 
     window.addEventListener('keydown', handleKeyDown);
 
+    // Prevent wheel and touch scrolling on the backdrop
+    const backdropEl = backdropRef.current;
+    const preventScroll = (e) => {
+      if (e.target === backdropEl) {
+        e.preventDefault();
+      }
+    };
+
+    if (backdropEl) {
+      backdropEl.addEventListener('wheel', preventScroll, { passive: false });
+      backdropEl.addEventListener('touchmove', preventScroll, { passive: false });
+    }
+
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.documentElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      if (backdropEl) {
+        backdropEl.removeEventListener('wheel', preventScroll);
+        backdropEl.removeEventListener('touchmove', preventScroll);
+      }
     };
   }, [isOpen, onClose]);
 
@@ -98,11 +125,13 @@ export default function ContactModal({ isOpen, onClose }) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer"
+      ref={backdropRef}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-md animate-in fade-in duration-200 cursor-pointer overscroll-contain select-none"
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto cursor-default"
+        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto cursor-default overscroll-contain"
+        style={{ overscrollBehavior: 'contain' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow ambient inside dialog */}

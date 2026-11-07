@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { 
   X, 
@@ -11,12 +11,18 @@ import {
 
 export default function InvestorRelationsModal({ isOpen, onClose, onOpenContact }) {
   const { t } = useLanguage();
+  const backdropRef = useRef(null);
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const originalOverflow = window.getComputedStyle(document.body).overflow;
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
 
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -25,9 +31,28 @@ export default function InvestorRelationsModal({ isOpen, onClose, onOpenContact 
     };
     window.addEventListener('keydown', handleKeyDown);
 
+    const backdropEl = backdropRef.current;
+    const preventScroll = (e) => {
+      if (e.target === backdropEl) {
+        e.preventDefault();
+      }
+    };
+
+    if (backdropEl) {
+      backdropEl.addEventListener('wheel', preventScroll, { passive: false });
+      backdropEl.addEventListener('touchmove', preventScroll, { passive: false });
+    }
+
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.documentElement.classList.remove('modal-open');
+      document.body.classList.remove('modal-open');
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      if (backdropEl) {
+        backdropEl.removeEventListener('wheel', preventScroll);
+        backdropEl.removeEventListener('touchmove', preventScroll);
+      }
     };
   }, [isOpen, onClose]);
 
@@ -96,13 +121,15 @@ Web: https://eternalia.io
 
   return (
     <div 
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 cursor-pointer"
+      ref={backdropRef}
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 dark:bg-black/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in duration-200 cursor-pointer overscroll-contain select-none"
       onClick={onClose}
     >
       
       {/* Container Card */}
       <div 
-        className="relative w-full max-w-4xl bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left overflow-hidden my-8 cursor-default"
+        className="relative w-full max-w-4xl bg-white dark:bg-zinc-950 border border-black/10 dark:border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl text-left overflow-hidden my-8 cursor-default overscroll-contain"
+        style={{ overscrollBehavior: 'contain' }}
         role="dialog"
         aria-modal="true"
         onClick={(e) => e.stopPropagation()}

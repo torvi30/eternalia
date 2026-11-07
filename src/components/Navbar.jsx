@@ -84,7 +84,7 @@ export default function Navbar({ onOpenContact }) {
             <nav className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-950/80 border border-black/10 dark:border-white/10 backdrop-blur-md shadow-sm">
               <button
                 onClick={() => scrollTo('productos-disponibles')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-orange-600 dark:text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 hover:border-orange-500/50 rounded-full transition-all shadow-[0_0_12px_rgba(249,115,22,0.15)] cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-blue-600 dark:text-cyan-400 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-cyan-500/50 rounded-full transition-all shadow-[0_0_12px_rgba(59,130,246,0.15)] cursor-pointer"
               >
                 <UtensilsCrossed className="w-3.5 h-3.5" />
                 <span>{language === 'es' ? '🍽️ Restaurantes' : '🍽️ Restaurants'}</span>

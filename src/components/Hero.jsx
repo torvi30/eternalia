@@ -49,7 +49,7 @@ export default function Hero() {
           <div className="flex justify-center">
             <Link
               to="/restaurantes"
-              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 hover:from-orange-500 hover:to-amber-400 transition-all duration-300 shadow-[0_4px_25px_rgba(249,115,22,0.35)] dark:shadow-[0_0_30px_rgba(249,115,22,0.45)] hover:shadow-[0_0_40px_rgba(249,115,22,0.6)] transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base"
+              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all duration-300 shadow-[0_4px_25px_rgba(59,130,246,0.35)] dark:shadow-[0_0_30px_rgba(99,102,241,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base"
             >
               <UtensilsCrossed className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
               <span>{language === 'es' ? 'Ver Software para Restaurantes' : 'View Restaurant Software'}</span>

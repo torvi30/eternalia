@@ -222,7 +222,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{language === 'es' ? 'PRODUCTOS & SOFTWARE LISTOS PARA DESPLIEGUE' : 'READY-TO-DEPLOY SOFTWARE PRODUCTS'}</span>
           </div>
@@ -251,23 +251,23 @@ export default function FeaturedProducts({ onOpenContact }) {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   {language === 'es' ? 'Producto Disponible • En Producción' : 'Live Product • In Production'}
                 </span>
-                <span className="text-xs font-mono text-orange-600 dark:text-orange-400 font-bold">
+                <span className="text-xs font-mono text-blue-600 dark:text-cyan-400 font-bold">
                   {desktopScreens.length} {language === 'es' ? 'Módulos Activos' : 'Active Modules'}
                 </span>
               </div>
 
               <div>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] shadow-md">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 p-[1.5px] shadow-md">
                     <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[10px] flex items-center justify-center">
-                      <UtensilsCrossed className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                      <UtensilsCrossed className="w-5 h-5 text-blue-600 dark:text-cyan-400" />
                     </div>
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white leading-tight">
                     EternalIA Gastronomía OS
                   </h3>
                 </div>
-                <p className="text-sm font-semibold text-orange-600 dark:text-orange-400">
+                <p className="text-sm font-semibold text-blue-600 dark:text-cyan-400">
                   {language === 'es'
                     ? 'Sistema Operativo para Restaurantes, Comidas Rápidas & Cafeterías'
                     : 'Operating System for Restaurants, Fast-Food Chains & Cafes'}
@@ -304,7 +304,7 @@ export default function FeaturedProducts({ onOpenContact }) {
               <div className="pt-3 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <Link
                   to="/restaurantes"
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-extrabold text-xs shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer group"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-extrabold text-xs shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all cursor-pointer group"
                 >
                   <span>{language === 'es' ? 'Ver Landing Dedicada de Restaurantes' : 'Explore Dedicated Restaurant Landing'}</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -333,7 +333,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                       key={screen.id}
                       onClick={() => setActiveScreenIndex(idx)}
                       className={`flex-1 py-1.5 px-2.5 rounded-xl text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap cursor-pointer ${isActive
-                          ? 'bg-orange-500 text-white shadow-md'
+                          ? 'bg-blue-600 text-white shadow-md'
                           : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white'
                         }`}
                     >
@@ -386,7 +386,7 @@ export default function FeaturedProducts({ onOpenContact }) {
 
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/browser:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="px-3.5 py-1.5 rounded-xl bg-orange-500 text-white font-bold text-xs shadow-lg flex items-center gap-1.5">
+                    <span className="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white font-bold text-xs shadow-lg flex items-center gap-1.5">
                       <Eye className="w-3.5 h-3.5" />
                       <span>{language === 'es' ? 'Click para Pantalla Completa' : 'Click to View Full Screen'}</span>
                     </span>
@@ -436,7 +436,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                     onClick={() => setActiveScreenIndex(idx)}
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
                     className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${activeScreenIndex === idx
-                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30'
+                        ? 'border-blue-500 shadow-md scale-105 opacity-100 ring-2 ring-blue-500/30'
                         : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
                       }`}
                   >
@@ -474,7 +474,7 @@ export default function FeaturedProducts({ onOpenContact }) {
             {/* Modal Header */}
             <div className="h-11 sm:h-12 bg-zinc-900/90 px-3 sm:px-5 flex items-center justify-between border-b border-white/10 shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 overflow-hidden">
-                <span className="px-2 py-0.5 rounded-md bg-orange-500/20 text-orange-400 font-mono text-xs font-bold shrink-0">
+                <span className="px-2 py-0.5 rounded-md bg-blue-500/20 text-cyan-400 font-mono text-xs font-bold shrink-0">
                   {activeScreenIndex + 1} / {desktopScreens.length}
                 </span>
                 <span className="text-xs sm:text-sm font-semibold text-white truncate">
@@ -512,7 +512,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                   e.stopPropagation();
                   handlePrev();
                 }}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Anterior (Flecha izquierda)' : 'Previous (Left arrow)'}
                 aria-label="Anterior"
               >
@@ -525,7 +525,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                   e.stopPropagation();
                   handleNext();
                 }}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-orange-500 text-white border border-white/20 hover:border-orange-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/70 hover:bg-blue-600 text-white border border-white/20 hover:border-blue-500 shadow-2xl flex items-center justify-center transition-all cursor-pointer z-10 active:scale-95"
                 title={language === 'es' ? 'Siguiente (Flecha derecha)' : 'Next (Right arrow)'}
                 aria-label="Siguiente"
               >
@@ -539,7 +539,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                 <span className="truncate">
                   {language === 'es' ? currentScreen.captionEs : currentScreen.captionEn}
                 </span>
-                <span className="shrink-0 text-amber-400 font-medium sm:hidden">
+                <span className="shrink-0 text-cyan-400 font-medium sm:hidden">
                   {language === 'es' ? '← Desliza para navegar →' : '← Swipe to navigate →'}
                 </span>
               </div>
@@ -552,7 +552,7 @@ export default function FeaturedProducts({ onOpenContact }) {
                     onClick={() => setActiveScreenIndex(idx)}
                     title={language === 'es' ? screen.labelEs : screen.labelEn}
                     className={`rounded-lg overflow-hidden border transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-14 sm:w-20 shrink-0 ${activeScreenIndex === idx
-                        ? 'border-orange-500 ring-2 ring-orange-500/50 scale-105 opacity-100'
+                        ? 'border-blue-500 ring-2 ring-blue-500/50 scale-105 opacity-100'
                         : 'border-white/10 opacity-50 hover:opacity-100'
                       }`}
                   >

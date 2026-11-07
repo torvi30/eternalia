@@ -184,7 +184,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
 
         {/* 1. SECTION HEADER */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-wider uppercase mb-3">
             <MapPin className="w-3.5 h-3.5" />
             <span>{language === 'es' ? 'VITRINA LOCAL POR MUNICIPIO' : 'LOCAL TOWN SHOWCASE'}</span>
           </div>

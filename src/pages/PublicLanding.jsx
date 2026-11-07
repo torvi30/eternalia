@@ -41,14 +41,14 @@ export default function PublicLanding() {
           }}
         />
 
+        {/* Red de Empresas & Clientes - Marquee Infinito de Logos (Social Proof Inmediata) */}
+        <CompanyMarquee />
+
         {/* Productos SaaS Disponibles - Posición Prioritaria Destacada */}
         <FeaturedProducts onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Directorio Comercial Multi-Municipio & Promociones Activas */}
         <LocalDirectorySection onOpenContact={() => setIsContactOpen(true)} />
-
-        {/* Red de Empresas & Clientes - Marquee Infinito de Logos */}
-        <CompanyMarquee />
 
         <CallToAction onOpenContact={() => setIsContactOpen(true)} />
       </main>

@@ -187,19 +187,19 @@ export default function LocalDirectorySection({ onOpenContact }) {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-700 dark:text-orange-400 text-xs font-bold tracking-wider uppercase mb-3">
             <MapPin className="w-3.5 h-3.5" />
-            <span>{language === 'es' ? 'DIRECTORIO TERRITORIAL MULTI-MUNICIPIO' : 'HYPERLOCAL TOWN DIRECTORY'}</span>
+            <span>{language === 'es' ? 'VITRINA LOCAL POR MUNICIPIO' : 'LOCAL TOWN SHOWCASE'}</span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
             {language === 'es'
-              ? 'Directorio de tu Pueblo: Promociones a tu Gusto, Ubicación, Redes y WhatsApp'
-              : 'Town Directory: Tailored Promotions, Location, Social Links & WhatsApp'}
+              ? 'Directorio Comercial & Promociones en Vivo'
+              : 'Local Directory & Live Promotions'}
           </h2>
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es'
-              ? 'Cada negocio en EternalIA cuenta con su vitrina comercial en el directorio de su pueblo. Sin maquetas ficticias: explora las capturas reales del sistema en producción. Organiza promociones y anuncios a tu gusto (en porcentaje, precio fijo o combos), con ubicación en Google Maps, redes sociales y pedidos en 1 clic.'
-              : 'Every EternalIA business gets its verified profile in their town directory. No fictional mockups: explore real production screenshots. Organize ads and promotions to your liking (percentages, fixed prices, or combos), with Google Maps location, social links, and 1-tap WhatsApp ordering.'}
+              ? 'Cada negocio conectado cuenta con su perfil oficial en el directorio de su pueblo: ubicación en Google Maps, redes sociales, horarios sincronizados y anuncios personalizados a su medida.'
+              : 'Every connected business gets its verified profile in their town directory: Google Maps location, social channels, live hours, and custom promotions tailored to their needs.'}
           </p>
 
           {/* 4 Feature Badges */}

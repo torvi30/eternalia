@@ -661,12 +661,12 @@ export default function RestaurantLanding() {
                 <CheckCircle2 className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-zinc-900 dark:text-white mb-2">
-                {language === 'es' ? 'Puesta en Marcha Llave en Mano' : 'Turnkey Setup'}
+                {language === 'es' ? 'Puesta en Marcha & Entregas Rápidas' : 'Fast Onboarding & Delivery'}
               </h3>
               <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 {language === 'es'
-                  ? 'Configuramos tu menú, categorías, fotos de platillos y horarios para que tú y tu personal comiencen a operar desde el primer día.'
-                  : 'We set up your catalog, categories, menu photography, and operational hours so your team starts operating seamlessly from day one.'}
+                  ? 'Configuramos tu menú, categorías, fotos de platillos y horarios con entregas rápidas y asesoría cercana para que operes con total tranquilidad.'
+                  : 'We set up your catalog, categories, photography, and operational hours with rapid delivery and close advisory.'}
               </p>
             </div>
 
@@ -688,15 +688,15 @@ export default function RestaurantLanding() {
 
           <p className="text-zinc-600 dark:text-zinc-300 text-base max-w-2xl mx-auto mb-8">
             {language === 'es'
-              ? 'Te entregamos tu sistema configurado con tu carta, códigos QR para mesas, comanderos y sincronizado con tu WhatsApp en tiempo récord.'
-              : 'We deliver your tailored system with your dishes, table QR codes, kitchen screens, and WhatsApp ordering in record time.'}
+              ? 'Te entregamos tu sistema configurado con tu carta, códigos QR para mesas, comanderos y sincronizado con tu WhatsApp, con entregas rápidas y soporte continuo.'
+              : 'We deliver your tailored system with your dishes, table QR codes, kitchen screens, and WhatsApp ordering, with fast delivery and ongoing support.'}
           </p>
 
           <button
             onClick={() => setIsContactOpen(true)}
             className="px-9 py-4 rounded-2xl bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-500 text-white font-black text-base shadow-2xl shadow-orange-500/30 cursor-pointer active:scale-95 transition-all"
           >
-            {language === 'es' ? 'Agendar Demostración Inmediata' : 'Schedule Instant Live Demo'}
+            {language === 'es' ? 'Agendar Demostración' : 'Schedule Live Demo'}
           </button>
         </div>
       </section>

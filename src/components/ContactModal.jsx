@@ -11,7 +11,9 @@ import {
   Loader2, 
   Paperclip, 
   FileText, 
-  Trash2 
+  Trash2,
+  ChevronDown,
+  Check 
 } from 'lucide-react';
 import { saveInquiry } from '../services/inquiryService';
 
@@ -28,6 +30,7 @@ export default function ContactModal({ isOpen, onClose }) {
   });
   const [attachmentFile, setAttachmentFile] = useState(null);
   const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success'
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Lock background scroll and listen for ESC key
   useEffect(() => {
@@ -105,6 +108,7 @@ export default function ContactModal({ isOpen, onClose }) {
 
   const handleReset = () => {
     setStatus('idle');
+    setIsDropdownOpen(false);
     setFormData({
       name: '',
       email: '',
@@ -213,22 +217,44 @@ export default function ContactModal({ isOpen, onClose }) {
                 />
               </div>
 
-              <div>
+              {/* Custom Elegant Dropdown */}
+              <div className="relative">
                 <label className="block text-xs font-medium text-zinc-700 dark:text-zinc-300 mb-1.5 flex items-center gap-1.5">
                   <Building className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   <span>{t.contactModal.form.role}</span>
                 </label>
-                <select
-                  value={formData.role}
-                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
+
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-black/10 dark:border-white/10 text-zinc-900 dark:text-white text-xs sm:text-sm flex items-center justify-between text-left focus:outline-none focus:border-indigo-500 hover:border-black/20 dark:hover:border-white/20 transition-colors shadow-sm cursor-pointer"
                 >
-                  {t.contactModal.form.roles.map((role, idx) => (
-                    <option key={idx} value={role} className="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white">
-                      {role}
-                    </option>
-                  ))}
-                </select>
+                  <span className="truncate font-medium">{formData.role || t.contactModal.form.roles[0]}</span>
+                  <ChevronDown className={`w-4 h-4 text-zinc-400 transition-transform ${isDropdownOpen ? 'rotate-180 text-indigo-500' : ''}`} />
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full left-0 right-0 mt-1.5 z-30 rounded-2xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 shadow-2xl p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+                    {t.contactModal.form.roles.map((role, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => {
+                          setFormData({ ...formData, role });
+                          setIsDropdownOpen(false);
+                        }}
+                        className={`w-full px-3 py-2 rounded-xl text-xs sm:text-sm text-left flex items-center justify-between transition-colors cursor-pointer ${
+                          formData.role === role
+                            ? 'bg-indigo-600 text-white font-semibold shadow-sm'
+                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-white'
+                        }`}
+                      >
+                        <span>{role}</span>
+                        {formData.role === role && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-2" />}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div>

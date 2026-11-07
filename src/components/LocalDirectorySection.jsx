@@ -67,6 +67,30 @@ const directoryScreens = [
     ]
   },
   {
+    id: 'anuncios-personalizados',
+    labelEs: 'Personalización de Anuncios & Promociones a su Gusto',
+    labelEn: 'Tailored Ads & Custom Promotions',
+    shortLabelEs: 'Anuncios a su Gusto',
+    shortLabelEn: 'Tailored Ads',
+    icon: Sparkles,
+    url: 'directorio.eternalia.co/marinilla?promos=custom',
+    img: '/directory/directorio-anuncios-personalizados.jpg',
+    taglineEs: 'Organiza y personaliza tus promociones a tu medida: define descuentos en porcentaje (10%), precios fijos ($2.000) o anuncios libres para todo tu catálogo.',
+    taglineEn: 'Organize and tailor promotions to your needs: set percentage cuts (10%), fixed prices ($2,000), or sitewide announcements.',
+    featuresEs: [
+      'Organización a tu gusto: configura ofertas en porcentaje (ej: 10% OFF), precio directo (ej: Buñuelos $2.000) o anuncios globales (ej: "Aplica para todo el vivero").',
+      'Badge superior llamativo: activa insignias personalizadas con efecto de fuego para captar la atención inmediata del cliente.',
+      'Control total de campañas: activa, pausa o cambia el texto de tus promociones según tus días de mayor flujo.',
+      'Sin intermediarios: el comensal hace clic en "Ver" o "Escribir por WhatsApp" y pide directo a tu negocio.'
+    ],
+    featuresEn: [
+      'Tailor to your taste: configure percentage deals (e.g. 10% OFF), fixed price drops ($2,000), or global storewide announcements.',
+      'Eye-catching top badge: enable custom flame badges to capture instant local diner interest.',
+      'Full campaign control: activate, pause, or tweak promotion copy anytime for peak sales hours.',
+      'Direct customer flow: diners tap "View" or "Chat on WhatsApp" straight to your counter.'
+    ]
+  },
+  {
     id: 'redes-whatsapp',
     labelEs: 'Redes Sociales, Horarios & Contacto WhatsApp en 1 Clic',
     labelEn: 'Social Channels, Hours & 1-Click WhatsApp',
@@ -168,14 +192,14 @@ export default function LocalDirectorySection({ onOpenContact }) {
 
           <h2 className="text-3xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
             {language === 'es'
-              ? 'Directorio Local por Municipio: Ubicación, Redes, Horarios y WhatsApp en 1 Clic'
-              : 'Town Directory: Location, Social Links, Live Hours & 1-Click WhatsApp'}
+              ? 'Directorio de tu Pueblo: Promociones a tu Gusto, Ubicación, Redes y WhatsApp'
+              : 'Town Directory: Tailored Promotions, Location, Social Links & WhatsApp'}
           </h2>
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es'
-              ? 'Cada negocio en EternalIA cuenta con su vitrina comercial en el directorio de su pueblo. Sin maquetas ficticias: explora las capturas reales del sistema en producción con ubicación en Google Maps, enlaces a redes sociales, horarios de atención en vivo y promociones del día.'
-              : 'Every EternalIA business gets its verified profile in their town directory. No fictional mockups: explore real production screenshots featuring Google Maps location, social links, live hours, and instant WhatsApp ordering.'}
+              ? 'Cada negocio en EternalIA cuenta con su vitrina comercial en el directorio de su pueblo. Sin maquetas ficticias: explora las capturas reales del sistema en producción. Organiza promociones y anuncios a tu gusto (en porcentaje, precio fijo o combos), con ubicación en Google Maps, redes sociales y pedidos en 1 clic.'
+              : 'Every EternalIA business gets its verified profile in their town directory. No fictional mockups: explore real production screenshots. Organize ads and promotions to your liking (percentages, fixed prices, or combos), with Google Maps location, social links, and 1-tap WhatsApp ordering.'}
           </p>
 
           {/* 4 Feature Badges */}
@@ -370,6 +394,28 @@ export default function LocalDirectorySection({ onOpenContact }) {
                 <span className="truncate">
                   {language === 'es' ? currentScreen.taglineEs : currentScreen.taglineEn}
                 </span>
+              </div>
+
+              {/* Mini Desktop Thumbnail Carousel (Capturas abajo pequeñas e intuitivas) */}
+              <div className="flex items-center gap-2.5 mt-4 w-full overflow-x-auto pb-1 no-scrollbar">
+                {directoryScreens.map((screen, idx) => (
+                  <button
+                    key={screen.id}
+                    onClick={() => setActiveScreenIndex(idx)}
+                    title={language === 'es' ? screen.labelEs : screen.labelEn}
+                    className={`rounded-xl overflow-hidden border-2 transition-all p-0.5 bg-black cursor-pointer aspect-[16/9] w-20 sm:w-24 shrink-0 ${
+                      activeScreenIndex === idx
+                        ? 'border-orange-500 shadow-md scale-105 opacity-100 ring-2 ring-orange-500/30'
+                        : 'border-black/10 dark:border-white/10 opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={screen.img}
+                      alt={screen.labelEs}
+                      className="w-full h-full object-cover rounded-lg"
+                    />
+                  </button>
+                ))}
               </div>
 
             </div>

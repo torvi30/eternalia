@@ -8,7 +8,7 @@
  * - `name`: Nombre comercial.
  * - `logo`: URL del logo (ej. "https://...", o `null` para usar el isotipo dinámico).
  * - `websiteUrl`: Enlace a la Landing Page o web oficial (ej. "https://...", o `null`).
- * - `whatsapp`: Número con código de país (ej. "573147809921").
+ * - `whatsapp`: Número con código de país (ej. "573225466673").
  * - `phone`: Teléfono en formato legible para llamadas.
  * - `category`: 'food' | 'nursery' | 'services' | 'automotive'
  * - `statusType`: 'open' | 'online'
@@ -30,7 +30,7 @@ export const marinillaBusinesses = [
     reviews: 142,
     address: "Cra 30 #28-15, Sector El Malecón, Marinilla",
     phone: "+57 314 780 9921",
-    whatsapp: "573147809921",
+    whatsapp: "573225466673",
     lat: 6.1722,
     lng: -75.3341,
     tags: ["Landing Page Activa", "Carta Digital QR", "Cocina de Autor"],

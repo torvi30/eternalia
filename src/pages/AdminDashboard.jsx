@@ -96,7 +96,7 @@ export default function AdminDashboard() {
     category: 'food',
     categoryLabelEs: 'Comercio & Gastronomía',
     categoryLabelEn: 'Commerce & Gastronomy',
-    whatsapp: '573147809921',
+    whatsapp: '573225466673',
     phone: '+57 314 780 9921',
     address: 'Sector Parque Principal, Marinilla',
     lat: 6.1725,
@@ -201,7 +201,7 @@ export default function AdminDashboard() {
       category: 'food',
       categoryLabelEs: 'Comercio & Gastronomía',
       categoryLabelEn: 'Commerce & Gastronomy',
-      whatsapp: '573147809921',
+      whatsapp: '573225466673',
       phone: '+57 314 780 9921',
       address: 'Sector Parque Principal, Marinilla',
       lat: 6.1725,
@@ -1482,7 +1482,7 @@ export default function AdminDashboard() {
                     required
                     value={bizForm.whatsapp}
                     onChange={(e) => setBizForm({ ...bizForm, whatsapp: e.target.value })}
-                    placeholder="573147809921"
+                    placeholder="573225466673"
                     className="w-full px-3.5 py-2 rounded-xl bg-zinc-900 border border-white/10 text-white text-xs focus:outline-none font-mono"
                   />
                 </div>

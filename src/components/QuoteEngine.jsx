@@ -11,7 +11,8 @@ import {
   Send, 
   Sparkles,
   Check,
-  RotateCcw
+  RotateCcw,
+  MessageCircle
 } from 'lucide-react';
 
 export default function QuoteEngine() {
@@ -202,13 +203,25 @@ export default function QuoteEngine() {
               <p>• Cronograma: <span className="text-cyan-700 dark:text-cyan-400 font-bold">{quoteCalculation.timeline}</span></p>
             </div>
 
-            <button
-              onClick={handleReset}
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold transition-all cursor-pointer"
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>{t.quoteEngine?.successAction || "Cotizar otra solución"}</span>
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={`https://wa.me/573225466673?text=${encodeURIComponent(`¡Hola! Acabo de cotizar en Eternalia la solución ${quoteCalculation.verticalName} (${quoteCalculation.tierName}) por un estimado de $${quoteCalculation.rangeMin} - $${quoteCalculation.rangeMax} USD (ID: #${submissionSuccess}). Me gustaría coordinar con un asesor.`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold transition-all cursor-pointer shadow-sm"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                <span>{language === 'es' ? 'Contactar por WhatsApp: 322 546 6673' : 'WhatsApp Contact: +57 322 546 6673'}</span>
+              </a>
+
+              <button
+                onClick={handleReset}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold transition-all cursor-pointer border border-black/10 dark:border-white/10"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>{t.quoteEngine?.successAction || "Cotizar otra solución"}</span>
+              </button>
+            </div>
           </div>
         ) : (
           /* Estimator Grid Layout */
@@ -447,7 +460,7 @@ export default function QuoteEngine() {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm text-zinc-950 bg-gradient-to-r from-emerald-400 via-cyan-400 to-indigo-300 hover:opacity-90 transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-3 px-4 rounded-xl font-semibold text-xs sm:text-sm text-white dark:text-zinc-950 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     <Send className={`w-4 h-4 ${isSubmitting ? 'animate-pulse' : ''}`} />
                     <span>

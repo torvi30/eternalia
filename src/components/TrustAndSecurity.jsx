@@ -14,8 +14,6 @@ export default function TrustAndSecurity() {
   const trustPillars = [
     {
       icon: Coins,
-      accent: 'from-emerald-500 to-teal-500',
-      badgeColor: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-500/25',
       badge: language === 'es' ? 'Cero Comisiones' : '0% Commission Fee',
       title: language === 'es' ? '100% de tu Ganancia Va Directa a Ti' : '100% of Your Revenue Stays with You',
       desc: language === 'es'
@@ -26,8 +24,6 @@ export default function TrustAndSecurity() {
     },
     {
       icon: Server,
-      accent: 'from-cyan-500 to-blue-500',
-      badgeColor: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/25',
       badge: language === 'es' ? 'Disponibilidad 99.9%' : '99.9% Cloud Uptime',
       title: language === 'es' ? 'Infraestructura en la Nube que Nunca se Cae' : 'High-Availability Cloud Infrastructure',
       desc: language === 'es'
@@ -38,8 +34,6 @@ export default function TrustAndSecurity() {
     },
     {
       icon: Lock,
-      accent: 'from-indigo-500 to-purple-500',
-      badgeColor: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-500/25',
       badge: language === 'es' ? 'Cifrado de Extremo a Extremo' : 'End-to-End Encryption',
       title: language === 'es' ? 'Privacidad y Custodia Segura de tus Datos' : 'Data Privacy & Strict Customer Custody',
       desc: language === 'es'
@@ -50,8 +44,6 @@ export default function TrustAndSecurity() {
     },
     {
       icon: Headphones,
-      accent: 'from-blue-600 to-cyan-500',
-      badgeColor: 'bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border-cyan-500/25',
       badge: language === 'es' ? 'Soporte Local Continuo' : 'Direct Human Support',
       title: language === 'es' ? 'Acompañamiento Técnico Real y Personalizado' : 'Personal Technical Onboarding & Care',
       desc: language === 'es'
@@ -63,17 +55,17 @@ export default function TrustAndSecurity() {
   ];
 
   return (
-    <section id="seguridad" className="py-20 relative overflow-hidden bg-slate-100/60 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300 scroll-mt-20">
+    <section id="seguridad" className="py-20 relative overflow-hidden bg-slate-50 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300 scroll-mt-20">
       
-      {/* Ambient background glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 blur-3xl pointer-events-none rounded-full" />
+      {/* Subtle ambient light */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-slate-400/5 dark:bg-zinc-700/10 blur-3xl pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-wider uppercase mb-3">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-zinc-700 dark:text-zinc-300 text-xs font-semibold tracking-wider uppercase mb-3">
+            <ShieldCheck className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
             <span>{language === 'es' ? 'RESPALDO, ESTÁNDARES Y CONFIANZA' : 'SECURITY, STANDARDS & TRUST'}</span>
           </div>
 
@@ -90,21 +82,19 @@ export default function TrustAndSecurity() {
           </p>
         </div>
 
-        {/* 4 Pillars Grid */}
+        {/* 4 Pillars Grid (Limpio, Ejecutivo, Sin Colores Estridentes) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-5xl mx-auto">
           {trustPillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
               <div
                 key={idx}
-                className="relative group p-6 sm:p-7 rounded-3xl bg-white/80 dark:bg-zinc-900/60 border border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 backdrop-blur-xl shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                className="relative group p-6 sm:p-7 rounded-3xl bg-white dark:bg-zinc-900/60 border border-black/10 dark:border-white/10 hover:border-black/20 dark:hover:border-white/20 backdrop-blur-xl shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className={`w-11 h-11 rounded-2xl bg-gradient-to-tr ${pillar.accent} p-0.5 shadow-md`}>
-                      <div className="w-full h-full bg-white dark:bg-[#0c0d14] rounded-[14px] flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-zinc-900 dark:text-white" />
-                      </div>
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-black/10 dark:border-white/10 flex items-center justify-center text-zinc-800 dark:text-zinc-200 shadow-sm">
+                      <Icon className="w-5 h-5" />
                     </div>
 
                     <div className="text-right font-mono">
@@ -117,11 +107,11 @@ export default function TrustAndSecurity() {
                     </div>
                   </div>
 
-                  <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase border mb-3 ${pillar.badgeColor}`}>
+                  <span className="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase bg-black/5 dark:bg-white/5 text-zinc-700 dark:text-zinc-300 border border-black/10 dark:border-white/10 mb-3">
                     {pillar.badge}
                   </span>
 
-                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2 tracking-tight group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+                  <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-2 tracking-tight group-hover:text-zinc-950 dark:group-hover:text-white transition-colors">
                     {pillar.title}
                   </h3>
 
@@ -130,8 +120,8 @@ export default function TrustAndSecurity() {
                   </p>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-black/5 dark:border-white/5 flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400">
-                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                <div className="mt-5 pt-4 border-t border-black/5 dark:border-white/5 flex items-center gap-2 text-xs font-medium text-zinc-600 dark:text-zinc-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
                   <span>{language === 'es' ? 'Garantía activa en todos los planes' : 'Included in all software deployments'}</span>
                 </div>
               </div>

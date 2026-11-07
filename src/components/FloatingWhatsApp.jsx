@@ -7,8 +7,8 @@ export default function FloatingWhatsApp() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
 
-  // Default support WhatsApp phone number
-  const whatsappNumber = '573147809921';
+  // WhatsApp oficial para cotización y contacto
+  const whatsappNumber = '573225466673';
 
   const messageText = language === 'es'
     ? '¡Hola Eternalia! Quiero cotizar una solución digital para mi negocio (Software de Restaurantes / Directorio Comercial / Landing). ¿Me pueden brindar más información?'
@@ -41,7 +41,7 @@ export default function FloatingWhatsApp() {
             rel="noopener noreferrer"
             className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
           >
-            {language === 'es' ? '¿Cotizamos tu negocio? Chatea con nosotros' : 'Need a quick quote? Chat with us'}
+            {language === 'es' ? '¿Cotizamos tu negocio? WhatsApp 322 546 6673' : 'Need a quick quote? WhatsApp +57 322 546 6673'}
           </a>
 
           <button

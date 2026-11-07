@@ -14,16 +14,16 @@ export default function Hero() {
         
         {/* Top Announcement Badge */}
         <div className="flex justify-center mb-5 sm:mb-6">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/90 dark:bg-zinc-900/90 border border-indigo-500/30 shadow-[0_4px_20px_rgba(99,102,241,0.15)] dark:shadow-[0_0_25px_rgba(99,102,241,0.2)] backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 shadow-sm backdrop-blur-md">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="text-[11px] font-semibold tracking-wider text-indigo-700 dark:text-indigo-200 uppercase">
+            <span className="text-[11px] font-semibold tracking-wider text-zinc-800 dark:text-zinc-200 uppercase">
               {t.hero.badge}
             </span>
             <div className="h-3 w-px bg-zinc-300 dark:bg-zinc-700 mx-0.5" />
-            <span className="text-[11px] text-zinc-600 dark:text-zinc-400 font-mono hidden sm:inline flex items-center gap-1">
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono hidden sm:inline flex items-center gap-1">
               <span className="text-emerald-500 dark:text-emerald-400">●</span> {t.hero.badgeStatus}
             </span>
           </div>
@@ -49,11 +49,11 @@ export default function Hero() {
           <div className="flex justify-center">
             <Link
               to="/restaurantes"
-              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all duration-300 shadow-[0_4px_25px_rgba(59,130,246,0.35)] dark:shadow-[0_0_30px_rgba(99,102,241,0.45)] hover:shadow-[0_0_40px_rgba(6,182,212,0.6)] transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base"
+              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold text-white dark:text-zinc-950 bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 transition-all duration-200 shadow-md transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base active:scale-95"
             >
-              <UtensilsCrossed className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
+              <UtensilsCrossed className="w-4 h-4 text-zinc-400 dark:text-zinc-600 group-hover:rotate-12 transition-transform" />
               <span>{language === 'es' ? 'Ver Software para Restaurantes' : 'View Restaurant Software'}</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 text-zinc-400 dark:text-zinc-600 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 

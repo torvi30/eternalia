@@ -13,7 +13,8 @@ import {
   FileText, 
   Trash2,
   ChevronDown,
-  Check 
+  Check,
+  MessageCircle 
 } from 'lucide-react';
 import { saveInquiry } from '../services/inquiryService';
 
@@ -322,7 +323,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 <button
                   type="submit"
                   disabled={status === 'sending'}
-                  className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-semibold text-xs sm:text-sm transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-950 font-semibold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {status === 'sending' ? (
                     <>
@@ -336,6 +337,19 @@ export default function ContactModal({ isOpen, onClose }) {
                     </>
                   )}
                 </button>
+              </div>
+
+              {/* Direct WhatsApp Option */}
+              <div className="pt-1 text-center">
+                <a
+                  href="https://wa.me/573225466673?text=%C2%A1Hola%20Eternalia!%20Quiero%20cotizar%20y%20recibir%20asesor%C3%ADa%20personalizada."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-medium text-emerald-600 dark:text-emerald-400 hover:underline cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-500" />
+                  <span>{language === 'es' ? 'O cotiza directamente al WhatsApp: 322 546 6673' : 'Or chat directly via WhatsApp: +57 322 546 6673'}</span>
+                </a>
               </div>
             </form>
           </div>

@@ -5,10 +5,12 @@ import Hero from '../components/Hero';
 import FeaturedProducts from '../components/FeaturedProducts';
 import LocalDirectorySection from '../components/LocalDirectorySection';
 import CompanyMarquee from '../components/CompanyMarquee';
+import TrustAndSecurity from '../components/TrustAndSecurity';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
 import InvestorRelationsModal from '../components/InvestorRelationsModal';
+import FloatingWhatsApp from '../components/FloatingWhatsApp';
 
 export default function PublicLanding() {
   const [isContactOpen, setIsContactOpen] = useState(false);
@@ -38,6 +40,10 @@ export default function PublicLanding() {
         {/* Directorio Comercial Multi-Municipio & Promociones Activas */}
         <LocalDirectorySection onOpenContact={() => setIsContactOpen(true)} />
 
+        {/* Soluciones, Seguridad & Confianza Empresarial */}
+        <TrustAndSecurity onOpenContact={() => setIsContactOpen(true)} />
+
+        {/* Cierre / Llamado a la Acción */}
         <CallToAction onOpenContact={() => setIsContactOpen(true)} />
       </main>
 
@@ -53,12 +59,15 @@ export default function PublicLanding() {
         onClose={() => setIsContactOpen(false)} 
       />
 
-      {/* 4. Drawer / Modal de Relación con Inversores */}
+      {/* Drawer / Modal de Relación con Inversores */}
       <InvestorRelationsModal
         isOpen={isInvestorOpen}
         onClose={() => setIsInvestorOpen(false)}
         onOpenContact={() => setIsContactOpen(true)}
       />
+
+      {/* Floating Instant WhatsApp Quotation Button */}
+      <FloatingWhatsApp />
     </div>
   );
 }

@@ -1,6 +1,5 @@
-import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Sparkles, MessageSquare, ArrowRight, ShieldCheck, Mail } from 'lucide-react';
+import { Sparkles, MessageSquare, ArrowRight } from 'lucide-react';
 
 export default function CallToAction({ onOpenContact }) {
   const { t } = useLanguage();
@@ -27,21 +26,14 @@ export default function CallToAction({ onOpenContact }) {
             {t.ctaSection.subtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center justify-center">
             <button
               onClick={onOpenContact}
-              className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-semibold text-sm shadow-[0_4px_20px_rgba(99,102,241,0.35)] dark:shadow-[0_0_25px_rgba(99,102,241,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5"
+              className="w-full sm:w-auto px-9 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-semibold text-sm sm:text-base shadow-[0_4px_25px_rgba(99,102,241,0.35)] dark:shadow-[0_0_30px_rgba(99,102,241,0.4)] hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer transform hover:-translate-y-0.5 active:scale-95"
             >
-              <MessageSquare className="w-4 h-4" />
+              <MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>{t.ctaSection.buttonContact}</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={onOpenContact}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white border border-black/10 dark:border-white/10 text-sm font-medium transition-colors cursor-pointer shadow-sm"
-            >
-              <span>{t.ctaSection.buttonPartner}</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
 

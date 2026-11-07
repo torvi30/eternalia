@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import FeaturedProducts from '../components/FeaturedProducts';
 import CompanyMarquee from '../components/CompanyMarquee';
-import TechSpecs from '../components/TechSpecs';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
@@ -51,9 +50,6 @@ export default function PublicLanding() {
 
         {/* Red de Empresas & Clientes - Marquee Infinito de Logos */}
         <CompanyMarquee />
-
-        {/* Especificaciones Corporativas */}
-        <TechSpecs />
 
         <CallToAction onOpenContact={() => setIsContactOpen(true)} />
       </main>

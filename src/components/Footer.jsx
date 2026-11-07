@@ -35,14 +35,11 @@ export default function Footer({ onOpenContact, onOpenInvestors }) {
               {t.footer.brandDesc}
             </p>
 
-            {/* System Status Pill */}
-            <a 
-              href="#infraestructura"
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-900 hover:bg-slate-50 dark:hover:bg-zinc-800 border border-emerald-500/30 text-zinc-700 dark:text-zinc-300 text-xs font-mono transition-colors shadow-sm"
-            >
+            {/* System Operational Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-zinc-900 border border-emerald-500/30 text-zinc-700 dark:text-zinc-300 text-xs font-mono shadow-sm">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{t.footer.systemStatus}</span>
-            </a>
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -64,11 +61,6 @@ export default function Footer({ onOpenContact, onOpenInvestors }) {
               <li>
                 <a href="#empresas" className="hover:text-zinc-900 dark:text-white transition-colors">
                   {language === 'es' ? 'Empresas & Clientes' : 'Client Network'}
-                </a>
-              </li>
-              <li>
-                <a href="#infraestructura" className="hover:text-zinc-900 dark:text-white transition-colors">
-                  {t.nav.statusBtn || "Estado Servidores (SLA)"}
                 </a>
               </li>
               <li>

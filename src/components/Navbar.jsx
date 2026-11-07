@@ -8,7 +8,6 @@ import {
   Menu, 
   X, 
   ArrowUpRight, 
-  Activity, 
   TrendingUp,
   ShieldCheck,
   Mail,
@@ -175,13 +174,6 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                 className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
               >
                 {language === 'es' ? 'Empresas & Clientes' : 'Client Network'}
-              </button>
-
-              <button
-                onClick={() => scrollTo('infraestructura')}
-                className="px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-white rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
-              >
-                {language === 'es' ? 'Seguridad & Servidores' : 'Security & Servers'}
               </button>
             </nav>
 
@@ -394,15 +386,18 @@ export default function Navbar({ onOpenContact, onOpenInvestors }) {
                   </button>
 
                   <button
-                    onClick={() => scrollTo('infraestructura')}
+                    onClick={() => {
+                      setDrawerOpen(false);
+                      onOpenContact();
+                    }}
                     className="p-3 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-zinc-950/70 border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 text-left transition-all cursor-pointer shadow-sm"
                   >
-                    <Activity className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mb-1.5" />
+                    <Mail className="w-4 h-4 text-indigo-600 dark:text-indigo-400 mb-1.5" />
                     <span className="text-xs font-bold text-zinc-900 dark:text-white block">
-                      {language === 'es' ? 'Servidores' : 'Servers'}
+                      {language === 'es' ? 'Contacto' : 'Contact'}
                     </span>
                     <span className="text-[10px] text-zinc-500">
-                      {language === 'es' ? 'Uptime 99.99%' : 'Live Health'}
+                      {language === 'es' ? 'Dirección' : 'Leadership'}
                     </span>
                   </button>
 

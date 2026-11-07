@@ -5,7 +5,6 @@ import Hero from '../components/Hero';
 import FeaturedProducts from '../components/FeaturedProducts';
 import CompanyMarquee from '../components/CompanyMarquee';
 import TechSpecs from '../components/TechSpecs';
-import InfrastructureStatus from '../components/InfrastructureStatus';
 import CallToAction from '../components/CallToAction';
 import Footer from '../components/Footer';
 import ContactModal from '../components/ContactModal';
@@ -55,9 +54,6 @@ export default function PublicLanding() {
 
         {/* Especificaciones Corporativas */}
         <TechSpecs />
-
-        {/* 2. Dashboard de Estado de Servidores en Vivo (Uptime 99.99%) */}
-        <InfrastructureStatus />
 
         <CallToAction onOpenContact={() => setIsContactOpen(true)} />
       </main>

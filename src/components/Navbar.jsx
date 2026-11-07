@@ -9,7 +9,8 @@ import {
   Moon, 
   UtensilsCrossed,
   MapPin,
-  Building2
+  Building2,
+  ShieldCheck
 } from 'lucide-react';
 
 export default function Navbar({ onOpenContact }) {
@@ -90,6 +91,14 @@ export default function Navbar({ onOpenContact }) {
               >
                 <Building2 className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                 <span>{language === 'es' ? 'Empresas & Clientes' : 'Client Network'}</span>
+              </button>
+
+              <button
+                onClick={() => scrollTo('seguridad')}
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 rounded-full hover:bg-black/[0.04] dark:hover:bg-white/[0.06] transition-all cursor-pointer"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span>{language === 'es' ? 'Seguridad' : 'Security'}</span>
               </button>
             </nav>
 

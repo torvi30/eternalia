@@ -41,7 +41,7 @@ export default function PublicLanding() {
         <LocalDirectorySection onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Soluciones, Seguridad & Confianza Empresarial */}
-        <TrustAndSecurity onOpenContact={() => setIsContactOpen(true)} />
+        <TrustAndSecurity />
 
         {/* Cierre / Llamado a la Acción */}
         <CallToAction onOpenContact={() => setIsContactOpen(true)} />

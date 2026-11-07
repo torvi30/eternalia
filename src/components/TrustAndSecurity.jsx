@@ -1,16 +1,14 @@
 import { useLanguage } from '../context/LanguageContext';
 import { 
   ShieldCheck, 
-  Zap, 
   Coins, 
   Headphones, 
   CheckCircle2, 
-  ArrowRight,
   Lock,
   Server
 } from 'lucide-react';
 
-export default function TrustAndSecurity({ onOpenContact }) {
+export default function TrustAndSecurity() {
   const { language } = useLanguage();
 
   const trustPillars = [
@@ -65,7 +63,7 @@ export default function TrustAndSecurity({ onOpenContact }) {
   ];
 
   return (
-    <section className="py-20 relative overflow-hidden bg-slate-100/60 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300">
+    <section id="seguridad" className="py-20 relative overflow-hidden bg-slate-100/60 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300 scroll-mt-20">
       
       {/* Ambient background glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 blur-3xl pointer-events-none rounded-full" />
@@ -93,7 +91,7 @@ export default function TrustAndSecurity({ onOpenContact }) {
         </div>
 
         {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-5xl mx-auto mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 max-w-5xl mx-auto">
           {trustPillars.map((pillar, idx) => {
             const Icon = pillar.icon;
             return (
@@ -141,32 +139,8 @@ export default function TrustAndSecurity({ onOpenContact }) {
           })}
         </div>
 
-        {/* Quick Enterprise Guarantee Banner */}
-        <div className="max-w-4xl mx-auto rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-emerald-500/10 via-cyan-500/10 to-indigo-500/10 border border-emerald-500/25 dark:border-cyan-500/20 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-              <Zap className="w-5 h-5 text-emerald-500 animate-pulse" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-zinc-900 dark:text-white">
-                {language === 'es' ? '¿Quieres ver una demostración en vivo de tu negocio?' : 'Want to see a live demo tailored to your brand?'}
-              </h4>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                {language === 'es' ? 'Te asesoramos en menos de 24 horas y cotizamos la solución a tu medida.' : 'We provide consultation within 24 hours with exact pricing.'}
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={onOpenContact}
-            className="shrink-0 px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-100 text-white dark:text-zinc-900 font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-2 active:scale-95"
-          >
-            <span>{language === 'es' ? 'Hablar con un Asesor' : 'Talk to a Specialist'}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
       </div>
     </section>
   );
 }
+

@@ -45,15 +45,15 @@ export default function Hero() {
             {t.hero.subtitle}
           </p>
 
-          {/* Action CTA: Botón directo a Gastronomía OS (Azul Elegante y Llamativo) */}
+          {/* Action CTA: Botón directo a Gastronomía OS (Compacto, Elegante y Centrado) */}
           <div className="flex justify-center">
             <Link
               to="/restaurantes"
-              className="w-full sm:w-auto relative group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:px-8 sm:py-4 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all duration-300 shadow-[0_4px_25px_rgba(37,99,235,0.4)] hover:shadow-[0_0_35px_rgba(6,182,212,0.6)] transform hover:-translate-y-0.5 cursor-pointer text-sm sm:text-base active:scale-95"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 transition-all duration-200 shadow-[0_4px_20px_rgba(37,99,235,0.35)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transform hover:-translate-y-0.5 cursor-pointer text-xs sm:text-sm active:scale-95"
             >
-              <UtensilsCrossed className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
+              <UtensilsCrossed className="w-3.5 h-3.5 text-cyan-100 group-hover:rotate-12 transition-transform shrink-0" />
               <span>{language === 'es' ? 'Ver Software para Restaurantes' : 'View Restaurant Software'}</span>
-              <ArrowRight className="w-4 h-4 text-cyan-200 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 text-cyan-200 group-hover:translate-x-1 transition-transform shrink-0" />
             </Link>
           </div>
 

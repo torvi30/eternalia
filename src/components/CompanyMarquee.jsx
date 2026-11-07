@@ -100,17 +100,27 @@ export default function CompanyMarquee() {
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-3 sm:mb-4 text-center">
-        {/* Section Title */}
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 dark:text-white tracking-tight mb-1.5 sm:mb-2">
-          {language === 'es' ? 'Comercios Conectados a Nuestra Red' : 'Businesses Connected to Our Network'}
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-4 sm:mb-5 text-center">
+        {/* Section Title (Perfectamente balanceado y centrado sin palabras huérfanas) */}
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-2 text-center text-balance leading-tight">
+          {language === 'es' ? (
+            <>
+              <span className="block sm:inline">Comercios Conectados</span>{' '}
+              <span className="block sm:inline">a Nuestra Red</span>
+            </>
+          ) : (
+            <>
+              <span className="block sm:inline">Businesses Connected</span>{' '}
+              <span className="block sm:inline">to Our Network</span>
+            </>
+          )}
         </h2>
 
         {/* Section Subtitle */}
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto line-clamp-2 sm:line-clamp-none">
+        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md sm:max-w-xl mx-auto text-center text-balance leading-relaxed px-2">
           {language === 'es'
-            ? 'Empresas y comercios locales con landings activas, catálogos digitales interactivos y canales de atención directa sin intermediarios.'
-            : 'Local merchants and brands with active landing pages, digital catalogs, and direct contact channels without middlemen.'}
+            ? 'Empresas y comercios locales con landings activas, catálogos digitales y atención directa sin intermediarios.'
+            : 'Local merchants and brands with active digital catalogs and direct channels without middlemen.'}
         </p>
       </div>
 

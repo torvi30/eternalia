@@ -31,7 +31,7 @@ export default function Hero() {
 
         {/* Hero Headline */}
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] mb-3.5 sm:mb-4">
+          <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.18] sm:leading-[1.12] mb-3 sm:mb-4">
             <span className="text-zinc-900 dark:text-white block font-extrabold transition-colors">
               {t.hero.titlePart1}
             </span>
@@ -41,7 +41,7 @@ export default function Hero() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-xl text-zinc-600 dark:text-zinc-300 max-w-3xl mx-auto leading-relaxed mb-6 sm:mb-7 font-normal transition-colors">
+          <p className="text-xs sm:text-base md:text-lg text-zinc-600 dark:text-zinc-300 max-w-2xl mx-auto leading-relaxed mb-5 sm:mb-6 font-normal transition-colors px-2">
             {t.hero.subtitle}
           </p>
 

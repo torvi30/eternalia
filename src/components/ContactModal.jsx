@@ -134,7 +134,7 @@ export default function ContactModal({ isOpen, onClose }) {
       onClick={onClose}
     >
       <div 
-        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-6 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto cursor-default overscroll-contain"
+        className="relative w-full max-w-lg rounded-3xl bg-white dark:bg-[#121217] text-zinc-900 dark:text-white border border-black/10 dark:border-white/15 p-5 sm:p-8 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto cursor-default overscroll-contain"
         style={{ overscrollBehavior: 'contain' }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -234,7 +234,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 </button>
 
                 {isDropdownOpen && (
-                  <div className="absolute top-full left-0 right-0 mt-1.5 z-30 rounded-2xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 shadow-2xl p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="absolute top-full left-0 right-0 mt-1.5 z-30 rounded-2xl bg-white dark:bg-zinc-900 border border-black/10 dark:border-white/15 shadow-2xl p-1.5 space-y-1 animate-in fade-in slide-in-from-top-2 duration-150 max-h-56 overflow-y-auto">
                     {t.contactModal.form.roles.map((role, idx) => (
                       <button
                         key={idx}

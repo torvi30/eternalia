@@ -316,29 +316,35 @@ export default function RestaurantLanding() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
           {/* Logo & Back Link */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4 overflow-hidden">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-orange-500/50 dark:hover:border-orange-500/50 text-xs sm:text-sm font-bold text-zinc-900 dark:text-white shadow-sm hover:shadow transition-all group cursor-pointer"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-black/10 dark:border-white/10 hover:border-orange-500/50 dark:hover:border-orange-500/50 text-xs sm:text-sm font-bold text-zinc-900 dark:text-white shadow-sm hover:shadow transition-all group cursor-pointer shrink-0"
               title={language === 'es' ? 'Volver a la página principal' : 'Back to main page'}
             >
-              <ArrowLeft className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover:-translate-x-1 transition-transform" />
-              <span>{language === 'es' ? 'Volver al Inicio' : 'Back to Home'}</span>
+              <ArrowLeft className="w-4 h-4 text-orange-600 dark:text-orange-400 group-hover:-translate-x-1 transition-transform shrink-0" />
+              <span>
+                {language === 'es' ? (
+                  <>Volver<span className="hidden sm:inline"> al Inicio</span></>
+                ) : (
+                  <>Back<span className="hidden sm:inline"> to Home</span></>
+                )}
+              </span>
             </Link>
 
             <div className="h-5 w-px bg-zinc-300 dark:bg-zinc-700 hidden sm:block" />
 
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] shadow-sm">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 p-[1.5px] shadow-sm shrink-0">
                 <div className="w-full h-full bg-white dark:bg-[#0e0f16] rounded-[10px] flex items-center justify-center">
                   <UtensilsCrossed className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                 </div>
               </div>
-              <div>
-                <span className="font-extrabold text-sm text-zinc-900 dark:text-white block leading-tight">
+              <div className="truncate">
+                <span className="font-extrabold text-xs sm:text-sm text-zinc-900 dark:text-white block leading-tight truncate">
                   EternalIA <span className="text-orange-600 dark:text-orange-400">Gastronomía OS</span>
                 </span>
-                <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 block -mt-0.5">
+                <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 hidden sm:block -mt-0.5 truncate">
                   Restaurantes &amp; Comidas Rápidas
                 </span>
               </div>
@@ -421,22 +427,22 @@ export default function RestaurantLanding() {
             </div>
 
             {/* Quick trust metrics */}
-            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto text-left font-mono">
-              <div className="p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-xl font-black text-orange-600 dark:text-orange-400 block">0%</span>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Comisiones por ventas</span>
+            <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4 max-w-3xl mx-auto text-left font-mono">
+              <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
+                <span className="text-lg sm:text-xl font-black text-orange-600 dark:text-orange-400 block">0%</span>
+                <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Comisiones por ventas</span>
               </div>
-              <div className="p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 block">&lt; 3s</span>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Comanda en comanderos</span>
+              <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
+                <span className="text-lg sm:text-xl font-black text-emerald-600 dark:text-emerald-400 block">&lt; 3s</span>
+                <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Comanda en comanderos</span>
               </div>
-              <div className="p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-xl font-black text-amber-600 dark:text-amber-400 block">3 en 1</span>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Mesa QR, Takeout, Domicilio</span>
+              <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
+                <span className="text-lg sm:text-xl font-black text-amber-600 dark:text-amber-400 block">3 en 1</span>
+                <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Mesa QR, Takeout, Domicilio</span>
               </div>
-              <div className="p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
-                <span className="text-xl font-black text-cyan-600 dark:text-cyan-400 block">100%</span>
-                <span className="text-[11px] text-zinc-500 dark:text-zinc-400">Responsive Multi-pantalla</span>
+              <div className="p-2.5 sm:p-3 rounded-xl bg-white/80 dark:bg-zinc-900/60 border border-black/5 dark:border-white/10">
+                <span className="text-lg sm:text-xl font-black text-cyan-600 dark:text-cyan-400 block">100%</span>
+                <span className="text-[10px] sm:text-[11px] text-zinc-500 dark:text-zinc-400">Responsive Multi-pantalla</span>
               </div>
             </div>
 
@@ -448,15 +454,15 @@ export default function RestaurantLanding() {
 
               <div className="w-full rounded-2xl overflow-hidden border border-black/15 dark:border-white/15 shadow-2xl bg-zinc-900">
                 <div className="h-7 bg-slate-200 dark:bg-zinc-800 px-3 flex items-center justify-between border-b border-black/10 dark:border-white/10">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 shrink-0">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
                     <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                   </div>
-                  <span className="text-[10px] font-mono text-zinc-500 truncate">
+                  <span className="text-[10px] font-mono text-zinc-500 truncate mx-2 max-w-[240px] sm:max-w-none">
                     🔒 https://restaurant.eternalia.co/admin/pedidos
                   </span>
-                  <span className="text-[10px] text-emerald-500 font-mono font-bold">1920 x 1080 Full HD</span>
+                  <span className="text-[10px] text-emerald-500 font-mono font-bold hidden sm:inline shrink-0">1920 x 1080 Full HD</span>
                 </div>
                 <div className="relative aspect-[16/9] bg-zinc-950 overflow-hidden">
                   <img

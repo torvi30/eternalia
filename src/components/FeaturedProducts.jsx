@@ -233,8 +233,8 @@ export default function FeaturedProducts({ onOpenContact }) {
 
           <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
             {language === 'es'
-              ? 'Plataformas SaaS de alto rendimiento para el sector gastronómico. Explora los 5 módulos reales en vista de escritorio que transforman la operación de restaurantes y comidas rápidas.'
-              : 'High-performance SaaS platforms for the gastronomy industry. Explore the 5 real desktop modules transforming restaurant and fast-food operations.'}
+              ? 'Plataformas SaaS de alto rendimiento para el sector gastronómico. Explora los módulos reales en vista de escritorio que transforman la operación de restaurantes y comidas rápidas.'
+              : 'High-performance SaaS platforms for the gastronomy industry. Explore the real desktop modules transforming restaurant and fast-food operations.'}
           </p>
         </div>
 
@@ -251,7 +251,9 @@ export default function FeaturedProducts({ onOpenContact }) {
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   {language === 'es' ? 'Producto Disponible • En Producción' : 'Live Product • In Production'}
                 </span>
-                <span className="text-xs font-mono text-orange-600 dark:text-orange-400 font-bold">5 Módulos Activos</span>
+                <span className="text-xs font-mono text-orange-600 dark:text-orange-400 font-bold">
+                  {desktopScreens.length} {language === 'es' ? 'Módulos Activos' : 'Active Modules'}
+                </span>
               </div>
 
               <div>

@@ -97,11 +97,11 @@ export default function CompanyMarquee() {
   };
 
   return (
-    <section id="empresas" className="py-20 relative overflow-hidden scroll-mt-20">
+    <section id="empresas" className="pt-4 pb-14 md:pt-6 md:pb-16 relative overflow-hidden scroll-mt-20">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-10 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-7 text-center">
         {/* Section Badge */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3.5">
           <Building2 className="w-3.5 h-3.5" />

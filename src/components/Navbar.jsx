@@ -83,6 +83,14 @@ export default function Navbar({ onOpenContact }) {
             {/* Desktop Navigation Links (Azul Elegante y Corporativo) */}
             <nav className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100/90 dark:bg-zinc-900/80 border border-black/10 dark:border-white/10 backdrop-blur-md shadow-sm">
               <button
+                onClick={() => scrollTo('empresas')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-400 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
+              >
+                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
+                <span>{language === 'es' ? 'Empresas & Clientes' : 'Client Network'}</span>
+              </button>
+
+              <button
                 onClick={() => scrollTo('productos-disponibles')}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.35)] transition-all cursor-pointer active:scale-95"
               >
@@ -96,14 +104,6 @@ export default function Navbar({ onOpenContact }) {
               >
                 <MapPin className="w-3.5 h-3.5 text-cyan-500" />
                 <span>{language === 'es' ? 'Directorio Comercial' : 'Commercial Directory'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('empresas')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-400 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all cursor-pointer"
-              >
-                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Empresas & Clientes' : 'Client Network'}</span>
               </button>
 
               <button
@@ -168,6 +168,14 @@ export default function Navbar({ onOpenContact }) {
           >
             <div className="flex items-center gap-1.5 pb-0.5 px-0.5 min-w-max">
               <button
+                onClick={() => scrollTo('empresas')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
+              >
+                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
+                <span>{language === 'es' ? 'Empresas & Clientes' : 'Empresas'}</span>
+              </button>
+
+              <button
                 onClick={() => scrollTo('productos-disponibles')}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-[0_0_12px_rgba(37,99,235,0.35)] shrink-0 active:scale-95 cursor-pointer"
               >
@@ -181,14 +189,6 @@ export default function Navbar({ onOpenContact }) {
               >
                 <MapPin className="w-3.5 h-3.5 text-cyan-500" />
                 <span>{language === 'es' ? 'Directorio Comercial' : 'Directorio'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('empresas')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100/90 dark:bg-zinc-900/90 border border-black/10 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
-              >
-                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Empresas & Clientes' : 'Empresas'}</span>
               </button>
 
               <button

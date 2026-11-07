@@ -3,7 +3,6 @@ import { useLanguage } from '../context/LanguageContext';
 import { directoryCompanies as defaultCompanies } from '../data/companiesData';
 import { fetchDirectoryCompaniesFromEndpoint } from '../services/businessService';
 import { 
-  Building2, 
   ArrowUpRight, 
   Sparkles
 } from 'lucide-react';
@@ -97,24 +96,18 @@ export default function CompanyMarquee() {
   };
 
   return (
-    <section id="empresas" className="pt-4 pb-14 md:pt-6 md:pb-16 relative overflow-hidden scroll-mt-20">
+    <section id="empresas" className="pt-0 pb-8 md:pb-12 relative overflow-hidden scroll-mt-24">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-7 text-center">
-        {/* Section Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3.5">
-          <Building2 className="w-3.5 h-3.5" />
-          <span>{language === 'es' ? 'RED DE COMERCIOS & EMPRESAS' : 'BUSINESS & MERCHANT NETWORK'}</span>
-        </div>
-
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-3 sm:mb-4 text-center">
         {/* Section Title */}
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-zinc-900 dark:text-white tracking-tight mb-1.5 sm:mb-2">
           {language === 'es' ? 'Comercios Conectados a Nuestra Red' : 'Businesses Connected to Our Network'}
         </h2>
 
         {/* Section Subtitle */}
-        <p className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 max-w-2xl mx-auto">
+        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto line-clamp-2 sm:line-clamp-none">
           {language === 'es'
             ? 'Empresas y comercios locales con landings activas, catálogos digitales interactivos y canales de atención directa sin intermediarios.'
             : 'Local merchants and brands with active landing pages, digital catalogs, and direct contact channels without middlemen.'}
@@ -122,7 +115,7 @@ export default function CompanyMarquee() {
       </div>
 
       {/* Marquee Full-Width Stage with Lateral Fade Gradients */}
-      <div className="relative w-full overflow-hidden marquee-container py-3">
+      <div className="relative w-full overflow-hidden marquee-container py-2">
         {/* Left Fade Gradient Mask */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-36 md:w-48 bg-gradient-to-r from-slate-50 dark:from-[#09090b] to-transparent z-20" />
 

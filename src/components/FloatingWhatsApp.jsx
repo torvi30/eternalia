@@ -25,7 +25,7 @@ export default function FloatingWhatsApp() {
   }, []);
 
   return (
-    <aside aria-label={language === 'es' ? 'Canal de WhatsApp' : 'WhatsApp Contact'} className="fixed bottom-6 right-6 z-40 flex items-end gap-3 select-none">
+    <aside aria-label={language === 'es' ? 'Canal de WhatsApp' : 'WhatsApp Contact'} className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40 flex items-end gap-2.5 sm:gap-3 select-none">
       
       {/* Interactive Tooltip Card */}
       {showTooltip && !isDismissed && (
@@ -60,16 +60,16 @@ export default function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={language === 'es' ? 'Chatear por WhatsApp para cotización inmediata' : 'Chat on WhatsApp for instant quote'}
-        className="relative group w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-[0_4px_25px_rgba(16,185,129,0.4)] hover:shadow-[0_0_35px_rgba(16,185,129,0.65)] transform hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+        className="relative group w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr from-emerald-600 via-emerald-500 to-teal-400 text-white flex items-center justify-center shadow-[0_4px_25px_rgba(16,185,129,0.4)] hover:shadow-[0_0_35px_rgba(16,185,129,0.65)] transform hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer touch-manipulation"
       >
         {/* Subtle pulsating outer ring */}
         <span className="absolute -inset-1 rounded-full bg-emerald-500/30 animate-ping pointer-events-none" />
 
         {/* Online Status Badge */}
-        <span className="absolute top-0 right-0 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-white dark:border-zinc-950 shadow-sm" />
+        <span className="absolute top-0 right-0 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-emerald-400 border-2 border-white dark:border-zinc-950 shadow-sm" />
 
         {/* WhatsApp Icon */}
-        <MessageCircle className="w-7 h-7 fill-white/20 text-white transform group-hover:rotate-12 transition-transform duration-300" />
+        <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 fill-white/20 text-white transform group-hover:rotate-12 transition-transform duration-300" />
       </a>
 
     </aside>

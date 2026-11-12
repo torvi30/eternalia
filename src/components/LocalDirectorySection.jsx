@@ -175,7 +175,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
   return (
     <section
       id="directorio-local"
-      className="py-20 relative overflow-hidden bg-slate-50/80 dark:bg-[#07080c] transition-colors duration-300 border-t border-black/5 dark:border-white/5 scroll-mt-16"
+      className="py-12 sm:py-20 relative overflow-hidden bg-slate-50/80 dark:bg-[#07080c] transition-colors duration-300 border-t border-black/5 dark:border-white/5 scroll-mt-16"
     >
       {/* Glow ambient background */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-b from-indigo-500/10 via-amber-500/10 to-transparent blur-3xl pointer-events-none" />
@@ -183,19 +183,19 @@ export default function LocalDirectorySection({ onOpenContact }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* 1. SECTION HEADER */}
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold tracking-wider uppercase mb-3">
             <MapPin className="w-3.5 h-3.5" />
             <span>{language === 'es' ? 'VITRINA LOCAL POR MUNICIPIO' : 'LOCAL TOWN SHOWCASE'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-3 sm:mb-4 text-balance">
             {language === 'es'
               ? 'Directorio Comercial & Promociones en Vivo'
               : 'Local Directory & Live Promotions'}
           </h2>
 
-          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance px-2">
             {language === 'es'
               ? 'Cada negocio conectado cuenta con su perfil oficial en el directorio de su pueblo: ubicación en Google Maps, redes sociales, horarios sincronizados y anuncios personalizados a su medida.'
               : 'Every connected business gets its verified profile in their town directory: Google Maps location, social channels, live hours, and custom promotions tailored to their needs.'}
@@ -231,7 +231,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
         </div>
 
         {/* 2. SHOWCASE CONTAINER (MATCHING RESTAURANT SHOWCASE DESIGN) */}
-        <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl overflow-hidden relative">
+        <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/15 p-4 sm:p-8 md:p-10 shadow-2xl overflow-hidden relative">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
@@ -249,7 +249,7 @@ export default function LocalDirectorySection({ onOpenContact }) {
               </div>
 
               <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-white leading-tight mb-2">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-zinc-900 dark:text-white leading-tight mb-2">
                   {language === 'es' ? currentScreen.labelEs : currentScreen.labelEn}
                 </h3>
                 <p className="text-sm text-zinc-600 dark:text-zinc-300 font-medium leading-relaxed">

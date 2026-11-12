@@ -55,7 +55,7 @@ export default function TrustAndSecurity() {
   ];
 
   return (
-    <section id="seguridad" className="py-20 relative overflow-hidden bg-slate-50 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300 scroll-mt-20">
+    <section id="seguridad" className="py-12 sm:py-20 relative overflow-hidden bg-slate-50 dark:bg-[#07080b] border-t border-black/5 dark:border-white/5 transition-colors duration-300 scroll-mt-20">
       
       {/* Elegant ambient aura */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-r from-blue-600/15 via-indigo-600/10 to-cyan-500/15 blur-3xl pointer-events-none rounded-full" />
@@ -63,19 +63,19 @@ export default function TrustAndSecurity() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3">
             <ShieldCheck className="w-3.5 h-3.5 text-cyan-500" />
             <span>{language === 'es' ? 'RESPALDO, ESTÁNDARES Y CONFIANZA' : 'SECURITY, STANDARDS & TRUST'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-3 sm:mb-4 text-balance">
             {language === 'es' 
               ? 'Tu Negocio Seguro, Estable y 100% Bajo tu Control' 
               : 'Your Business Safe, Always Online & Truly Yours'}
           </h2>
 
-          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance px-2">
             {language === 'es'
               ? 'Construimos tecnología para que vendas más y te preocupes menos. Sin comisiones abusivas, sin caídas inesperadas y con respaldo técnico de primer nivel.'
               : 'Designed to help you sell more without headaches. No commission cuts, zero unexpected outages, and direct human engineering backing your operations.'}

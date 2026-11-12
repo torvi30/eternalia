@@ -30,4 +30,5 @@ Cada ADR sigue un formato estándar:
 | [ADR-0001](0001-coautor-jsdnlb-en-commits.md) | Coautor obligatorio `jsdnlb` en todos los commits | **Aceptado** | 2026-11-06 |
 | [ADR-0002](0002-sistema-diseno-light-mode-estrategia-seo-agente-experto.md) | Sistema de Diseño Dual (Dark/Light Mode), SEO y Agente Experto | **Aceptado** | 2026-11-06 |
 | [ADR-0003](0003-planes-especificaciones-tareas-unificados.md) | Planes, Especificaciones y Tareas Unificadas en un Solo Archivo | **Aceptado** | 2026-11-06 |
+| [ADR-0004](0004-diseno-mobile-first-agente-experto.md) | Estándar de Arquitectura Mobile-First y Rol de Agente Experto en Experiencia Móvil | **Aceptado** | 2026-11-12 |
 

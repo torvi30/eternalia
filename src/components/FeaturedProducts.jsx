@@ -214,24 +214,24 @@ export default function FeaturedProducts({ onOpenContact }) {
   };
 
   return (
-    <section id="productos-disponibles" className="py-24 relative overflow-hidden scroll-mt-20">
+    <section id="productos-disponibles" className="py-12 sm:py-20 md:py-24 relative overflow-hidden scroll-mt-20">
       {/* Background ambient decorative glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-blue-500/10 via-indigo-500/5 to-cyan-500/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-blue-700 dark:text-cyan-400 text-xs font-bold tracking-wider uppercase mb-3">
             <Sparkles className="w-3.5 h-3.5" />
             <span>{language === 'es' ? 'PRODUCTOS & SOFTWARE LISTOS PARA DESPLIEGUE' : 'READY-TO-DEPLOY SOFTWARE PRODUCTS'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-3 sm:mb-4 text-balance">
             {language === 'es' ? 'Productos Disponibles de EternalIA' : 'Available EternalIA Products'}
           </h2>
 
-          <p className="text-zinc-600 dark:text-zinc-400 text-base sm:text-lg leading-relaxed">
+          <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base md:text-lg leading-relaxed text-balance px-2">
             {language === 'es'
               ? 'Plataformas SaaS de alto rendimiento para el sector gastronómico. Explora los módulos reales en vista de escritorio que transforman la operación de restaurantes y comidas rápidas.'
               : 'High-performance SaaS platforms for the gastronomy industry. Explore the real desktop modules transforming restaurant and fast-food operations.'}
@@ -239,7 +239,7 @@ export default function FeaturedProducts({ onOpenContact }) {
         </div>
 
         {/* Featured Product Banner Card */}
-        <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-3xl border border-black/10 dark:border-white/15 p-6 sm:p-10 shadow-2xl overflow-hidden relative">
+        <div className="bg-gradient-to-b from-white to-slate-50 dark:from-[#0e0f17] dark:to-[#090a10] rounded-2xl sm:rounded-3xl border border-black/10 dark:border-white/15 p-4 sm:p-8 md:p-10 shadow-2xl overflow-hidden relative">
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 

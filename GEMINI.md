@@ -26,3 +26,12 @@
   3. Desglose de Tareas Accionables (checklist interactivo `[ ]` / `[x]`).
 - **Seguimiento Activo**: Las tareas deben actualizarse a `[x]` a medida que se implemente la solución.
 
+## Regla de Arquitectura y Experiencia Móvil (ADR-0004)
+- **Rol Mandatario `mobile-experience-specialist`**: Todo agente o desarrollador que modifique elementos de la interfaz de usuario debe asumir una postura crítica y rigurosa sobre la experiencia móvil antes de aprobar cualquier cambio.
+- **Checklist Crítico Obligatorio**:
+  1. *Cero Desbordamiento Horizontal*: Compatibilidad estricta desde 320px hasta 430px y superiores.
+  2. *Tipografía y Text-Balance*: Títulos proporcionados (`text-2xl` a `text-3xl` en móvil), sin palabras huérfanas en saltos de línea.
+  3. *Ergonomía Táctil*: Zonas de toque y botones con área mínima de 44x44px y feedback táctil inmediato (`active:scale-95`).
+  4. *Densidad Visual Saludable*: Espaciados verticales reducidos en móvil (`py-12 sm:py-20 md:py-24`) para evitar fatiga de scroll.
+  5. *Separación de Idiomas*: Copy visible en español profesional y código/identificadores en inglés.
+

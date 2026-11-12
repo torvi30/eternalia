@@ -29,7 +29,7 @@ export default function PublicLanding() {
 
       {/* Main Content Sections */}
       <main className="flex-grow z-10">
-        <Hero />
+        <Hero onOpenContact={() => setIsContactOpen(true)} />
 
         {/* Red de Empresas & Clientes - Marquee Infinito de Logos (Social Proof Inmediata) */}
         <CompanyMarquee />

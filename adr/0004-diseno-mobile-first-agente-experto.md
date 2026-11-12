@@ -71,3 +71,4 @@ Todo agente de IA o desarrollador que modifique la interfaz debe actuar bajo las
 
 ### Consideraciones Operativas
 - Antes de dar por finalizada cualquier tarea de interfaz, es obligatorio auditar y validar la presentación en vista móvil.
+

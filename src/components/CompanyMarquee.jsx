@@ -32,14 +32,23 @@ export default function CompanyMarquee() {
     return (clean[0][0] + clean[1][0]).toUpperCase();
   };
 
-  // Dividir equitativamente en 2 filas continuas
+  // Dividir equitativamente en filas
   const half = Math.ceil(businesses.length / 2);
   const firstRow = businesses.slice(0, half);
   const secondRow = businesses.slice(half);
 
+  // Tercera fila exclusiva para vista móvil (< md)
+  const third = Math.ceil(businesses.length / 3);
+  const mobileThirdRow = businesses.slice(third * 2);
+
   // Duplicar para animación infinita sin saltos
   const row1Items = [...firstRow, ...firstRow, ...firstRow];
   const row2Items = [...secondRow, ...secondRow, ...secondRow];
+  const row3Items = [
+    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses),
+    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses),
+    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses)
+  ];
 
   const renderCard = (biz, uniqueKey) => {
     const hasValidLogo = biz.logo && !imageErrors[biz.id];
@@ -77,17 +86,17 @@ export default function CompanyMarquee() {
         {/* Business Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between gap-1 mb-0.5">
-            <h4 className="text-sm font-bold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors truncate">
+            <h4 className="text-sm sm:text-base font-extrabold text-zinc-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors truncate">
               {biz.name}
             </h4>
             <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
           </div>
 
-          <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-black/5 dark:border-white/5 mb-1 truncate max-w-full">
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-black/5 dark:border-white/5 mb-1 truncate max-w-full">
             {category}
           </span>
 
-          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate font-medium">
             📍 {location}
           </p>
         </div>
@@ -96,13 +105,13 @@ export default function CompanyMarquee() {
   };
 
   return (
-    <section id="empresas" className="pt-0 pb-8 md:pb-12 relative overflow-hidden scroll-mt-24">
+    <section id="empresas" className="pt-0 pb-8 md:pb-12 relative overflow-hidden scroll-mt-28 sm:scroll-mt-32">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-3xl pointer-events-none" />
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-4 sm:mb-5 text-center">
-        {/* Section Title (Perfectamente balanceado y centrado sin palabras huérfanas) */}
-        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-zinc-900 dark:text-white tracking-tight mb-2 text-center text-balance leading-tight">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-5 sm:mb-6 text-center">
+        {/* Section Title (Mayor tamaño, perfectamente balanceado y centrado) */}
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-2.5 sm:mb-3 text-center text-balance leading-tight">
           {language === 'es' ? (
             <>
               <span className="block sm:inline">Comercios Conectados</span>{' '}
@@ -117,7 +126,7 @@ export default function CompanyMarquee() {
         </h2>
 
         {/* Section Subtitle */}
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-md sm:max-w-xl mx-auto text-center text-balance leading-relaxed px-2">
+        <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 max-w-md sm:max-w-2xl mx-auto text-center text-balance leading-relaxed px-2">
           {language === 'es'
             ? 'Empresas y comercios locales con landings activas, catálogos digitales y atención directa sin intermediarios.'
             : 'Local merchants and brands with active digital catalogs and direct channels without middlemen.'}
@@ -133,16 +142,23 @@ export default function CompanyMarquee() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 dark:from-[#09090b] to-transparent z-20" />
 
         {/* Row 1: Moving Right to Left */}
-        <div className="flex mb-4">
+        <div className="flex mb-3 sm:mb-4">
           <div className="marquee-track">
             {row1Items.map((biz, index) => renderCard(biz, `row1-${biz.id}-${index}`))}
           </div>
         </div>
 
         {/* Row 2: Moving Left to Right */}
-        <div className="flex">
+        <div className="flex mb-3 md:mb-0">
           <div className="marquee-track-reverse">
             {row2Items.map((biz, index) => renderCard(biz, `row2-${biz.id}-${index}`))}
+          </div>
+        </div>
+
+        {/* Row 3: Tercera línea de movimiento exclusiva para dispositivos móviles (< md) */}
+        <div className="flex md:hidden">
+          <div className="marquee-track">
+            {row3Items.map((biz, index) => renderCard(biz, `row3-${biz.id}-${index}`))}
           </div>
         </div>
       </div>

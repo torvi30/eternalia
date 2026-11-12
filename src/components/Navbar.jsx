@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useTheme } from '../context/ThemeContext';
@@ -19,18 +19,84 @@ export default function Navbar({ onOpenContact }) {
   const { language, toggleLanguage } = useLanguage();
   const { isDark, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+  const navItems = [
+    {
+      id: 'empresas',
+      icon: Building2,
+      labelEs: 'Empresas & Clientes',
+      shortLabelEs: 'Empresas',
+      labelEn: 'Client Network',
+      shortLabelEn: 'Companies',
+      iconColor: 'text-blue-500 dark:text-cyan-400'
+    },
+    {
+      id: 'productos-disponibles',
+      icon: UtensilsCrossed,
+      labelEs: 'Restaurantes OS',
+      shortLabelEs: 'Restaurantes OS',
+      labelEn: 'Restaurants OS',
+      shortLabelEn: 'Restaurants',
+      badge: 'Pro',
+      iconColor: 'text-cyan-400'
+    },
+    {
+      id: 'directorio-local',
+      icon: MapPin,
+      labelEs: 'Directorio Comercial',
+      shortLabelEs: 'Directorio',
+      labelEn: 'Commercial Directory',
+      shortLabelEn: 'Directory',
+      iconColor: 'text-cyan-500'
+    },
+    {
+      id: 'seguridad',
+      icon: ShieldCheck,
+      labelEs: 'Seguridad & SLA',
+      shortLabelEs: 'Seguridad',
+      labelEn: 'Security & SLA',
+      shortLabelEn: 'Security',
+      iconColor: 'text-indigo-500 dark:text-cyan-400'
+    }
+  ];
+
+  // Dynamic Scrollspy: detects which section is currently active in viewport
+  const handleScrollSpy = useCallback(() => {
+    setScrolled(window.scrollY > 20);
+
+    const sectionIds = ['empresas', 'productos-disponibles', 'directorio-local', 'seguridad'];
+    let visibleSection = '';
+
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        // If the top of the section enters the upper 45% of the viewport and its bottom is still visible
+        if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= 110) {
+          visibleSection = id;
+        }
+      }
+    }
+
+    if (visibleSection) {
+      setActiveSection(visibleSection);
+    } else if (window.scrollY < 260) {
+      setActiveSection('');
+    }
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollSpy, { passive: true });
+    handleScrollSpy();
+    return () => window.removeEventListener('scroll', handleScrollSpy);
+  }, [handleScrollSpy]);
+
   const scrollTo = (id) => {
+    setActiveSection(id);
+
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
@@ -63,6 +129,7 @@ export default function Navbar({ onOpenContact }) {
             {/* 1. Logotipo Corporativo Eternalia */}
             <Link 
               to="/" 
+              onClick={() => setActiveSection('')}
               className="flex items-center gap-2.5 sm:gap-3 group shrink-0 focus:outline-none"
               aria-label="Eternalia Inicio"
             >
@@ -87,42 +154,33 @@ export default function Navbar({ onOpenContact }) {
               </div>
             </Link>
 
-            {/* 2. Desktop Navigation Menu (Estilo Enterprise Horizon) */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-2 px-3 py-1.5 rounded-full bg-slate-100/80 dark:bg-zinc-900/80 border border-slate-200/60 dark:border-white/10 backdrop-blur-md shadow-inner">
-              <button
-                onClick={() => scrollTo('empresas')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-300 rounded-full hover:bg-white dark:hover:bg-zinc-800 transition-all cursor-pointer"
-              >
-                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Empresas & Clientes' : 'Client Network'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('productos-disponibles')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.35)] transition-all cursor-pointer active:scale-95"
-              >
-                <UtensilsCrossed className="w-3.5 h-3.5 text-cyan-200" />
-                <span>{language === 'es' ? 'Restaurantes OS' : 'Restaurants OS'}</span>
-                <span className="text-[9px] font-black uppercase px-1.5 py-0.2 bg-white/20 rounded-full text-white ml-0.5">
-                  Pro
-                </span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('directorio-local')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-300 rounded-full hover:bg-white dark:hover:bg-zinc-800 transition-all cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-cyan-500" />
-                <span>{language === 'es' ? 'Directorio Comercial' : 'Commercial Directory'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('seguridad')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-300 rounded-full hover:bg-white dark:hover:bg-zinc-800 transition-all cursor-pointer"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Seguridad & SLA' : 'Security & SLA'}</span>
-              </button>
+            {/* 2. Desktop Navigation Menu (Scrollspy + Clic Activo Dinámico) */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 px-3 py-1.5 rounded-full bg-slate-100/80 dark:bg-zinc-900/80 border border-slate-200/60 dark:border-white/10 backdrop-blur-md shadow-inner">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full transition-all duration-200 cursor-pointer active:scale-95 ${
+                      isActive
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-[0_0_15px_rgba(37,99,235,0.35)]'
+                        : 'font-semibold text-zinc-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-cyan-300 hover:bg-white dark:hover:bg-zinc-800'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-200' : item.iconColor}`} />
+                    <span>{language === 'es' ? item.labelEs : item.labelEn}</span>
+                    {item.badge && (
+                      <span className={`text-[9px] font-black uppercase px-1.5 py-0.2 rounded-full ml-0.5 ${
+                        isActive ? 'bg-white/20 text-white' : 'bg-blue-500/10 text-blue-600 dark:text-cyan-400'
+                      }`}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
             </nav>
 
             {/* 3. Acciones Enterprise: Asesor + Demo + Switches */}
@@ -180,43 +238,30 @@ export default function Navbar({ onOpenContact }) {
 
           </div>
 
-          {/* 4. Mobile Navigation Rail (Accesible sin menús hamburguesa ocultos) */}
+          {/* 4. Mobile Navigation Rail (Scrollspy y Clic Activo Dinámico) */}
           <nav 
             aria-label="Navegación móvil rápida"
             className="lg:hidden mt-2 pt-2 border-t border-slate-200/60 dark:border-white/[0.06] overflow-x-auto no-scrollbar"
           >
             <div className="flex items-center gap-1.5 pb-0.5 px-0.5 min-w-max">
-              <button
-                onClick={() => scrollTo('empresas')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
-              >
-                <Building2 className="w-3.5 h-3.5 text-blue-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Empresas' : 'Companies'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('productos-disponibles')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-sm shrink-0 active:scale-95 cursor-pointer"
-              >
-                <UtensilsCrossed className="w-3.5 h-3.5 text-cyan-200" />
-                <span>{language === 'es' ? 'Restaurantes OS' : 'Restaurants'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('directorio-local')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
-              >
-                <MapPin className="w-3.5 h-3.5 text-cyan-500" />
-                <span>{language === 'es' ? 'Directorio' : 'Directory'}</span>
-              </button>
-
-              <button
-                onClick={() => scrollTo('seguridad')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/10 rounded-full shrink-0 active:scale-95 cursor-pointer"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-500 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Seguridad' : 'Security'}</span>
-              </button>
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full shrink-0 active:scale-95 transition-all duration-200 cursor-pointer ${
+                      isActive
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold shadow-[0_0_12px_rgba(37,99,235,0.4)] border border-blue-500/30'
+                        : 'font-semibold text-zinc-700 dark:text-zinc-200 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-white/10 hover:bg-slate-200 dark:hover:bg-zinc-800'
+                    }`}
+                  >
+                    <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-cyan-200' : item.iconColor}`} />
+                    <span>{language === 'es' ? item.shortLabelEs : item.shortLabelEn}</span>
+                  </button>
+                );
+              })}
             </div>
           </nav>
 

@@ -11,7 +11,7 @@ import {
   MapPin,
   Building2,
   ShieldCheck,
-  Headphones,
+  HelpCircle,
   Sparkles
 } from 'lucide-react';
 
@@ -216,13 +216,13 @@ export default function Navbar({ onOpenContact }) {
                 <span className={language === 'en' ? 'text-zinc-900 dark:text-white font-bold' : 'text-zinc-500'}>EN</span>
               </button>
 
-              {/* Botón Secundario Enterprise: Hablar con Asesor */}
+              {/* Botón Secundario Enterprise: Déjanos tus dudas */}
               <button
                 onClick={onOpenContact}
                 className="hidden md:inline-flex items-center gap-1.5 px-3.5 h-8 sm:h-9 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-bold transition-all shadow-sm cursor-pointer active:scale-95"
               >
-                <Headphones className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
-                <span>{language === 'es' ? 'Hablar con Asesor' : 'Talk to Advisor'}</span>
+                <HelpCircle className="w-3.5 h-3.5 text-blue-600 dark:text-cyan-400" />
+                <span>{language === 'es' ? 'Déjanos tus dudas' : 'Ask Questions'}</span>
               </button>
 
               {/* Botón Primario Enterprise: Comenzar / Solicitar Demo */}

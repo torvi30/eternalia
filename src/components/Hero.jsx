@@ -4,7 +4,7 @@ import { useLanguage } from '../context/LanguageContext';
 import { 
   ArrowRight, 
   UtensilsCrossed,
-  Headphones,
+  HelpCircle,
   Sparkles,
   ShieldCheck,
   Zap,
@@ -106,13 +106,13 @@ export default function Hero({ onOpenContact }) {
               <ArrowRight className="w-4 h-4 text-cyan-200 group-hover:translate-x-1 transition-transform shrink-0" />
             </Link>
 
-            {/* Secondary Action Button: Contacto Directo con Asesor */}
+            {/* Secondary Action Button: Déjanos tus dudas */}
             <button
               onClick={onOpenContact}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-zinc-800 dark:text-zinc-200 bg-white dark:bg-zinc-900/90 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-700 shadow-sm hover:shadow transition-all duration-200 cursor-pointer text-xs sm:text-sm active:scale-95"
             >
-              <Headphones className="w-4 h-4 text-blue-600 dark:text-cyan-400 shrink-0" />
-              <span>{language === 'es' ? 'Hablar con un Asesor' : 'Talk to an Advisor'}</span>
+              <HelpCircle className="w-4 h-4 text-blue-600 dark:text-cyan-400 shrink-0" />
+              <span>{language === 'es' ? 'Déjanos tus dudas' : 'Send Us Your Questions'}</span>
             </button>
           </div>
 

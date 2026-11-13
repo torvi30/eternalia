@@ -49,8 +49,8 @@ export default function Hero({ onOpenContact }) {
   return (
     <section className="relative pt-24 pb-12 sm:pt-28 md:pt-32 md:pb-16 overflow-hidden">
       
-      {/* Background Ambient Radial Auras */}
-      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[750px] sm:w-[950px] h-[450px] bg-gradient-to-tr from-blue-600/15 via-indigo-500/10 to-cyan-400/15 blur-[120px] pointer-events-none rounded-full" />
+      {/* Background Ambient Radial Auras - Optimized for mobile memory */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[350px] sm:w-[950px] h-[300px] sm:h-[450px] bg-gradient-to-tr from-blue-600/15 via-indigo-500/10 to-cyan-400/15 blur-[60px] sm:blur-[120px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -250,6 +250,7 @@ export default function Hero({ onOpenContact }) {
                   alt={currentPreview.labelEs}
                   className="w-full h-full object-cover object-top transition-all duration-500 transform group-hover:scale-[1.01]"
                   loading="eager"
+                  decoding="async"
                 />
 
                 {/* Corner Quick Action Overlay */}

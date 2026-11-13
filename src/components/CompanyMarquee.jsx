@@ -13,16 +13,22 @@ export default function CompanyMarquee() {
   const [imageErrors, setImageErrors] = useState({});
 
   useEffect(() => {
+    let isMounted = true;
     // Consulta en vivo el endpoint de auth-foundattion para sincronizar logos y nombres
-    fetchDirectoryCompaniesFromEndpoint().then((liveData) => {
-      if (liveData && liveData.length > 0) {
-        setBusinesses(liveData);
-      }
-    });
+    fetchDirectoryCompaniesFromEndpoint()
+      .then((liveData) => {
+        if (isMounted && liveData && liveData.length > 0) {
+          setBusinesses(liveData);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleImageError = (id) => {
-    setImageErrors((prev) => ({ ...prev, [id]: true }));
+    setImageErrors((prev) => (prev[id] ? prev : { ...prev, [id]: true }));
   };
 
   const getInitials = (name) => {
@@ -32,22 +38,27 @@ export default function CompanyMarquee() {
     return (clean[0][0] + clean[1][0]).toUpperCase();
   };
 
-  // Dividir equitativamente en filas
+  // Dividir equitativamente para Escritorio (2 filas de ~10-11 items)
   const half = Math.ceil(businesses.length / 2);
-  const firstRow = businesses.slice(0, half);
-  const secondRow = businesses.slice(half);
+  const desktopRow1 = businesses.slice(0, half);
+  const desktopRow2 = businesses.slice(half);
 
-  // Tercera fila exclusiva para vista móvil (< md)
+  // Dividir equitativamente en 3 tercios para Móvil (3 filas de ~7 items)
   const third = Math.ceil(businesses.length / 3);
-  const mobileThirdRow = businesses.slice(third * 2);
+  const mobileRow1 = businesses.slice(0, third);
+  const mobileRow2 = businesses.slice(third, third * 2);
+  const mobileRow3 = businesses.slice(third * 2);
 
-  // Duplicar para animación infinita sin saltos
-  const row1Items = [...firstRow, ...firstRow, ...firstRow];
-  const row2Items = [...secondRow, ...secondRow, ...secondRow];
-  const row3Items = [
-    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses),
-    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses),
-    ...(mobileThirdRow.length > 0 ? mobileThirdRow : businesses)
+  // Duplicar exactamente 2x para un bucle continuo matemáticamente óptimo (-50% translation)
+  // En móvil: 14 tarjetas por fila (~4.200px), dentro del límite seguro de textura GPU en iOS Safari
+  const desktopRow1Items = [...desktopRow1, ...desktopRow1];
+  const desktopRow2Items = [...desktopRow2, ...desktopRow2];
+
+  const mobileRow1Items = [...mobileRow1, ...mobileRow1];
+  const mobileRow2Items = [...mobileRow2, ...mobileRow2];
+  const mobileRow3Items = [
+    ...(mobileRow3.length > 0 ? mobileRow3 : businesses),
+    ...(mobileRow3.length > 0 ? mobileRow3 : businesses)
   ];
 
   const renderCard = (biz, uniqueKey) => {
@@ -72,6 +83,7 @@ export default function CompanyMarquee() {
                 src={biz.logo}
                 alt={biz.name}
                 loading="lazy"
+                decoding="async"
                 onError={() => handleImageError(biz.id)}
                 className="w-full h-full object-contain p-1 rounded-lg"
               />
@@ -107,7 +119,7 @@ export default function CompanyMarquee() {
   return (
     <section id="empresas" className="pt-0 pb-8 md:pb-12 relative overflow-hidden scroll-mt-28 sm:scroll-mt-32">
       {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[700px] h-[200px] sm:h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-2xl sm:blur-3xl pointer-events-none" />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-5 sm:mb-6 text-center">
         {/* Section Title (Mayor tamaño, perfectamente balanceado y centrado) */}
@@ -141,24 +153,44 @@ export default function CompanyMarquee() {
         {/* Right Fade Gradient Mask */}
         <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 dark:from-[#09090b] to-transparent z-20" />
 
-        {/* Row 1: Moving Right to Left */}
-        <div className="flex mb-3 sm:mb-4">
-          <div className="marquee-track">
-            {row1Items.map((biz, index) => renderCard(biz, `row1-${biz.id}-${index}`))}
+        {/* DESKTOP VIEW (>= md): 2 Filas de alta velocidad y fluidez continua */}
+        <div className="hidden md:block">
+          {/* Row 1 Desktop: Moving Right to Left */}
+          <div className="flex mb-4">
+            <div className="marquee-track">
+              {desktopRow1Items.map((biz, index) => renderCard(biz, `d-row1-${biz.id}-${index}`))}
+            </div>
+          </div>
+
+          {/* Row 2 Desktop: Moving Left to Right */}
+          <div className="flex">
+            <div className="marquee-track-reverse">
+              {desktopRow2Items.map((biz, index) => renderCard(biz, `d-row2-${biz.id}-${index}`))}
+            </div>
           </div>
         </div>
 
-        {/* Row 2: Moving Left to Right */}
-        <div className="flex mb-3 md:mb-0">
-          <div className="marquee-track-reverse">
-            {row2Items.map((biz, index) => renderCard(biz, `row2-${biz.id}-${index}`))}
+        {/* MOBILE VIEW (< md): 3 Filas ligeras optimizadas para GPU y cero saturación de memoria */}
+        <div className="block md:hidden">
+          {/* Row 1 Mobile: Moving Right to Left */}
+          <div className="flex mb-3">
+            <div className="marquee-track">
+              {mobileRow1Items.map((biz, index) => renderCard(biz, `m-row1-${biz.id}-${index}`))}
+            </div>
           </div>
-        </div>
 
-        {/* Row 3: Tercera línea de movimiento exclusiva para dispositivos móviles (< md) */}
-        <div className="flex md:hidden">
-          <div className="marquee-track">
-            {row3Items.map((biz, index) => renderCard(biz, `row3-${biz.id}-${index}`))}
+          {/* Row 2 Mobile: Moving Left to Right */}
+          <div className="flex mb-3">
+            <div className="marquee-track-reverse">
+              {mobileRow2Items.map((biz, index) => renderCard(biz, `m-row2-${biz.id}-${index}`))}
+            </div>
+          </div>
+
+          {/* Row 3 Mobile: Moving Right to Left */}
+          <div className="flex">
+            <div className="marquee-track">
+              {mobileRow3Items.map((biz, index) => renderCard(biz, `m-row3-${biz.id}-${index}`))}
+            </div>
           </div>
         </div>
       </div>

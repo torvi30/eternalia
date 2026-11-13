@@ -63,36 +63,52 @@ export default function Navbar({ onOpenContact }) {
     }
   ];
 
-  // Dynamic Scrollspy: detects which section is currently active in viewport
-  const handleScrollSpy = useCallback(() => {
-    setScrolled(window.scrollY > 20);
-
-    const sectionIds = ['empresas', 'productos-disponibles', 'directorio-local', 'seguridad'];
-    let visibleSection = '';
-
-    for (const id of sectionIds) {
-      const el = document.getElementById(id);
-      if (el) {
-        const rect = el.getBoundingClientRect();
-        // If the top of the section enters the upper 45% of the viewport and its bottom is still visible
-        if (rect.top <= window.innerHeight * 0.45 && rect.bottom >= 110) {
-          visibleSection = id;
-        }
+  // Throttled scroll listener using requestAnimationFrame for navbar appearance
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isScrolled = window.scrollY > 20;
+          setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+          ticking = false;
+        });
+        ticking = true;
       }
-    }
+    };
 
-    if (visibleSection) {
-      setActiveSection(visibleSection);
-    } else if (window.scrollY < 260) {
-      setActiveSection('');
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Async IntersectionObserver for Scrollspy (prevents layout thrashing and iOS Safari crashes)
   useEffect(() => {
-    window.addEventListener('scroll', handleScrollSpy, { passive: true });
-    handleScrollSpy();
-    return () => window.removeEventListener('scroll', handleScrollSpy);
-  }, [handleScrollSpy]);
+    const sectionIds = ['empresas', 'productos-disponibles', 'directorio-local', 'seguridad'];
+    const elements = sectionIds.map((id) => document.getElementById(id)).filter(Boolean);
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const intersecting = entries.filter((e) => e.isIntersecting);
+        if (intersecting.length > 0) {
+          // Sort by proximity to top of viewport
+          intersecting.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
+          setActiveSection(intersecting[0].target.id);
+        } else if (window.scrollY < 200) {
+          setActiveSection('');
+        }
+      },
+      {
+        rootMargin: '-20% 0px -40% 0px',
+        threshold: [0, 0.2]
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [location.pathname]);
 
   const scrollTo = (id) => {
     setActiveSection(id);

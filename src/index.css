@@ -108,6 +108,9 @@ html.light .glass-panel {
   display: flex;
   width: max-content;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   animation: marquee-scroll 45s linear infinite;
 }
 
@@ -115,6 +118,9 @@ html.light .glass-panel {
   display: flex;
   width: max-content;
   will-change: transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   animation: marquee-scroll-reverse 48s linear infinite;
 }
 

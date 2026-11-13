@@ -8,4 +8,15 @@ export default defineConfig({
     port: 5174,
     strictPort: false,
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          lucide: ['lucide-react'],
+          firebase: ['firebase/app', 'firebase/firestore', 'firebase/storage']
+        }
+      }
+    }
+  }
 })

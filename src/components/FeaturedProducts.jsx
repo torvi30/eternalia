@@ -381,6 +381,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                     key={currentScreen.id}
                     src={currentScreen.img}
                     alt={currentScreen.labelEs}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-contain animate-in fade-in duration-300"
                   />
 
@@ -443,6 +445,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                     <img
                       src={screen.img}
                       alt={screen.labelEs}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover rounded-lg"
                     />
                   </button>
@@ -559,6 +563,8 @@ export default function FeaturedProducts({ onOpenContact }) {
                     <img
                       src={screen.img}
                       alt={screen.labelEs}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover rounded"
                     />
                   </button>

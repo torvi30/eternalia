@@ -244,7 +244,7 @@ export default function Hero({ onOpenContact }) {
               </div>
 
               {/* Live Image Stage */}
-              <div className="relative aspect-[16/9] sm:aspect-[21/10] bg-zinc-950 overflow-hidden">
+              <div className="relative aspect-[16/9] sm:aspect-[21/10] bg-slate-100 dark:bg-zinc-950 overflow-hidden">
                 <img
                   src={currentPreview.img}
                   alt={currentPreview.labelEs}

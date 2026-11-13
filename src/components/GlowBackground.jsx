@@ -53,8 +53,8 @@ export default function GlowBackground() {
         }}
       />
 
-      {/* Subtle architectural grid pattern */}
-      <div className="absolute inset-0 bg-mesh-grid opacity-50 dark:opacity-40 dark:mix-blend-screen" />
+      {/* Subtle architectural grid pattern without mix-blend-mode for WebKit iOS performance */}
+      <div className="absolute inset-0 bg-mesh-grid opacity-35 dark:opacity-20" />
     </div>
   );
 }

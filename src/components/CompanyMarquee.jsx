@@ -7,23 +7,50 @@ import {
   Sparkles
 } from 'lucide-react';
 
+// Cloudinary URL optimizer: downscales heavy 800x800 images to 96x96 thumbnails (4KB instead of 107KB)
+function getOptimizedLogoUrl(url) {
+  if (!url) return '';
+  if (url.includes('res.cloudinary.com') && url.includes('/upload/')) {
+    if (url.includes('/upload/w_') || url.includes('/upload/c_')) return url;
+    return url.replace('/upload/', '/upload/w_96,h_96,c_fit,f_auto,q_auto/');
+  }
+  return url;
+}
+
 export default function CompanyMarquee() {
   const { language } = useLanguage();
   const [businesses, setBusinesses] = useState(defaultCompanies);
   const [imageErrors, setImageErrors] = useState({});
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 767px)');
+    const onChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
-    // Consulta en vivo el endpoint de auth-foundattion para sincronizar logos y nombres
-    fetchDirectoryCompaniesFromEndpoint()
-      .then((liveData) => {
-        if (isMounted && liveData && liveData.length > 0) {
-          setBusinesses(liveData);
-        }
-      })
-      .catch(() => {});
+    // Consulta diferida a endpoint en segundo plano para no demorar la carga inicial
+    const timer = setTimeout(() => {
+      fetchDirectoryCompaniesFromEndpoint()
+        .then((liveData) => {
+          if (isMounted && liveData && liveData.length > 0) {
+            setBusinesses(liveData);
+          }
+        })
+        .catch(() => {});
+    }, 2500);
+
     return () => {
       isMounted = false;
+      clearTimeout(timer);
     };
   }, []);
 
@@ -43,14 +70,13 @@ export default function CompanyMarquee() {
   const desktopRow1 = businesses.slice(0, half);
   const desktopRow2 = businesses.slice(half);
 
-  // Dividir equitativamente en 3 tercios para Móvil (3 filas de ~7 items)
+  // Dividir equitativamente en 3 tercios para Móvil (~6 items por fila)
   const third = Math.ceil(businesses.length / 3);
   const mobileRow1 = businesses.slice(0, third);
   const mobileRow2 = businesses.slice(third, third * 2);
   const mobileRow3 = businesses.slice(third * 2);
 
   // Duplicar exactamente 2x para un bucle continuo matemáticamente óptimo (-50% translation)
-  // En móvil: 14 tarjetas por fila (~4.200px), dentro del límite seguro de textura GPU en iOS Safari
   const desktopRow1Items = [...desktopRow1, ...desktopRow1];
   const desktopRow2Items = [...desktopRow2, ...desktopRow2];
 
@@ -66,6 +92,7 @@ export default function CompanyMarquee() {
     const targetUrl = biz.url || (biz.companyTag ? `https://auth-foundattion.web.app/${biz.companyTag}/landing` : 'https://auth-foundattion.web.app/directorio');
     const category = language === 'es' ? (biz.categoryEs || biz.industry || 'Comercio') : (biz.categoryEn || 'Merchant');
     const location = biz.municipality ? `${biz.municipality}, ${biz.department || 'Antioquia'}` : 'Comercio Activo';
+    const optimizedLogo = hasValidLogo ? getOptimizedLogoUrl(biz.logo) : null;
 
     return (
       <a
@@ -73,15 +100,17 @@ export default function CompanyMarquee() {
         href={targetUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex items-center gap-3.5 p-3.5 sm:p-4 rounded-2xl bg-white/95 dark:bg-zinc-900/85 hover:bg-white dark:hover:bg-zinc-800/95 border border-black/[0.08] dark:border-white/[0.08] hover:border-cyan-500/40 dark:hover:border-cyan-500/40 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 w-[290px] sm:w-[330px] shrink-0 mx-2 select-none transform hover:-translate-y-1"
+        className="group relative flex items-center gap-3.5 p-3 sm:p-4 rounded-2xl bg-white/95 dark:bg-zinc-900/85 hover:bg-white dark:hover:bg-zinc-800/95 border border-black/[0.08] dark:border-white/[0.08] hover:border-cyan-500/40 dark:hover:border-cyan-500/40 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300 w-[280px] sm:w-[330px] shrink-0 mx-2 select-none transform hover:-translate-y-1"
       >
         {/* Logo Container (Cloudinary Image URL or Gradient Monogram) */}
-        <div className="relative w-12 h-12 rounded-xl shrink-0 p-[1.5px] bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-white/10 dark:to-white/5 group-hover:from-cyan-500 group-hover:to-indigo-500 transition-colors shadow-inner">
+        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl shrink-0 p-[1.5px] bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-white/10 dark:to-white/5 group-hover:from-cyan-500 group-hover:to-indigo-500 transition-colors shadow-inner">
           <div className="w-full h-full rounded-[10px] bg-white dark:bg-zinc-950 flex items-center justify-center overflow-hidden">
-            {hasValidLogo ? (
+            {optimizedLogo ? (
               <img
-                src={biz.logo}
+                src={optimizedLogo}
                 alt={biz.name}
+                width="48"
+                height="48"
                 loading="lazy"
                 decoding="async"
                 onError={() => handleImageError(biz.id)}
@@ -122,7 +151,7 @@ export default function CompanyMarquee() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[700px] h-[200px] sm:h-[300px] bg-gradient-to-r from-cyan-500/10 via-indigo-500/5 to-purple-500/10 blur-2xl sm:blur-3xl pointer-events-none" />
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-5 sm:mb-6 text-center">
-        {/* Section Title (Mayor tamaño, perfectamente balanceado y centrado) */}
+        {/* Section Title */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-zinc-900 dark:text-white tracking-tight mb-2.5 sm:mb-3 text-center text-balance leading-tight">
           {language === 'es' ? (
             <>
@@ -148,51 +177,52 @@ export default function CompanyMarquee() {
       {/* Marquee Full-Width Stage with Lateral Fade Gradients */}
       <div className="relative w-full overflow-hidden marquee-container py-2">
         {/* Left Fade Gradient Mask */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 sm:w-36 md:w-48 bg-gradient-to-r from-slate-50 dark:from-[#09090b] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-36 md:w-48 bg-gradient-to-r from-slate-50 dark:from-[#09090b] to-transparent z-20" />
 
         {/* Right Fade Gradient Mask */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 dark:from-[#09090b] to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-36 md:w-48 bg-gradient-to-l from-slate-50 dark:from-[#09090b] to-transparent z-20" />
 
-        {/* DESKTOP VIEW (>= md): 2 Filas de alta velocidad y fluidez continua */}
-        <div className="hidden md:block">
-          {/* Row 1 Desktop: Moving Right to Left */}
-          <div className="flex mb-4">
-            <div className="marquee-track">
-              {desktopRow1Items.map((biz, index) => renderCard(biz, `d-row1-${biz.id}-${index}`))}
+        {/* Conditional rendering: Only mount mobile rows OR desktop rows to halve DOM tree & GPU texture memory */}
+        {isMobile ? (
+          <div>
+            {/* Row 1 Mobile */}
+            <div className="flex mb-3">
+              <div className="marquee-track">
+                {mobileRow1Items.map((biz, index) => renderCard(biz, `m-r1-${biz.id}-${index}`))}
+              </div>
+            </div>
+
+            {/* Row 2 Mobile */}
+            <div className="flex mb-3">
+              <div className="marquee-track-reverse">
+                {mobileRow2Items.map((biz, index) => renderCard(biz, `m-r2-${biz.id}-${index}`))}
+              </div>
+            </div>
+
+            {/* Row 3 Mobile */}
+            <div className="flex">
+              <div className="marquee-track">
+                {mobileRow3Items.map((biz, index) => renderCard(biz, `m-r3-${biz.id}-${index}`))}
+              </div>
             </div>
           </div>
+        ) : (
+          <div>
+            {/* Row 1 Desktop */}
+            <div className="flex mb-4">
+              <div className="marquee-track">
+                {desktopRow1Items.map((biz, index) => renderCard(biz, `d-r1-${biz.id}-${index}`))}
+              </div>
+            </div>
 
-          {/* Row 2 Desktop: Moving Left to Right */}
-          <div className="flex">
-            <div className="marquee-track-reverse">
-              {desktopRow2Items.map((biz, index) => renderCard(biz, `d-row2-${biz.id}-${index}`))}
+            {/* Row 2 Desktop */}
+            <div className="flex">
+              <div className="marquee-track-reverse">
+                {desktopRow2Items.map((biz, index) => renderCard(biz, `d-r2-${biz.id}-${index}`))}
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* MOBILE VIEW (< md): 3 Filas ligeras optimizadas para GPU y cero saturación de memoria */}
-        <div className="block md:hidden">
-          {/* Row 1 Mobile: Moving Right to Left */}
-          <div className="flex mb-3">
-            <div className="marquee-track">
-              {mobileRow1Items.map((biz, index) => renderCard(biz, `m-row1-${biz.id}-${index}`))}
-            </div>
-          </div>
-
-          {/* Row 2 Mobile: Moving Left to Right */}
-          <div className="flex mb-3">
-            <div className="marquee-track-reverse">
-              {mobileRow2Items.map((biz, index) => renderCard(biz, `m-row2-${biz.id}-${index}`))}
-            </div>
-          </div>
-
-          {/* Row 3 Mobile: Moving Right to Left */}
-          <div className="flex">
-            <div className="marquee-track">
-              {mobileRow3Items.map((biz, index) => renderCard(biz, `m-row3-${biz.id}-${index}`))}
-            </div>
-          </div>
-        </div>
+        )}
       </div>
 
       {/* Interactive Helper Hint */}

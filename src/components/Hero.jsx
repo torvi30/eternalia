@@ -248,6 +248,8 @@ export default function Hero({ onOpenContact }) {
                 <img
                   src={currentPreview.img}
                   alt={currentPreview.labelEs}
+                  width="1200"
+                  height="675"
                   className="w-full h-full object-cover object-top transition-all duration-500 transform group-hover:scale-[1.01]"
                   loading="eager"
                   decoding="async"
